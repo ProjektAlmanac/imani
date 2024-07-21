@@ -30,6 +30,7 @@ enum class Figura {
     CIRCULO,
     TRIANGULO,
     ESTRELLA,
+    ANILLO,
     SEMICIRCULO,
     NUBE
 }
