@@ -1,4 +1,4 @@
-package io.github.projektalmanac.hackathon.generated.dto
+package io.github.projektalmanac.imani.generated.dto
 
 import java.util.Objects
 import com.fasterxml.jackson.annotation.JsonProperty

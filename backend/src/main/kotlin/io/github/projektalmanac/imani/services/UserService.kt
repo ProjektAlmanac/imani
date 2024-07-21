@@ -1,9 +1,9 @@
-package io.github.projektalmanac.hackathon.services
+package io.github.projektalmanac.imani.services
 
-import io.github.projektalmanac.hackathon.generated.dto.PostUserRequestDto
-import io.github.projektalmanac.hackathon.generated.dto.UserDto
-import io.github.projektalmanac.hackathon.mappers.UserMapper
-import io.github.projektalmanac.hackathon.repositories.UserRepository
+import io.github.projektalmanac.imani.generated.dto.PostUserRequestDto
+import io.github.projektalmanac.imani.generated.dto.UserDto
+import io.github.projektalmanac.imani.mappers.UserMapper
+import io.github.projektalmanac.imani.repositories.UserRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 

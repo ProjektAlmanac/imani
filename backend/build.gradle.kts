@@ -61,13 +61,13 @@ openApiGenerate {
 	groupId = "$group"
 	modelNameSuffix = "Dto"
 
-	packageName = "io.github.projektalmanac.hackathon.generated"
-	apiPackage = "io.github.projektalmanac.hackathon.generated.api"
-	modelPackage = "io.github.projektalmanac.hackathon.generated.dto"
+	packageName = "io.github.projektalmanac.imani.generated"
+	apiPackage = "io.github.projektalmanac.imani.generated.api"
+	modelPackage = "io.github.projektalmanac.imani.generated.dto"
 
 	additionalProperties.put("interfaceOnly", true)
 	additionalProperties.put("skipDefaultInterface", true)
-	additionalProperties.put("configPackage", "io.github.projektalmanac.hackathon.generated.config")
+	additionalProperties.put("configPackage", "io.github.projektalmanac.imani.generated.config")
 	additionalProperties.put("useTags", true)
 	additionalProperties.put("hideGenerationTimestamp", true)
 }

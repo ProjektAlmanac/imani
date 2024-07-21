@@ -1,11 +1,11 @@
-package io.github.projektalmanac.hackathon.controllers
+package io.github.projektalmanac.imani.controllers
 
-import io.github.projektalmanac.hackathon.exceptions.UsuarioNoEncontradoException
-import io.github.projektalmanac.hackathon.generated.api.DefaultApi
-import io.github.projektalmanac.hackathon.generated.dto.PatchUsersUserIdRequestDto
-import io.github.projektalmanac.hackathon.generated.dto.PostUserRequestDto
-import io.github.projektalmanac.hackathon.generated.dto.UserDto
-import io.github.projektalmanac.hackathon.services.UserService
+import io.github.projektalmanac.imani.exceptions.UsuarioNoEncontradoException
+import io.github.projektalmanac.imani.generated.api.DefaultApi
+import io.github.projektalmanac.imani.generated.dto.PatchUsersUserIdRequestDto
+import io.github.projektalmanac.imani.generated.dto.PostUserRequestDto
+import io.github.projektalmanac.imani.generated.dto.UserDto
+import io.github.projektalmanac.imani.services.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

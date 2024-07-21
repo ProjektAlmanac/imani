@@ -1,4 +1,4 @@
-package io.github.projektalmanac.hackathon.config
+package io.github.projektalmanac.imani.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

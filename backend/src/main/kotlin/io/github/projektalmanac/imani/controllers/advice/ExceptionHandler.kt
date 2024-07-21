@@ -1,7 +1,7 @@
-package io.github.projektalmanac.hackathon.controllers.advice
+package io.github.projektalmanac.imani.controllers.advice
 
-import io.github.projektalmanac.hackathon.exceptions.AppException
-import io.github.projektalmanac.hackathon.generated.dto.ProblemDetailsDto
+import io.github.projektalmanac.imani.exceptions.AppException
+import io.github.projektalmanac.imani.generated.dto.ProblemDetailsDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler

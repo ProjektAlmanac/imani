@@ -3,11 +3,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
 */
-package io.github.projektalmanac.hackathon.generated.api
+package io.github.projektalmanac.imani.generated.api
 
-import io.github.projektalmanac.hackathon.generated.dto.PatchUsersUserIdRequestDto
-import io.github.projektalmanac.hackathon.generated.dto.PostUserRequestDto
-import io.github.projektalmanac.hackathon.generated.dto.UserDto
+import io.github.projektalmanac.imani.generated.dto.PatchUsersUserIdRequestDto
+import io.github.projektalmanac.imani.generated.dto.PostUserRequestDto
+import io.github.projektalmanac.imani.generated.dto.UserDto
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.enums.*
 import io.swagger.v3.oas.annotations.media.*

@@ -1,8 +1,8 @@
-src/main/kotlin/io/github/projektalmanac/hackathon/generated/api/ApiUtil.kt
-src/main/kotlin/io/github/projektalmanac/hackathon/generated/api/DefaultApi.kt
-src/main/kotlin/io/github/projektalmanac/hackathon/generated/api/Exceptions.kt
-src/main/kotlin/io/github/projektalmanac/hackathon/generated/dto/PatchUsersUserIdRequestDto.kt
-src/main/kotlin/io/github/projektalmanac/hackathon/generated/dto/PostUserRequestDto.kt
-src/main/kotlin/io/github/projektalmanac/hackathon/generated/dto/ProblemDetailsDto.kt
-src/main/kotlin/io/github/projektalmanac/hackathon/generated/dto/UserDto.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/api/ApiUtil.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/api/DefaultApi.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/api/Exceptions.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/dto/PatchUsersUserIdRequestDto.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/dto/PostUserRequestDto.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/dto/ProblemDetailsDto.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/dto/UserDto.kt
 src/main/kotlin/org/openapitools/SpringDocConfiguration.kt

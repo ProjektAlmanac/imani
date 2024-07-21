@@ -1,4 +1,4 @@
-package io.github.projektalmanac.hackathon.entities
+package io.github.projektalmanac.imani.entities
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
