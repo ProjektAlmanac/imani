@@ -12,6 +12,14 @@ class SecurityConfig {
     @Bean
     fun filterChan(http: HttpSecurity): SecurityFilterChain =
         http.authorizeHttpRequests {
-            it.anyRequest().permitAll()
+            it
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().permitAll()
+        }.csrf{
+            it.disable()
+        }.headers {
+            it.frameOptions {
+                it.disable()
+            }
         }.build()
 }
