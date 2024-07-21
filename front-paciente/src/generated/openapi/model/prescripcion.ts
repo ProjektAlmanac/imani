@@ -18,7 +18,6 @@ export interface Prescripcion {
     duracion: number;
     inicio?: string;
     identificador?: string;
-    figura: Prescripcion.FiguraEnum;
     /**
      * La cantidad que tiene la caja o la cantidad que le queda al paciente en estos momentos 
      */
@@ -27,7 +26,9 @@ export interface Prescripcion {
      * cuanto tiene que tomar cada vez 
      */
     cantidadPorDosis: number;
+    idDoctor?: number;
     id: number;
+    figura: Prescripcion.FiguraEnum;
 }
 export namespace Prescripcion {
     export type FiguraEnum = 'cuadrado' | 'circulo' | 'triangulo' | 'estrella' | 'anillo' | 'semicirculo' | 'nube';

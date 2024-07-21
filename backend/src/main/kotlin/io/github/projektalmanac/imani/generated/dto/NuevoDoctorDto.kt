@@ -23,20 +23,20 @@ import io.swagger.v3.oas.annotations.media.Schema
  */
 data class NuevoDoctorDto(
 
-    @Schema(example = "null", description = "")
-    @get:JsonProperty("nombre") val nombre: kotlin.String? = null,
+    @Schema(example = "null", required = true, description = "")
+    @get:JsonProperty("nombre", required = true) val nombre: kotlin.String,
 
-    @Schema(example = "null", description = "")
-    @get:JsonProperty("apellidos") val apellidos: kotlin.String? = null,
+    @Schema(example = "null", required = true, description = "")
+    @get:JsonProperty("apellidos", required = true) val apellidos: kotlin.String,
 
-    @Schema(example = "null", description = "")
-    @get:JsonProperty("nombreUsuario") val nombreUsuario: kotlin.String? = null,
+    @Schema(example = "null", required = true, description = "")
+    @get:JsonProperty("nombreUsuario", required = true) val nombreUsuario: kotlin.String,
 
-    @Schema(example = "null", description = "")
-    @get:JsonProperty("centroMedico") val centroMedico: kotlin.String? = null,
+    @Schema(example = "null", required = true, description = "")
+    @get:JsonProperty("centroMedico", required = true) val centroMedico: kotlin.String,
 
-    @Schema(example = "null", description = "")
-    @get:JsonProperty("password") val password: kotlin.String? = null
+    @Schema(example = "null", required = true, description = "")
+    @get:JsonProperty("password", required = true) val password: kotlin.String
 ) {
 
 }

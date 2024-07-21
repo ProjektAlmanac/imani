@@ -18,8 +18,8 @@ import io.swagger.v3.oas.annotations.media.Schema
  * 
  * @param id 
  * @param nombre 
- * @param rol 
  * @param apellido 
+ * @param rol 
  */
 data class UsuarioDto(
 
@@ -30,10 +30,10 @@ data class UsuarioDto(
     @get:JsonProperty("Nombre", required = true) val nombre: kotlin.String,
 
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("rol", required = true) val rol: UsuarioDto.Rol,
+    @get:JsonProperty("Apellido", required = true) val apellido: kotlin.String,
 
-    @Schema(example = "null", description = "")
-    @get:JsonProperty("Apellido") val apellido: kotlin.String? = null
+    @Schema(example = "null", required = true, description = "")
+    @get:JsonProperty("rol", required = true) val rol: UsuarioDto.Rol
 ) {
 
     /**

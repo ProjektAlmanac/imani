@@ -20,12 +20,13 @@ import io.swagger.v3.oas.annotations.media.Schema
  * @param frecuenciaDosis 
  * @param indicaciones 
  * @param duracion 
- * @param figura 
  * @param numeroDeDosis La cantidad que tiene la caja o la cantidad que le queda al paciente en estos momentos 
  * @param cantidadPorDosis cuanto tiene que tomar cada vez 
  * @param id 
+ * @param figura 
  * @param inicio 
  * @param identificador 
+ * @param idDoctor 
  */
 data class PrescripcionDto(
 
@@ -41,9 +42,6 @@ data class PrescripcionDto(
     @Schema(example = "null", required = true, description = "")
     @get:JsonProperty("duracion", required = true) val duracion: kotlin.Int,
 
-    @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("figura", required = true) val figura: PrescripcionDto.Figura,
-
     @Schema(example = "null", required = true, description = "La cantidad que tiene la caja o la cantidad que le queda al paciente en estos momentos ")
     @get:JsonProperty("numeroDeDosis", required = true) val numeroDeDosis: java.math.BigDecimal,
 
@@ -53,11 +51,17 @@ data class PrescripcionDto(
     @Schema(example = "null", required = true, description = "")
     @get:JsonProperty("id", required = true) val id: kotlin.Int,
 
+    @Schema(example = "null", required = true, description = "")
+    @get:JsonProperty("figura", required = true) val figura: PrescripcionDto.Figura,
+
     @Schema(example = "null", description = "")
     @get:JsonProperty("inicio") val inicio: java.time.OffsetDateTime? = null,
 
     @Schema(example = "null", description = "")
-    @get:JsonProperty("identificador") val identificador: kotlin.String? = null
+    @get:JsonProperty("identificador") val identificador: kotlin.String? = null,
+
+    @Schema(example = "null", description = "")
+    @get:JsonProperty("idDoctor") val idDoctor: kotlin.Int? = null
 ) {
 
     /**

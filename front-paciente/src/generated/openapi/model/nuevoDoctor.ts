@@ -12,10 +12,10 @@
 
 
 export interface NuevoDoctor { 
-    nombre?: string;
-    apellidos?: string;
-    nombreUsuario?: string;
-    centroMedico?: string;
-    password?: string;
+    nombre: string;
+    apellidos: string;
+    nombreUsuario: string;
+    centroMedico: string;
+    password: string;
 }
 

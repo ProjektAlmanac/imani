@@ -18,7 +18,6 @@ export interface NuevaPrescripcion {
     duracion: number;
     inicio?: string;
     identificador?: string;
-    figura: NuevaPrescripcion.FiguraEnum;
     /**
      * La cantidad que tiene la caja o la cantidad que le queda al paciente en estos momentos 
      */
@@ -27,18 +26,6 @@ export interface NuevaPrescripcion {
      * cuanto tiene que tomar cada vez 
      */
     cantidadPorDosis: number;
+    idDoctor?: number;
 }
-export namespace NuevaPrescripcion {
-    export type FiguraEnum = 'cuadrado' | 'circulo' | 'triangulo' | 'estrella' | 'anillo' | 'semicirculo' | 'nube';
-    export const FiguraEnum = {
-        Cuadrado: 'cuadrado' as FiguraEnum,
-        Circulo: 'circulo' as FiguraEnum,
-        Triangulo: 'triangulo' as FiguraEnum,
-        Estrella: 'estrella' as FiguraEnum,
-        Anillo: 'anillo' as FiguraEnum,
-        Semicirculo: 'semicirculo' as FiguraEnum,
-        Nube: 'nube' as FiguraEnum
-    };
-}
-
 
