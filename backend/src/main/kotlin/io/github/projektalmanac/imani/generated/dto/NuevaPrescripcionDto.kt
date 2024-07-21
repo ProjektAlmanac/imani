@@ -2,7 +2,6 @@ package io.github.projektalmanac.imani.generated.dto
 
 import java.util.Objects
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonValue
 import javax.validation.constraints.DecimalMax
 import javax.validation.constraints.DecimalMin
 import javax.validation.constraints.Email
@@ -20,11 +19,11 @@ import io.swagger.v3.oas.annotations.media.Schema
  * @param frecuenciaDosis 
  * @param indicaciones 
  * @param duracion 
- * @param figura 
  * @param numeroDeDosis La cantidad que tiene la caja o la cantidad que le queda al paciente en estos momentos 
  * @param cantidadPorDosis cuanto tiene que tomar cada vez 
  * @param inicio 
  * @param identificador 
+ * @param idDoctor 
  */
 data class NuevaPrescripcionDto(
 
@@ -40,9 +39,6 @@ data class NuevaPrescripcionDto(
     @Schema(example = "null", required = true, description = "")
     @get:JsonProperty("duracion", required = true) val duracion: kotlin.Int,
 
-    @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("figura", required = true) val figura: NuevaPrescripcionDto.Figura,
-
     @Schema(example = "null", required = true, description = "La cantidad que tiene la caja o la cantidad que le queda al paciente en estos momentos ")
     @get:JsonProperty("numeroDeDosis", required = true) val numeroDeDosis: java.math.BigDecimal,
 
@@ -53,23 +49,11 @@ data class NuevaPrescripcionDto(
     @get:JsonProperty("inicio") val inicio: java.time.OffsetDateTime? = null,
 
     @Schema(example = "null", description = "")
-    @get:JsonProperty("identificador") val identificador: kotlin.String? = null
+    @get:JsonProperty("identificador") val identificador: kotlin.String? = null,
+
+    @Schema(example = "null", description = "")
+    @get:JsonProperty("idDoctor") val idDoctor: kotlin.Int? = null
 ) {
-
-    /**
-    * 
-    * Values: cuadrado,circulo,triangulo,estrella,anillo,semicirculo,nube
-    */
-    enum class Figura(val value: kotlin.String) {
-
-        @JsonProperty("cuadrado") cuadrado("cuadrado"),
-        @JsonProperty("circulo") circulo("circulo"),
-        @JsonProperty("triangulo") triangulo("triangulo"),
-        @JsonProperty("estrella") estrella("estrella"),
-        @JsonProperty("anillo") anillo("anillo"),
-        @JsonProperty("semicirculo") semicirculo("semicirculo"),
-        @JsonProperty("nube") nube("nube")
-    }
 
 }
 

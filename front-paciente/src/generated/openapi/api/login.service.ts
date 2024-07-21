@@ -36,7 +36,7 @@ import { Configuration }                                     from '../configurat
 })
 export class LoginService {
 
-    protected basePath = 'http://localhost:8088';
+    protected basePath = 'http://localhost:8080/api';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
