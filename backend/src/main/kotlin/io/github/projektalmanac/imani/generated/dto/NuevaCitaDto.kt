@@ -15,20 +15,16 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 /**
  * 
- * @param type 
- * @param detail 
- * @param status 
+ * @param idDoctor 
+ * @param fecha 
  */
-data class ProblemDetailsDto(
+data class NuevaCitaDto(
 
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("type", required = true) val type: kotlin.String,
+    @get:JsonProperty("idDoctor", required = true) val idDoctor: kotlin.String,
 
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("detail", required = true) val detail: kotlin.String,
-
-    @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("status", required = true) val status: kotlin.Int
+    @get:JsonProperty("fecha", required = true) val fecha: java.time.OffsetDateTime
 ) {
 
 }

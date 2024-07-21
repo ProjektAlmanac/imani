@@ -1,0 +1,13 @@
+export * from './cita.service';
+import { CitaService } from './cita.service';
+export * from './doctor.service';
+import { DoctorService } from './doctor.service';
+export * from './farmaceutico.service';
+import { FarmaceuticoService } from './farmaceutico.service';
+export * from './login.service';
+import { LoginService } from './login.service';
+export * from './paciente.service';
+import { PacienteService } from './paciente.service';
+export * from './prescripciones.service';
+import { PrescripcionesService } from './prescripciones.service';
+export const APIS = [CitaService, DoctorService, FarmaceuticoService, LoginService, PacienteService, PrescripcionesService];

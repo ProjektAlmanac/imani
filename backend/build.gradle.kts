@@ -56,7 +56,7 @@ tasks.withType<Test> {
 
 openApiGenerate {
 	generatorName = "kotlin-spring"
-	inputSpec = "$rootDir/api-docs.yml"
+	inputSpec = "$rootDir/../api-docs.yml"
 	outputDir = "$rootDir"
 	groupId = "$group"
 	modelNameSuffix = "Dto"

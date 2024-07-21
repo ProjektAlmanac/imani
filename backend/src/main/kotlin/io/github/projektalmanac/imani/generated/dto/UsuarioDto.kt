@@ -2,6 +2,7 @@ package io.github.projektalmanac.imani.generated.dto
 
 import java.util.Objects
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonValue
 import javax.validation.constraints.DecimalMax
 import javax.validation.constraints.DecimalMin
 import javax.validation.constraints.Email
@@ -15,21 +16,35 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 /**
  * 
- * @param type 
- * @param detail 
- * @param status 
+ * @param id 
+ * @param nombre 
+ * @param rol 
+ * @param apellido 
  */
-data class ProblemDetailsDto(
+data class UsuarioDto(
 
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("type", required = true) val type: kotlin.String,
+    @get:JsonProperty("id", required = true) val id: kotlin.String,
 
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("detail", required = true) val detail: kotlin.String,
+    @get:JsonProperty("Nombre", required = true) val nombre: kotlin.String,
 
     @Schema(example = "null", required = true, description = "")
-    @get:JsonProperty("status", required = true) val status: kotlin.Int
+    @get:JsonProperty("rol", required = true) val rol: UsuarioDto.Rol,
+
+    @Schema(example = "null", description = "")
+    @get:JsonProperty("Apellido") val apellido: kotlin.String? = null
 ) {
+
+    /**
+    * 
+    * Values: doctor,farmaceutico
+    */
+    enum class Rol(val value: kotlin.String) {
+
+        @JsonProperty("doctor") doctor("doctor"),
+        @JsonProperty("farmaceutico") farmaceutico("farmaceutico")
+    }
 
 }
 

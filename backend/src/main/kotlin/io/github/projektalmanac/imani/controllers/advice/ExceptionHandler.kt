@@ -14,6 +14,6 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleAppException(ex: AppException) : ResponseEntity<ProblemDetailsDto> {
         return ResponseEntity
             .status(ex.status.value())
-            .body(ProblemDetailsDto(ex.tipo, ex.message, ex.status.value()))
+            .body(ProblemDetailsDto(ex.tipo, ex.message ?: "", ex.status.value()))
     }
 }

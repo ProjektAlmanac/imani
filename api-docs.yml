@@ -1,0 +1,653 @@
+openapi: 3.0.0
+x-stoplight:
+  id: t2s1o8pp3riny
+info:
+  title: Imani API
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8088'
+    description: Servidor local
+paths:
+  '/pacientes/{pacienteId}':
+    parameters:
+      - schema:
+          type: integer
+        name: pacienteId
+        in: path
+        required: true
+    get:
+      summary: Obtiene la informacion del paciente
+      responses:
+        '200':
+          description: paciente existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paciente'
+              examples:
+                Get User Alice Smith:
+                  value:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: '1997-10-31'
+                    emailVerified: true
+                    signUpDate: '2019-08-24'
+        '404':
+          description: Paciente no existe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: getPacienteID
+      description: |-
+        Obtiene la información del paciente 
+        nombre, estatura, etc
+      x-stoplight:
+        id: 597e18xmve7um
+      tags:
+        - paciente
+    put:
+      summary: Actualiza informacion del paciente
+      operationId: upDatePacienteID
+      responses:
+        '204':
+          description: Paciente Creado
+          content: {}
+        '404':
+          description: No existe el paciente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      description: 'Actualiza fecha de nacimiento, nombre, etc'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paciente'
+        description: Patch user properties to update.
+      x-stoplight:
+        id: zdq8jrhnbmc8p
+      tags:
+        - paciente
+  '/pacientes/{pacienteId}/prescripciones':
+    parameters:
+      - schema:
+          type: integer
+        name: pacienteId
+        in: path
+        required: true
+    get:
+      summary: Obtiene las prescripciones del paciente
+      tags:
+        - prescripciones
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prescripcion'
+      operationId: getPrescription
+      x-stoplight:
+        id: 8siu6zxk1rcy7
+      description: 'Medicamentos, horas, inicio y duracion'
+    post:
+      summary: Agregar prescripciones
+      tags:
+        - prescripciones
+      responses:
+        '201':
+          description: Created
+        '404':
+          description: Paciente no encontrado
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: postPrescription
+      x-stoplight:
+        id: dxmf1ryxmgz6j
+      description: 'agrega una lista de prescripciones (Medicamentos, horas, inicio y duracion)'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/NuevaPrescripcion'
+  '/pacientes/{pacienteId}/citas':
+    parameters:
+      - schema:
+          type: integer
+        name: pacienteId
+        in: path
+        required: true
+    get:
+      summary: Obtiene las Citas del paciente
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Citas'
+        '404':
+          description: Paciente no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: getDates
+      x-stoplight:
+        id: vsomnt4vnc10g
+      description: Obtienen la cita del paciente con la informacion del doctor y centro medico
+      tags:
+        - cita
+    post:
+      summary: Crea cita medica
+      tags:
+        - cita
+      responses:
+        '201':
+          description: cita creada
+        '404':
+          description: Paciente no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: PostDate
+      x-stoplight:
+        id: j2ns8nifdbz6r
+      description: Crea una cita medica a un paciente se envia id Doctor y dia de la cita
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NuevaCita'
+  /pacientes:
+    post:
+      summary: Crea un paciente
+      tags:
+        - paciente
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paciente'
+      operationId: postPacientes
+      x-stoplight:
+        id: 5mt2p8bhcugph
+      description: |-
+        Crea un paciente 
+        nombre estatura, etc
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Paciente'
+  /doctores:
+    post:
+      summary: Crear doctor
+      tags:
+        - doctor
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: postDoctor
+      x-stoplight:
+        id: rtdxtgetto7x7
+      description: 'Crea un doctor nombre, centro medico, etc'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NuevoDoctor'
+    parameters: []
+  '/pacientes/{pacienteId}/prescripciones/{prescripcionId}':
+    parameters:
+      - schema:
+          type: integer
+        name: pacienteId
+        in: path
+        required: true
+      - schema:
+          type: integer
+        name: prescripcionId
+        in: path
+        required: true
+    put:
+      summary: Modifica Prescripcion
+      tags:
+        - prescripciones
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: putPrescripcion
+      x-stoplight:
+        id: tk96c4tw2pu89
+      description: Modifica la prescripcion de un medicamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NuevaPrescripcion'
+  /farmaceutico:
+    post:
+      summary: Crear un farmaceutico
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: postFarmaceutico
+      x-stoplight:
+        id: eo7zllp8oyejz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NuevoFarmaceutico'
+      tags:
+        - farmaceutico
+    parameters: []
+  /login:
+    post:
+      summary: Login
+      tags:
+        - login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '401':
+          description: Datos incorrectos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: login
+      x-stoplight:
+        id: nlx0ran8j80pg
+      description: Hace un login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+  '/doctores/{doctorId}/pacientes':
+    parameters:
+      - schema:
+          type: string
+        name: doctorId
+        in: path
+        required: true
+    get:
+      summary: Obtener pacientes de doctor
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Paciente'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+      operationId: getPacientesDoctorID
+      x-stoplight:
+        id: mxk7ub50adl7g
+      tags:
+        - paciente
+      description: Recuperar la lista de pacientes de un doctor
+components:
+  schemas:
+    Paciente:
+      title: Paciente
+      type: object
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      x-stoplight:
+        id: nbmmsf9f33lrf
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+          x-stoplight:
+            id: 5cqf8x5g4d97f
+        nombre:
+          type: string
+          x-stoplight:
+            id: pxcik255a0j8z
+        apellidos:
+          type: string
+          x-stoplight:
+            id: yntkrwbmt7md6
+        fechaDeNacimiento:
+          type: string
+          format: date
+          example: '1997-10-31'
+          x-stoplight:
+            id: 1n395w1h9lffu
+        estatura:
+          type: number
+          x-stoplight:
+            id: eqv1rb8lk10l5
+        peso:
+          type: string
+          x-stoplight:
+            id: qnk8k69tv1dkg
+        token:
+          type: string
+          x-stoplight:
+            id: c418w4univyy1
+    NuevoPaciente:
+      title: NuevoPaciente
+      x-stoplight:
+        id: ktf50p80ricp0
+      type: object
+      x-examples:
+        Alice Smith:
+          id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        nombre:
+          type: string
+        apellidos:
+          type: string
+        fechaDeNacimiento:
+          type: string
+          format: date
+          example: '1997-10-31'
+        estatura:
+          type: number
+        peso:
+          type: string
+        token:
+          type: string
+    ProblemDetails:
+      title: ProblemDetails
+      x-stoplight:
+        id: 5j6k6qlni0ec2
+      type: object
+      required:
+        - type
+        - detail
+        - status
+      properties:
+        type:
+          type: string
+          x-stoplight:
+            id: fjckcdi55urms
+        detail:
+          type: string
+          x-stoplight:
+            id: b8wv85m6tu5xm
+        status:
+          type: integer
+          x-stoplight:
+            id: mxoycuryqftiu
+    Prescripcion:
+      title: Prescripcion
+      x-stoplight:
+        id: exuvz5ceualks
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: integer
+              x-stoplight:
+                id: 4450ovaa1xj8b
+        - $ref: '#/components/schemas/NuevaPrescripcion'
+    NuevaPrescripcion:
+      title: NuevaPrescripcion
+      x-stoplight:
+        id: 11ur6cz2cfohh
+      type: object
+      required:
+        - medicamento
+        - frecuenciaDosis
+        - indicaciones
+        - duracion
+        - figura
+        - numeroDeDosis
+        - cantidadPorDosis
+      properties:
+        medicamento:
+          type: string
+        frecuenciaDosis:
+          type: integer
+        indicaciones:
+          type: string
+        duracion:
+          type: integer
+        inicio:
+          type: string
+          format: date-time
+        identificador:
+          type: string
+        figura:
+          enum:
+            - cuadrado
+            - circulo
+            - triangulo
+            - estrella
+            - anillo
+            - semicirculo
+            - nube
+        numeroDeDosis:
+          type: number
+          description: |
+            La cantidad que tiene la caja o la cantidad que le queda al paciente en estos momentos
+        cantidadPorDosis:
+          type: number
+          description: |
+            cuanto tiene que tomar cada vez
+    Citas:
+      title: Citas
+      x-stoplight:
+        id: 1d0eerfdiet2t
+      type: object
+      required:
+        - id
+        - fecha
+        - nombreDoctor
+        - apellidoDoctor
+        - centroMedico
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: z7idbjfy9aw7g
+        fecha:
+          type: string
+          x-stoplight:
+            id: nx2fveq5a6hbd
+          format: date-time
+        nombreDoctor:
+          type: string
+          x-stoplight:
+            id: y23f2zoiq3pah
+        apellidoDoctor:
+          type: string
+          x-stoplight:
+            id: s2m8kkt2oo3w2
+        centroMedico:
+          type: string
+          x-stoplight:
+            id: 6fqttpe7qe4a2
+    NuevaCita:
+      title: NuevaCita
+      x-stoplight:
+        id: 2fin3f2n789qs
+      type: object
+      required:
+        - idDoctor
+        - fecha
+      properties:
+        idDoctor:
+          type: string
+          x-stoplight:
+            id: e5k4d9gw7yod9
+        fecha:
+          type: string
+          x-stoplight:
+            id: 6cx9vw1qq7ani
+          format: date-time
+    NuevoDoctor:
+      title: NuevoDoctor
+      x-stoplight:
+        id: 41d4s5kajswn2
+      allOf:
+        - type: object
+          x-stoplight:
+            id: 4vkg8sycxkkhy
+          properties:
+            password:
+              type: string
+              x-stoplight:
+                id: ae0vybn83v9cg
+        - $ref: '#/components/schemas/Doctor'
+    Doctor:
+      title: Doctor
+      x-stoplight:
+        id: l1nbeimanjy0j
+      type: object
+      properties:
+        nombre:
+          type: string
+        apellidos:
+          type: string
+        nombreUsuario:
+          type: string
+        centroMedico:
+          type: string
+    Farmaceutico:
+      title: Farmaceutico
+      x-stoplight:
+        id: lhn8bq759dyal
+      type: object
+      required:
+        - nombre
+        - apellidos
+        - nombreUsuario
+      properties:
+        nombre:
+          type: string
+        apellidos:
+          type: string
+        nombreUsuario:
+          type: string
+    NuevoFarmaceutico:
+      title: NuevoDoctor
+      x-stoplight:
+        id: ttlolhjhqkan9
+      allOf:
+        - type: object
+          required:
+            - password
+          properties:
+            password:
+              type: string
+        - $ref: '#/components/schemas/Farmaceutico'
+    Usuario:
+      title: Usuario
+      x-stoplight:
+        id: 52p2uszj2i8ff
+      type: object
+      required:
+        - id
+        - Nombre
+        - rol
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: e259jmse20ngl
+        Nombre:
+          type: string
+          x-stoplight:
+            id: 2i9kbqz4h0gjm
+        Apellido:
+          type: string
+          x-stoplight:
+            id: 7g3ne9lk8g4fg
+        rol:
+          x-stoplight:
+            id: x2ioxtdsgw4ud
+          enum:
+            - doctor
+            - farmaceutico
+    Login:
+      title: Login
+      x-stoplight:
+        id: xdcz2wstb0mvs
+      type: object
+      required:
+        - usuario
+        - password
+      properties:
+        usuario:
+          type: string
+          x-stoplight:
+            id: c79chg5qqudhc
+        password:
+          type: string
+          x-stoplight:
+            id: x0k6yxkvf38vy
