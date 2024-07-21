@@ -1,4 +1,4 @@
-package io.github.projektalmanac.hackathon.generated.api
+package io.github.projektalmanac.imani.generated.api
 
 import org.springframework.web.context.request.NativeWebRequest
 

@@ -1,4 +1,4 @@
-package io.github.projektalmanac.hackathon.exceptions
+package io.github.projektalmanac.imani.exceptions
 
 import org.springframework.http.HttpStatus
 

@@ -1,6 +1,6 @@
-package io.github.projektalmanac.hackathon.repositories
+package io.github.projektalmanac.imani.repositories
 
-import io.github.projektalmanac.hackathon.entities.User
+import io.github.projektalmanac.imani.entities.User
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 

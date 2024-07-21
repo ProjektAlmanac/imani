@@ -1,10 +1,10 @@
-package io.github.projektalmanac.hackathon
+package io.github.projektalmanac.imani
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class HackathonApplicationTests {
+class ImaniApplicationTests {
 
 	@Test
 	fun contextLoads() {

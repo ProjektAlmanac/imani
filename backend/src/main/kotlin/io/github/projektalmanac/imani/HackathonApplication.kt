@@ -1,11 +1,11 @@
-package io.github.projektalmanac.hackathon
+package io.github.projektalmanac.imani
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class HackathonApplication
+class ImaniApplication
 
 fun main(args: Array<String>) {
-	runApplication<HackathonApplication>(*args)
+	runApplication<ImaniApplication>(*args)
 }

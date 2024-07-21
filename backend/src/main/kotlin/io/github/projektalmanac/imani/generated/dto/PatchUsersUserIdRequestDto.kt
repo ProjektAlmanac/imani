@@ -1,4 +1,4 @@
-package io.github.projektalmanac.hackathon.generated.dto
+package io.github.projektalmanac.imani.generated.dto
 
 import java.util.Objects
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -15,20 +15,24 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 /**
  * 
- * @param type 
- * @param detail 
- * @param status 
+ * @param firstName 
+ * @param lastName 
+ * @param email If a new email is given, the user's email verified property will be set to false.
+ * @param dateOfBirth 
  */
-data class ProblemDetailsDto(
+data class PatchUsersUserIdRequestDto(
 
     @Schema(example = "null", description = "")
-    @get:JsonProperty("type") val type: kotlin.String? = null,
+    @get:JsonProperty("firstName") val firstName: kotlin.String? = null,
 
     @Schema(example = "null", description = "")
-    @get:JsonProperty("detail") val detail: kotlin.String? = null,
+    @get:JsonProperty("lastName") val lastName: kotlin.String? = null,
+
+    @Schema(example = "null", description = "If a new email is given, the user's email verified property will be set to false.")
+    @get:JsonProperty("email") val email: kotlin.String? = null,
 
     @Schema(example = "null", description = "")
-    @get:JsonProperty("status") val status: kotlin.Int? = null
+    @get:JsonProperty("dateOfBirth") val dateOfBirth: kotlin.String? = null
 ) {
 
 }
