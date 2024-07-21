@@ -14,11 +14,11 @@ class Doctor(
     var centroMedico: String,
 
     @OneToMany(mappedBy = "doctor", cascade = [CascadeType.ALL] ,fetch = FetchType.LAZY)
-    var prescripciones: MutableList<Prescripcion>,
+    var prescripciones: MutableList<Prescripcion> = mutableListOf(),
 
-    @ManyToMany(mappedBy = "doctores", fetch = FetchType.LAZY)
-    var pacientes: MutableList<Paciente>,
+    @ManyToMany(fetch = FetchType.LAZY)
+    var pacientes: MutableList<Paciente> = mutableListOf(),
 
     @OneToMany(mappedBy = "doctor", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    var citas: MutableList<Cita>
+    var citas: MutableList<Cita> = mutableListOf()
 )
