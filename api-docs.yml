@@ -558,6 +558,8 @@ components:
         - type: object
           x-stoplight:
             id: 4vkg8sycxkkhy
+          required:
+            - password
           properties:
             password:
               type: string
@@ -569,6 +571,11 @@ components:
       x-stoplight:
         id: l1nbeimanjy0j
       type: object
+      required:
+        - nombre
+        - apellidos
+        - nombreUsuario
+        - centroMedico
       properties:
         nombre:
           type: string
@@ -614,6 +621,7 @@ components:
       required:
         - id
         - Nombre
+        - Apellido
         - rol
       properties:
         id:

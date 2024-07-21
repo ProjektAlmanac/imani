@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.module.ts
 api/api.ts
@@ -11,7 +10,6 @@ api/paciente.service.ts
 api/prescripciones.service.ts
 configuration.ts
 encoder.ts
-git_push.sh
 index.ts
 model/citas.ts
 model/doctor.ts

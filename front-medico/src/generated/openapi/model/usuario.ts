@@ -14,7 +14,7 @@
 export interface Usuario { 
     id: string;
     Nombre: string;
-    Apellido?: string;
+    Apellido: string;
     rol: Usuario.RolEnum;
 }
 export namespace Usuario {

@@ -12,9 +12,9 @@
 
 
 export interface Doctor { 
-    nombre?: string;
-    apellidos?: string;
-    nombreUsuario?: string;
-    centroMedico?: string;
+    nombre: string;
+    apellidos: string;
+    nombreUsuario: string;
+    centroMedico: string;
 }
 
