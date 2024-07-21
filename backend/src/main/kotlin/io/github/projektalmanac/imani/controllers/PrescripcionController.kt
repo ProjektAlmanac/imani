@@ -4,9 +4,11 @@ import io.github.projektalmanac.imani.generated.api.PrescripcionesApi
 import io.github.projektalmanac.imani.generated.dto.NuevaPrescripcionDto
 import io.github.projektalmanac.imani.generated.dto.PrescripcionDto
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api")
 class PrescripcionController : PrescripcionesApi {
     override fun getPrescription(pacienteId: Int): ResponseEntity<List<PrescripcionDto>> {
         TODO("Not yet implemented")

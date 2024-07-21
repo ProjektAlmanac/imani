@@ -4,9 +4,11 @@ import io.github.projektalmanac.imani.generated.api.CitaApi
 import io.github.projektalmanac.imani.generated.dto.CitasDto
 import io.github.projektalmanac.imani.generated.dto.NuevaCitaDto
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api")
 class CitaController : CitaApi{
     override fun getDates(pacienteId: Int): ResponseEntity<List<CitasDto>> {
         TODO("Not yet implemented")
