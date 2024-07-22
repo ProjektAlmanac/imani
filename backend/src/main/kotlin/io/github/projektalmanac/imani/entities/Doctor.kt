@@ -12,7 +12,7 @@ class Doctor(
     var nombreUsuario: String,
     var passwordHash: String,
     var centroMedico: String,
-
+    var pacienteAtendido:Int,
     @OneToMany(mappedBy = "doctor", cascade = [CascadeType.ALL] ,fetch = FetchType.LAZY)
     var prescripciones: MutableList<Prescripcion> = mutableListOf(),
 
@@ -21,4 +21,9 @@ class Doctor(
 
     @OneToMany(mappedBy = "doctor", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     var citas: MutableList<Cita> = mutableListOf()
+    @OneToOne(fetch = FetchType.LAZY)
+   
+    @JoinColumn(name = "paciente_atendido_id")
+    var pacienteAtendido: Paciente? = null
+ 
 )
