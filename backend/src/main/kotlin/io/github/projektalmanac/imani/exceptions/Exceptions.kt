@@ -11,3 +11,8 @@ class UsuarioNoEncontradoException(id: Int, cause: Throwable? = null) : AppExcep
     override val tipo = "USUARIO_NO_ENCONTRADO"
     override val status = HttpStatus.NOT_FOUND
 }
+
+class CuerpoDePeticionNuloException(cause: Throwable? = null) : AppException("El cuerpo de la petición no puede ser nulo", cause) {
+    override val tipo = "CUERPO_NULO"
+    override val status = HttpStatus.BAD_REQUEST
+}
