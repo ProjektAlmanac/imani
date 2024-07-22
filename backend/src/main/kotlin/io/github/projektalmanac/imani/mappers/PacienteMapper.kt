@@ -10,5 +10,5 @@ abstract class PacienteMapper {
     @Mapping(source = "fechaDeNacimiento", target = "fechaNacimiento")
     abstract fun toPaciente(pacienteDto: PacienteDto): Paciente
     @Mapping(source = "fechaNacimiento", target = "fechaDeNacimiento")
-    abstract fun toPaciente(paciente: Paciente): PacienteDto
+    abstract fun toPacienteDto(paciente: Paciente): PacienteDto
 }
