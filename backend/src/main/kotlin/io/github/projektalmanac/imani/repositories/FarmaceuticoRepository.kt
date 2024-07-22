@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface FarmaceuticoRepository: CrudRepository<Farmaceutico, Int>
+interface FarmaceuticoRepository: CrudRepository<Farmaceutico, Int> {
+    fun findFarmaceuticoByNombreUsuario(nombreUsuario: String): Farmaceutico?
+}
