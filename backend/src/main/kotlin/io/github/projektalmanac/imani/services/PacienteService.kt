@@ -22,6 +22,6 @@ class PacienteService (
         paciente.token = UUID.randomUUID().toString()
         // Se persiste en base de datos la entidad
         val pacienteGuardado = pacienteRepository.save(paciente)
-        return pacienteMapper.toPaciente(pacienteGuardado)
+        return pacienteMapper.toPacienteDto(pacienteGuardado)
     }
 }
