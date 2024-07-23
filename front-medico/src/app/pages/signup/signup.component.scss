@@ -1,0 +1,41 @@
+@import "../../styles/breakpoints.scss";
+
+.form {
+  display: grid;
+  gap: 2rem;
+
+  @include sm {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include md {
+    width: 600px;
+  }
+}
+
+mat-card {
+  @include xs {
+    width: 100%;
+  }
+
+  @include sm {
+    width: unset;
+  }
+}
+
+mat-radio-group,
+button,
+.centro-medico,
+.error {
+  @include sm {
+    grid-column: 1 / 3;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

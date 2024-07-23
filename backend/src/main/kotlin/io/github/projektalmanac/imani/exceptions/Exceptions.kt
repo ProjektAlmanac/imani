@@ -16,3 +16,9 @@ class CuerpoDePeticionNuloException(cause: Throwable? = null) : AppException("El
     override val tipo = "CUERPO_NULO"
     override val status = HttpStatus.BAD_REQUEST
 }
+
+class NombreUsuarioTomadoException(nombreUsuario: String, cause: Throwable? = null) : AppException("El nombre de usuario '$nombreUsuario' ya está en uso", cause) {
+    override val tipo = "NOMBRE_USUARIO_TOMADO"
+    override val status = HttpStatus.BAD_REQUEST
+}
+
