@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface DoctorRepository : CrudRepository<Doctor, Int>
+interface DoctorRepository : CrudRepository<Doctor, Int> {
+    fun findDoctorByNombreUsuario(nombreUsuario: String): Doctor?
+}

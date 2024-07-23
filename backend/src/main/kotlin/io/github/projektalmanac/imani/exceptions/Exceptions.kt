@@ -12,6 +12,16 @@ class UsuarioNoEncontradoException(id: Int, cause: Throwable? = null) : AppExcep
     override val status = HttpStatus.NOT_FOUND
 }
 
+class CuerpoDePeticionNuloException(cause: Throwable? = null) : AppException("El cuerpo de la petición no puede ser nulo", cause) {
+    override val tipo = "CUERPO_NULO"
+    override val status = HttpStatus.BAD_REQUEST
+}
+
+class NombreUsuarioTomadoException(nombreUsuario: String, cause: Throwable? = null) : AppException("El nombre de usuario '$nombreUsuario' ya está en uso", cause) {
+    override val tipo = "NOMBRE_USUARIO_TOMADO"
+    override val status = HttpStatus.BAD_REQUEST
+}
+
 class PrescripcionVaciaException(cause: Throwable? = null) : AppException("La prescripción no puede estar vacía", cause) {
     override val tipo = "PRESCRIPCION_VACIA"
     override val status = HttpStatus.BAD_REQUEST
