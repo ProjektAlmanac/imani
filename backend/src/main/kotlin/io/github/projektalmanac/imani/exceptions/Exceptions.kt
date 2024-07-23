@@ -21,3 +21,4 @@ class NombreUsuarioTomadoException(nombreUsuario: String, cause: Throwable? = nu
     override val tipo = "NOMBRE_USUARIO_TOMADO"
     override val status = HttpStatus.BAD_REQUEST
 }
+
