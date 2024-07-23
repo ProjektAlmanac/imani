@@ -15,5 +15,6 @@ export interface Farmaceutico {
     nombre: string;
     apellidos: string;
     nombreUsuario: string;
+    idPaciente?: number;
 }
 

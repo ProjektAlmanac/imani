@@ -16,5 +16,6 @@ export interface Doctor {
     apellidos: string;
     nombreUsuario: string;
     centroMedico: string;
+    idPaciente?: number;
 }
 

@@ -166,10 +166,10 @@ export class PacienteService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPacientesDoctorID(doctorId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Paciente>>;
-    public getPacientesDoctorID(doctorId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Paciente>>>;
-    public getPacientesDoctorID(doctorId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Paciente>>>;
-    public getPacientesDoctorID(doctorId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getPacientesDoctorID(doctorId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Paciente>>;
+    public getPacientesDoctorID(doctorId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Paciente>>>;
+    public getPacientesDoctorID(doctorId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Paciente>>>;
+    public getPacientesDoctorID(doctorId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (doctorId === null || doctorId === undefined) {
             throw new Error('Required parameter doctorId was null or undefined when calling getPacientesDoctorID.');
         }
@@ -210,7 +210,7 @@ export class PacienteService {
             }
         }
 
-        let localVarPath = `/doctores/${this.configuration.encodeParam({name: "doctorId", value: doctorId, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}/pacientes`;
+        let localVarPath = `/doctores/${this.configuration.encodeParam({name: "doctorId", value: doctorId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}/pacientes`;
         return this.httpClient.request<Array<Paciente>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,

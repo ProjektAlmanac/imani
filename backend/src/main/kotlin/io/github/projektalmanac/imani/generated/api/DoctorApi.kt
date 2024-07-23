@@ -5,6 +5,7 @@
 */
 package io.github.projektalmanac.imani.generated.api
 
+import io.github.projektalmanac.imani.generated.dto.DoctorDto
 import io.github.projektalmanac.imani.generated.dto.NuevoDoctorDto
 import io.github.projektalmanac.imani.generated.dto.ProblemDetailsDto
 import io.swagger.v3.oas.annotations.*
@@ -39,6 +40,23 @@ interface DoctorApi {
 
     @Operation(
         tags = ["doctor",],
+        summary = "Obten doctor",
+        operationId = "getDoctor",
+        description = """""",
+        responses = [
+            ApiResponse(responseCode = "200", description = "OK", content = [Content(schema = Schema(implementation = DoctorDto::class))]),
+            ApiResponse(responseCode = "404", description = "Not Found", content = [Content(schema = Schema(implementation = ProblemDetailsDto::class))])
+        ]
+    )
+    @RequestMapping(
+            method = [RequestMethod.GET],
+            value = ["/doctores/{doctorId}"],
+            produces = ["application/json"]
+    )
+    fun getDoctor(@Parameter(description = "", required = true) @PathVariable("doctorId") doctorId: kotlin.Int): ResponseEntity<DoctorDto>
+
+    @Operation(
+        tags = ["doctor",],
         summary = "Crear doctor",
         operationId = "postDoctor",
         description = """Crea un doctor nombre, centro medico, etc""",
@@ -54,4 +72,22 @@ interface DoctorApi {
             consumes = ["application/json"]
     )
     fun postDoctor(@Parameter(description = "") @Valid @RequestBody(required = false) nuevoDoctorDto: NuevoDoctorDto?): ResponseEntity<Unit>
+
+    @Operation(
+        tags = ["doctor",],
+        summary = "Actualiza Doctor",
+        operationId = "putDoctor",
+        description = """""",
+        responses = [
+            ApiResponse(responseCode = "204", description = "No Content"),
+            ApiResponse(responseCode = "404", description = "Not Found", content = [Content(schema = Schema(implementation = ProblemDetailsDto::class))])
+        ]
+    )
+    @RequestMapping(
+            method = [RequestMethod.PUT],
+            value = ["/doctores/{doctorId}"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun putDoctor(@Parameter(description = "", required = true) @PathVariable("doctorId") doctorId: kotlin.Int,@Parameter(description = "") @Valid @RequestBody(required = false) doctorDto: DoctorDto?): ResponseEntity<Unit>
 }

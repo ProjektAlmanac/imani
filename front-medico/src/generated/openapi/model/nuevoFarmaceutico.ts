@@ -15,6 +15,7 @@ export interface NuevoFarmaceutico {
     nombre: string;
     apellidos: string;
     nombreUsuario: string;
+    idPaciente?: number;
     password: string;
 }
 
