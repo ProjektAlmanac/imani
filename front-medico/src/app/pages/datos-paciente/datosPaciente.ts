@@ -104,6 +104,13 @@ export class DatosPacienteComponent implements OnInit {
     this.error = undefined;
     this.router.navigate(['/agregar-prescripcion'], { state: { paciente: this.paciente } });
   }
+
+  public async actualizarPaciente() {
+    if (!this.paciente) return;
+
+    this.error = undefined;
+    this.router.navigate(['/actualizar-paciente'], { state: { paciente: this.paciente } });
+  }
 }
 
 
