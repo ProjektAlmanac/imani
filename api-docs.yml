@@ -220,6 +220,54 @@ paths:
             schema:
               $ref: "#/components/schemas/NuevoDoctor"
     parameters: []
+  "/doctores/{doctorId}":
+    parameters:
+      - schema:
+          type: integer
+        name: doctorId
+        in: path
+        required: true
+    get:
+      summary: Obten doctor
+      tags:
+        - doctor
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Doctor"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+      operationId: getDoctor
+      x-stoplight:
+        id: b844dfurx4zjv
+    put:
+      summary: Actualiza Doctor
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+      operationId: putDoctor
+      x-stoplight:
+        id: jall88e6dyqpt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Doctor"
+      tags:
+        - doctor
   "/pacientes/{pacienteId}/prescripciones/{prescripcionId}":
     parameters:
       - schema:
@@ -313,7 +361,7 @@ paths:
   "/doctores/{doctorId}/pacientes":
     parameters:
       - schema:
-          type: string
+          type: integer
         name: doctorId
         in: path
         required: true
@@ -340,6 +388,55 @@ paths:
       tags:
         - paciente
       description: Recuperar la lista de pacientes de un doctor
+  "/farmaceutico/{farmaceuticoId}":
+    parameters:
+      - schema:
+          type: integer
+        name: farmaceuticoId
+        in: path
+        required: true
+    get:
+      summary: Obten Farmaceutico
+      tags:
+        - farmaceutico
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+      operationId: getFarmaceutico
+      x-stoplight:
+        id: pmu2271onq552
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Farmaceutico"
+    put:
+      summary: Actualiza Farmaceutico
+      tags:
+        - farmaceutico
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+      operationId: put-farmaceutico-farmaceuticoId
+      x-stoplight:
+        id: 27jt5sb9tjx36
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Farmaceutico"
 components:
   schemas:
     Paciente:
@@ -591,6 +688,10 @@ components:
           type: string
         centroMedico:
           type: string
+        idPaciente:
+          type: integer
+          x-stoplight:
+            id: 9eytic5redg01
     Farmaceutico:
       title: Farmaceutico
       x-stoplight:
@@ -607,6 +708,10 @@ components:
           type: string
         nombreUsuario:
           type: string
+        idPaciente:
+          type: integer
+          x-stoplight:
+            id: ge1wvh71uif2q
     NuevoFarmaceutico:
       title: NuevoDoctor
       x-stoplight:
