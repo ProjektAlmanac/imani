@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { PacienteService } from "../../services/paciente.servicec";
+import { PacienteService } from "../../services/paciente.service";
 import {ProblemDetails, Paciente} from '../../../generated/openapi';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from "@angular/material/table";
