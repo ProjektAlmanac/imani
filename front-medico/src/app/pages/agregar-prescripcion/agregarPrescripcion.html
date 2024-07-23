@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prescripciones</title>
+  <link rel="stylesheet" href="agregarPrescripcion.component.scss">
+</head>
+<body>
+<div class="container">
+  <mat-card appearance="raised">
+    <h1 class="titulo">Agregar Prescripciones</h1>
+    <mat-card-content>
+      <form [formGroup]="prescripcionForm" class="form">
+        <mat-form-field>
+          <mat-label>Medicamento</mat-label>
+          <input matInput formControlName="medicamento" />
+          <mat-error *ngIf="prescripcionForm.get('medicamento')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Frecuencia de Dosis</mat-label>
+          <input type="number" matInput formControlName="frecuenciaDosis" />
+          <mat-error *ngIf="prescripcionForm.get('frecuenciaDosis')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Indicaciones</mat-label>
+          <input matInput formControlName="indicaciones" />
+          <mat-error *ngIf="prescripcionForm.get('indicaciones')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Duración</mat-label>
+          <input type="number" matInput formControlName="duracion" />
+          <mat-error *ngIf="prescripcionForm.get('duracion')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Número de Dosis</mat-label>
+          <input matInput formControlName="numeroDeDosis" />
+          <mat-error *ngIf="prescripcionForm.get('numeroDeDosis')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Cantidad por Dosis</mat-label>
+          <input matInput formControlName="cantidadPorDosis" />
+          <mat-error *ngIf="prescripcionForm.get('cantidadPorDosis')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fecha de Inicio</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaInicio" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="prescripcionForm.get('fechaInicio')?.hasError('required')">Este campo es obligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Hora de Inicio (opcional)</mat-label>
+          <input matInput formControlName="horaInicio" placeholder="HH:MM" />
+        </mat-form-field>
+
+      </form>
+
+      <div class="button-container">
+        <button type="button" mat-raised-button (click)="agregarPrescripcion()">Agregar Prescripción</button>
+      </div>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="medicamento">
+          <th mat-header-cell *matHeaderCellDef> Medicamento </th>
+          <td mat-cell *matCellDef="let element"> {{element.medicamento}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="frecuenciaDosis">
+          <th mat-header-cell *matHeaderCellDef> Frecuencia de Dosis </th>
+          <td mat-cell *matCellDef="let element"> {{element.frecuenciaDosis}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="indicaciones">
+          <th mat-header-cell *matHeaderCellDef> Indicaciones </th>
+          <td mat-cell *matCellDef="let element"> {{element.indicaciones}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="duracion">
+          <th mat-header-cell *matHeaderCellDef> Duración </th>
+          <td mat-cell *matCellDef="let element"> {{element.duracion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="numeroDeDosis">
+          <th mat-header-cell *matHeaderCellDef> Número de Dosis </th>
+          <td mat-cell *matCellDef="let element"> {{element.numeroDeDosis}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidadPorDosis">
+          <th mat-header-cell *matHeaderCellDef> Cantidad por Dosis </th>
+          <td mat-cell *matCellDef="let element"> {{element.cantidadPorDosis}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaInicio">
+          <th mat-header-cell *matHeaderCellDef> Fecha de Inicio </th>
+          <td mat-cell *matCellDef="let element"> {{element.fechaInicio | date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horaInicio">
+          <th mat-header-cell *matHeaderCellDef> Hora de Inicio </th>
+          <td mat-cell *matCellDef="let element"> {{element.horaInicio}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div class="bottom-buttons">
+        <button type="button" mat-raised-button (click)="onSubmit()">Guardar Prescripciones</button>
+        <button type="button" mat-raised-button (click)="cerrarComponente()">Cerrar</button>
+      </div>
+
+      <!-- Mensaje de éxito -->
+      <div *ngIf="success() !== undefined" class="success">{{ success() }}</div>
+      <mat-error *ngIf="error() !== undefined" class="error">{{ error() }}</mat-error>
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+</html>
+
+
