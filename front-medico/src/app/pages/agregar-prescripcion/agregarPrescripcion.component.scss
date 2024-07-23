@@ -12,8 +12,12 @@
   }
 
   @media (min-width: 901px) {
-    grid-template-columns: repeat(3, 1fr); // Tres columnas por fila para pantallas grandes
+    grid-template-columns: repeat(4, 1fr); // Tres columnas por fila para pantallas grandes
   }
+}
+
+.form-group mat-form-field {
+  flex: 1;
 }
 
 mat-form-field {
@@ -26,7 +30,7 @@ mat-form-field {
 
 mat-card {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 .container {
