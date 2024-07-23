@@ -77,7 +77,7 @@ export class DatosPacienteComponent implements OnInit {
     this.success = undefined;
 
     try {
-      const prescripciones = await this.prescripcionService.obtenerPrescripciones(1);
+      const prescripciones = await this.prescripcionService.obtenerPrescripciones(this.paciente?.id || 1);
       this.dataSource.data = prescripciones.map((p: { inicio: string }) => {
         console.log("Valor original de inicio:", p.inicio);
         const fechaInicio = p.inicio ? DateTime.fromISO(p.inicio, { zone: 'utc' }) : null;
