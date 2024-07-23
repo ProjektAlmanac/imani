@@ -1,6 +1,7 @@
 package io.github.projektalmanac.imani.entities
 
 import jakarta.persistence.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -22,7 +23,7 @@ class Prescripcion(
     var paciente: Paciente,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    var doctor: Doctor
+    var doctor: Doctor?
 )
 
 enum class Figura {
