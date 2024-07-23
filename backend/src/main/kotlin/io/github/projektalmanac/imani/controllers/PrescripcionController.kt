@@ -14,7 +14,8 @@ import java.net.URI
 class PrescripcionController(private val prescripcionService: PrescripcionService) : PrescripcionesApi {
 
     override fun getPrescription(pacienteId: Int): ResponseEntity<List<PrescripcionDto>> {
-        TODO("Not yet implemented")
+        val prescripciones = prescripcionService.obtenerPrescripciones(pacienteId)
+        return ResponseEntity.ok(prescripciones)
     }
 
     override fun postPrescription(
