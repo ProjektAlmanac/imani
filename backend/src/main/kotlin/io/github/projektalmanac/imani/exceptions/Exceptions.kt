@@ -12,12 +12,12 @@ class UsuarioNoEncontradoException(id: Int, cause: Throwable? = null) : AppExcep
     override val status = HttpStatus.NOT_FOUND
 }
 
-class CuerpoDePeticionNuloException(cause: Throwable? = null) : AppException("El cuerpo de la petición no puede ser nulo", cause) {
-    override val tipo = "CUERPO_NULO"
-    override val status = HttpStatus.BAD_REQUEST
-}
-
 class PrescripcionVaciaException(cause: Throwable? = null) : AppException("La prescripción no puede estar vacía", cause) {
     override val tipo = "PRESCRIPCION_VACIA"
     override val status = HttpStatus.BAD_REQUEST
+}
+
+class GuardarPrescripcionException(id: Int, cause: Throwable? = null) : AppException("No se pudo guardar la prescripción del usuario con ID '$id'", cause) {
+    override val tipo = "GUARDAR_PRESCRIPCION"
+    override val status = HttpStatus.INTERNAL_SERVER_ERROR
 }
