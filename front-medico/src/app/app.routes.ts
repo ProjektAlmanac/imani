@@ -1,3 +1,15 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { AgregarPrescripcionComponent } from './pages/agregar-prescripcion/agregarPrescripcion';
+import { DatosPacienteComponent } from './pages/datos-paciente/datosPaciente';
+
+export const routes: Routes = [
+  {
+    path: 'agregar-prescripcion',
+    component: AgregarPrescripcionComponent,
+  },
+  {
+    path: 'datos-paciente',
+    component: DatosPacienteComponent,
+  },
+];
