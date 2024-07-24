@@ -25,6 +25,7 @@ class PacienteController (val pasienteService: PacienteService): PacienteApi {
     }
 
     override fun upDatePacienteID(pacienteId: Int, pacienteDto: PacienteDto?): ResponseEntity<Unit> {
-        TODO("Not yet implemented")
+        pasienteService.updatePaciente(pacienteId, pacienteDto)
+        return ResponseEntity.noContent().build()
     }
 }
