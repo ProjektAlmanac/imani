@@ -30,4 +30,14 @@ class PacienteService (
         val paciente = pacienteRepository.findById(pacienteId).orElseThrow { throw UsuarioNoEncontradoException(pacienteId) }
         return pacienteMapper.toPacienteDto(paciente)
     }
+
+    fun updatePaciente(pacienteId: Int, pacienteDto: PacienteDto?) {
+        if (pacienteDto === null) throw CuerpoDePeticionNuloException()
+        val paciente = pacienteRepository.findById(pacienteId).orElseThrow { throw UsuarioNoEncontradoException(pacienteId) }
+        val pacienteActualizado = pacienteMapper.toPaciente(pacienteDto)
+        pacienteActualizado.id = paciente.id
+        pacienteActualizado.token = paciente.token
+        val pacienteGuardado = pacienteRepository.save(pacienteActualizado)
+        pacienteMapper.toPacienteDto(pacienteGuardado)
+    }
 }
