@@ -52,12 +52,6 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Número de Dosis</mat-label>
-          <input matInput formControlName="numeroDeDosis" />
-          <mat-error *ngIf="prescripcionForm.get('numeroDeDosis')?.hasError('required')">Este campo es obligatorio</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
           <mat-label>Cantidad por Dosis</mat-label>
           <input matInput formControlName="cantidadPorDosis" />
           <mat-error *ngIf="prescripcionForm.get('cantidadPorDosis')?.hasError('required')">Este campo es obligatorio</mat-error>
@@ -100,11 +94,6 @@
         <ng-container matColumnDef="duracion">
           <th mat-header-cell *matHeaderCellDef> Duración </th>
           <td mat-cell *matCellDef="let element"> {{element.duracion}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="numeroDeDosis">
-          <th mat-header-cell *matHeaderCellDef> Número de Dosis </th>
-          <td mat-cell *matCellDef="let element"> {{element.numeroDeDosis}} </td>
         </ng-container>
 
         <ng-container matColumnDef="cantidadPorDosis">
