@@ -35,7 +35,7 @@
 
       <div class="bottom-buttons">
         <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="onSubmit()">Guardar Prescripciones</button>
-        <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="onSubmit()">Modificar Paciente</button>
+        <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="actualizarPaciente()">Modificar Paciente</button>
       </div>
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
