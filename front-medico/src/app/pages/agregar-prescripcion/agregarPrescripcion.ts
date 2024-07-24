@@ -20,15 +20,13 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from "@angular/material/table";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule, MatOption} from '@angular/material/core';
-import { formatISO, parseISO } from 'date-fns';
 import {MatSelect} from "@angular/material/select";
 
 interface PrescripcionTabla {
   medicamento: string;
-  frecuenciaDosis: string; // Cambiar de number a string
+  frecuenciaDosis: string;
   indicaciones: string;
-  duracion: string; // Cambiar de number a string
-  numeroDeDosis: number;
+  duracion: string;
   cantidadPorDosis: string;
   inicio: string;
   fechaInicio: Date | null;
@@ -67,7 +65,6 @@ export class AgregarPrescripcionComponent {
     indicaciones: new FormControl<string>('', Validators.required),
     duracion: new FormControl<number | null>(null, Validators.required),
     unidadDuracion: new FormControl<string>('dias', Validators.required),
-    numeroDeDosis: new FormControl<number | null>(null, Validators.required),
     cantidadPorDosis: new FormControl<string>('', Validators.required),
     fechaInicio: new FormControl<Date | null>(null, Validators.required),
     horaInicio: new FormControl<string>('00:00'),
@@ -80,7 +77,7 @@ export class AgregarPrescripcionComponent {
 
   displayedColumns: string[] = [
     'medicamento', 'frecuenciaDosis', 'indicaciones', 'duracion',
-    'numeroDeDosis', 'cantidadPorDosis', 'fechaInicio', 'horaInicio'
+    'cantidadPorDosis', 'fechaInicio', 'horaInicio'
   ];
 
   constructor(
@@ -108,7 +105,6 @@ export class AgregarPrescripcionComponent {
       frecuenciaDosis: `${formValue.frecuenciaDosis} ${formValue.unidadFrecuenciaDosis}`,
       indicaciones: formValue.indicaciones,
       duracion: `${formValue.duracion} ${formValue.unidadDuracion}`,
-      numeroDeDosis: formValue.numeroDeDosis,
       cantidadPorDosis: formValue.cantidadPorDosis,
       inicio: fechaHoraISO,
       fechaInicio: formValue.fechaInicio ? new Date(formValue.fechaInicio) : null,
@@ -166,12 +162,12 @@ export class AgregarPrescripcionComponent {
         frecuenciaDosis: convertToSeconds(parseFloat(frecuencia), unidadFrecuencia),
         duracion: convertToSeconds(parseFloat(duracionValor), unidadDuracion),
         cantidadPorDosis: parseFloat(cantidadPorDosis),
-        inicio: rest.inicio
+        inicio: rest.inicio,
+        numeroDeDosis: 0
       };
     });
 
     try {
-      console.info('Creando prescripción: ', prescripciones)
       await this.prescripcionService.crearPrescripcion(this.paciente?.id || 1, prescripciones);
       this.snackBar.open('Prescripción creada con éxito', 'Cerrar', { duration: 3000 });
       this.success.set('Prescripción creada con éxito'); // Establece el mensaje de éxito
