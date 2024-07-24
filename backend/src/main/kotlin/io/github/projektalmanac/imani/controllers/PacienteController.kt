@@ -14,9 +14,7 @@ class PacienteController (val pasienteService: PacienteService): PacienteApi {
         TODO("Not yet implemented")
     }
 
-    override fun getPacientesDoctorID(doctorId: String): ResponseEntity<List<PacienteDto>> {
-        TODO("Not yet implemented")
-    }
+
 
     override fun postPacientes(pacienteDto: PacienteDto?): ResponseEntity<PacienteDto> {
         val paciente = pasienteService.addPaciente(pacienteDto)
@@ -26,4 +24,8 @@ class PacienteController (val pasienteService: PacienteService): PacienteApi {
     override fun upDatePacienteID(pacienteId: Int, pacienteDto: PacienteDto?): ResponseEntity<Unit> {
         TODO("Not yet implemented")
     }
+
+    override fun getPacientesDoctorID(doctorId: Int): ResponseEntity<List<PacienteDto>> {
+        TODO("Not yet implemented")
+     }
 }
