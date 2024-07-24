@@ -19,10 +19,16 @@ import { ProblemDetails, Paciente, NuevaPrescripcion } from '../../../generated/
 import { CommonModule } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from "@angular/material/table";
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { formatISO, parseISO } from 'date-fns';
+import {MatNativeDateModule, MatOption} from '@angular/material/core';
+import {MatSelect} from "@angular/material/select";
 
-interface PrescripcionTabla extends NuevaPrescripcion {
+interface PrescripcionTabla {
+  medicamento: string;
+  frecuenciaDosis: string;
+  indicaciones: string;
+  duracion: string;
+  cantidadPorDosis: string;
+  inicio: string;
   fechaInicio: Date | null;
   horaInicio: string;
 }
@@ -42,6 +48,8 @@ interface PrescripcionTabla extends NuevaPrescripcion {
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatOption,
+    MatSelect,
   ],
   templateUrl: './agregarPrescripcion.html',
   styleUrls: ['./agregarPrescripcion.component.scss'],
@@ -53,9 +61,10 @@ export class AgregarPrescripcionComponent {
   prescripcionForm: FormGroup = new FormGroup({
     medicamento: new FormControl<string>('', Validators.required),
     frecuenciaDosis: new FormControl<number | null>(null, Validators.required),
+    unidadFrecuenciaDosis: new FormControl<string>('horas', Validators.required),
     indicaciones: new FormControl<string>('', Validators.required),
     duracion: new FormControl<number | null>(null, Validators.required),
-    numeroDeDosis: new FormControl<number | null>(null, Validators.required),
+    unidadDuracion: new FormControl<string>('dias', Validators.required),
     cantidadPorDosis: new FormControl<string>('', Validators.required),
     fechaInicio: new FormControl<Date | null>(null, Validators.required),
     horaInicio: new FormControl<string>('00:00'),
@@ -68,7 +77,7 @@ export class AgregarPrescripcionComponent {
 
   displayedColumns: string[] = [
     'medicamento', 'frecuenciaDosis', 'indicaciones', 'duracion',
-    'numeroDeDosis', 'cantidadPorDosis', 'fechaInicio', 'horaInicio'
+    'cantidadPorDosis', 'fechaInicio', 'horaInicio'
   ];
 
   constructor(
@@ -93,10 +102,9 @@ export class AgregarPrescripcionComponent {
     const fechaHoraISO = this.formatToISODateTime(formValue.fechaInicio, horaInicio);
     const nuevaPrescripcion: PrescripcionTabla = {
       medicamento: formValue.medicamento,
-      frecuenciaDosis: formValue.frecuenciaDosis,
+      frecuenciaDosis: `${formValue.frecuenciaDosis} ${formValue.unidadFrecuenciaDosis}`,
       indicaciones: formValue.indicaciones,
-      duracion: formValue.duracion,
-      numeroDeDosis: formValue.numeroDeDosis,
+      duracion: `${formValue.duracion} ${formValue.unidadDuracion}`,
       cantidadPorDosis: formValue.cantidadPorDosis,
       inicio: fechaHoraISO,
       fechaInicio: formValue.fechaInicio ? new Date(formValue.fechaInicio) : null,
@@ -132,11 +140,35 @@ export class AgregarPrescripcionComponent {
     this.error.set(undefined);
     this.success.set(undefined);
 
-    const prescripciones: NuevaPrescripcion[] = this.prescripciones().map(({ fechaInicio, horaInicio, ...rest }) => rest);
+    const convertToSeconds = (value: number, unit: string): number => {
+      switch (unit) {
+        case 'minutos':
+          return value * 60;
+        case 'horas':
+          return value * 3600;
+        case 'dias':
+          return value * 86400;
+        default:
+          return value;
+      }
+    };
+
+    const prescripciones: NuevaPrescripcion[] = this.prescripciones().map(({ fechaInicio, horaInicio, frecuenciaDosis, duracion, cantidadPorDosis, ...rest }) => {
+      const [frecuencia, unidadFrecuencia] = frecuenciaDosis.split(' ');
+      const [duracionValor, unidadDuracion] = duracion.split(' ');
+
+      return {
+        ...rest,
+        frecuenciaDosis: convertToSeconds(parseFloat(frecuencia), unidadFrecuencia),
+        duracion: convertToSeconds(parseFloat(duracionValor), unidadDuracion),
+        cantidadPorDosis: parseFloat(cantidadPorDosis),
+        inicio: rest.inicio,
+        numeroDeDosis: 0
+      };
+    });
 
     try {
-      console.info('Creando prescripción: ', prescripciones)
-      await this.prescripcionService.crearPrescripcion(1, prescripciones);
+      await this.prescripcionService.crearPrescripcion(this.paciente?.id || 1, prescripciones);
       this.snackBar.open('Prescripción creada con éxito', 'Cerrar', { duration: 3000 });
       this.success.set('Prescripción creada con éxito'); // Establece el mensaje de éxito
       this.router.navigate(['/datos-paciente'], { state: { paciente: this.paciente } });

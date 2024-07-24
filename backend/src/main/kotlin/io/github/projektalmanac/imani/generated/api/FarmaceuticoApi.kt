@@ -5,6 +5,7 @@
 */
 package io.github.projektalmanac.imani.generated.api
 
+import io.github.projektalmanac.imani.generated.dto.FarmaceuticoDto
 import io.github.projektalmanac.imani.generated.dto.NuevoFarmaceuticoDto
 import io.github.projektalmanac.imani.generated.dto.ProblemDetailsDto
 import io.swagger.v3.oas.annotations.*
@@ -39,6 +40,24 @@ interface FarmaceuticoApi {
 
     @Operation(
         tags = ["farmaceutico",],
+        summary = "Obten Farmaceutico",
+        operationId = "getFarmaceutico",
+        description = """""",
+        responses = [
+            ApiResponse(responseCode = "204", description = "No Content"),
+            ApiResponse(responseCode = "404", description = "Not Found", content = [Content(schema = Schema(implementation = ProblemDetailsDto::class))])
+        ]
+    )
+    @RequestMapping(
+            method = [RequestMethod.GET],
+            value = ["/farmaceutico/{farmaceuticoId}"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun getFarmaceutico(@Parameter(description = "", required = true) @PathVariable("farmaceuticoId") farmaceuticoId: kotlin.Int,@Parameter(description = "") @Valid @RequestBody(required = false) farmaceuticoDto: FarmaceuticoDto?): ResponseEntity<Unit>
+
+    @Operation(
+        tags = ["farmaceutico",],
         summary = "Crear un farmaceutico",
         operationId = "postFarmaceutico",
         description = """""",
@@ -54,4 +73,22 @@ interface FarmaceuticoApi {
             consumes = ["application/json"]
     )
     fun postFarmaceutico(@Parameter(description = "") @Valid @RequestBody(required = false) nuevoFarmaceuticoDto: NuevoFarmaceuticoDto?): ResponseEntity<Unit>
+
+    @Operation(
+        tags = ["farmaceutico",],
+        summary = "Actualiza Farmaceutico",
+        operationId = "putFarmaceuticoFarmaceuticoId",
+        description = """""",
+        responses = [
+            ApiResponse(responseCode = "204", description = "No Content"),
+            ApiResponse(responseCode = "404", description = "Not Found", content = [Content(schema = Schema(implementation = ProblemDetailsDto::class))])
+        ]
+    )
+    @RequestMapping(
+            method = [RequestMethod.PUT],
+            value = ["/farmaceutico/{farmaceuticoId}"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun putFarmaceuticoFarmaceuticoId(@Parameter(description = "", required = true) @PathVariable("farmaceuticoId") farmaceuticoId: kotlin.Int,@Parameter(description = "") @Valid @RequestBody(required = false) farmaceuticoDto: FarmaceuticoDto?): ResponseEntity<Unit>
 }

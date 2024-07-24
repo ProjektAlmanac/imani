@@ -1,34 +1,3 @@
-.form {
-  display: grid;
-  gap: 2rem;
-  grid-template-columns: repeat(3, 1fr); // Tres columnas por fila
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr; // Una columna por fila para pantallas pequeñas
-  }
-
-  @media (min-width: 601px) and (max-width: 900px) {
-    grid-template-columns: repeat(2, 1fr); // Dos columnas por fila para pantallas medianas
-  }
-
-  @media (min-width: 901px) {
-    grid-template-columns: repeat(3, 1fr); // Tres columnas por fila para pantallas grandes
-  }
-}
-
-mat-form-field {
-  width: 100%;
-
-  &:first-child {
-    grid-column: span 2; // El campo de medicamento ocupará dos columnas
-  }
-}
-
-mat-card {
-  width: 100%;
-  max-width: 1300px;
-}
-
 .container {
   width: 100%;
   height: 100vh;
@@ -37,27 +6,48 @@ mat-card {
   align-items: center;
 }
 
-.mat-elevation-z8 {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+mat-card {
+  width: 100%;
+  max-width: 1300px;
 }
+
 .titulo {
-  font-size: 24px;
+  font-size: 35px;
   text-align: center;
   margin-bottom: 2rem;
   color: #000000;
 }
 
-.button-container {
-  justify-content: center;
+.datos-paciente {
   display: flex;
-  margin:  30px auto;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fila {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 10px 0;
+}
+
+.dato {
+  text-align: center;
+}
+
+.label {
+  font-weight: bold;
 }
 
 .bottom-buttons {
   justify-content: center;
   display: flex;
-  margin:  30px auto;
+  margin: 30px auto;
   gap: 40px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .success {
@@ -69,4 +59,3 @@ mat-card {
 .error {
   color: rgb(255, 0, 0);
 }
-

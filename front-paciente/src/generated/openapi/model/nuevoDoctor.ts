@@ -16,6 +16,7 @@ export interface NuevoDoctor {
     apellidos: string;
     nombreUsuario: string;
     centroMedico: string;
+    idPaciente?: number;
     password: string;
 }
 
