@@ -1,0 +1,61 @@
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 1300px;
+}
+
+.titulo {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #000000;
+}
+
+.datos-paciente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fila {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 10px 0;
+}
+
+.dato {
+  text-align: center;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.bottom-buttons {
+  justify-content: center;
+  display: flex;
+  margin: 30px auto;
+  gap: 40px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.success {
+  color: rgb(0, 128, 0); /* Ajusta el estilo según tus necesidades */
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.error {
+  color: rgb(255, 0, 0);
+}

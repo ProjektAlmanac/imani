@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paciente</title>
+  <link rel="stylesheet" href="datosPaciente.component.scss">
+</head>
+<body>
+<div class="container">
+  <mat-card appearance="raised">
+    <h1 class="titulo">Paciente</h1>
+    <mat-card-content>
+      <div *ngIf="paciente" class="datos-paciente">
+        <div class="fila">
+          <div class="dato">
+            <p class="label">Nombre</p>
+            <p>{{ paciente.nombre }} {{ paciente.apellidos }}</p>
+          </div>
+          <div class="dato">
+            <p class="label">Fecha de Nacimiento</p>
+            <p>{{ paciente.fechaDeNacimiento | date: 'dd-MM-yyyy' }}</p>
+          </div>
+        </div>
+        <div class="fila">
+          <div class="dato">
+            <p class="label">Estatura</p>
+            <p *ngIf="paciente.estatura">{{ paciente.estatura }} m</p>
+            <p *ngIf="!paciente.estatura">{{ paciente.estatura }}</p>
+          </div>
+          <div class="dato">
+            <p class="label">Peso</p>
+            <p *ngIf="paciente.peso">{{ paciente.peso }} kg</p>
+            <p *ngIf="!paciente.peso">{{ paciente.peso }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-buttons">
+        <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="onSubmit()">Ingresar Prescripciones</button>
+        <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="actualizarPaciente()">Modificar Paciente</button>
+      </div>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="medicamento">
+          <th mat-header-cell *matHeaderCellDef> Medicamento </th>
+          <td mat-cell *matCellDef="let element"> {{element.medicamento}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="frecuenciaDosis">
+          <th mat-header-cell *matHeaderCellDef> Frecuencia de dosis </th>
+          <td mat-cell *matCellDef="let element"> {{formatTime(element.frecuenciaDosis)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="indicaciones">
+          <th mat-header-cell *matHeaderCellDef> Indicaciones </th>
+          <td mat-cell *matCellDef="let element"> {{element.indicaciones}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="duracion">
+          <th mat-header-cell *matHeaderCellDef> Duración </th>
+          <td mat-cell *matCellDef="let element"> {{formatTime(element.duracion)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidadPorDosis">
+          <th mat-header-cell *matHeaderCellDef> Cantidad por dosis </th>
+          <td mat-cell *matCellDef="let element"> {{element.cantidadPorDosis}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaInicio">
+          <th mat-header-cell *matHeaderCellDef> Fecha de inicio </th>
+          <td mat-cell *matCellDef="let element"> {{element.fechaInicio}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="horaInicio">
+          <th mat-header-cell *matHeaderCellDef> Hora de inicio </th>
+          <td mat-cell *matCellDef="let element"> {{element.horaInicio}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="figura">
+          <th mat-header-cell *matHeaderCellDef> Figura asignada </th>
+          <td mat-cell *matCellDef="let element"> {{element.figura}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Mensaje de éxito -->
+      <mat-error *ngIf="error" class="error">{{ error }}</mat-error>
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+</html>
+
