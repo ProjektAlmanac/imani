@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import {SigupPatientComponent} from "./pages/sigup-patient/sigup-patient.component";
+import {PrescriptionsComponent} from "./pages/prescriptions/prescriptions.component";
+import { NotificacionMedicamentoComponent } from './pages/notificacion-medicamento/notificacion-medicamento.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +16,14 @@ export const routes: Routes = [
   {
     path: 'signup-patient',
     component: SigupPatientComponent
+  },
+  {
+    path: 'prescriptions',
+    component: PrescriptionsComponent
+  },
+  {
+    path: "notificacion-medicamento/:id",
+    component: NotificacionMedicamentoComponent
   },
   {
     path: '',

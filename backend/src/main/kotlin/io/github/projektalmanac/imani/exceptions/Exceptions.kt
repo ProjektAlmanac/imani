@@ -36,3 +36,8 @@ class CredencialesInvalidasException(cause: Throwable? = null) : AppException("N
     override val status: HttpStatus = HttpStatus.UNAUTHORIZED
 }
 
+
+class PrescripcionNoEncontradaException(id: Int, cause: Throwable? = null) : AppException("No se encontró la prescripción con el id '$id'", cause) {
+    override val tipo = "PRESCRIPCION_NO_ENCONTRADA"
+    override val status = HttpStatus.NOT_FOUND
+}
