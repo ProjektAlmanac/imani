@@ -22,6 +22,7 @@ class DoctorController(val doctorService: DoctorService) : DoctorApi {
     }
 
     override fun putDoctor(doctorId: Int, doctorDto: DoctorDto?): ResponseEntity<Unit> {
-        TODO("Not yet implemented")
+        doctorService.updateDoctor(doctorId, doctorDto)
+        return ResponseEntity.noContent().build()
     }
 }

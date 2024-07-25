@@ -12,5 +12,5 @@ class Farmaceutico(
     var nombreUsuario: String,
     var passwordHash: String,
     @OneToOne(fetch = FetchType.LAZY)
-    var pacientaAtendido: Paciente?
+    var pacientaAtendido: Paciente? = null
 )

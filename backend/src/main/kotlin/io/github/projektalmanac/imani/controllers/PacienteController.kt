@@ -43,7 +43,8 @@ class PacienteController(
             pacienteId: Int,
             pacienteDto: PacienteDto?
     ): ResponseEntity<Unit> {
-        TODO()
+        pacienteService.updatePaciente(pacienteId, pacienteDto)
+        return ResponseEntity.noContent().build()
     }
 
     override fun postPacientesSendQr(

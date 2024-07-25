@@ -36,22 +36,18 @@
           </div>
 
           <div class="bottom-buttons">
-            <button
-              *ngIf="esDoctor(usuario)"
-              type="button"
-              mat-raised-button
-              (click)="onSubmit()"
-            >
+            @if (usuarioService.usuario()?.rol === "doctor") {
+            <button type="button" mat-raised-button (click)="onSubmit()">
               Ingresar Prescripciones
             </button>
             <button
-              *ngIf="esDoctor(usuario)"
               type="button"
               mat-raised-button
               (click)="actualizarPaciente()"
             >
               Modificar Paciente
             </button>
+            }
           </div>
 
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

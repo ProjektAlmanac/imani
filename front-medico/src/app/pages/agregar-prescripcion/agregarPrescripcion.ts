@@ -164,16 +164,21 @@ export class AgregarPrescripcionComponent {
     this.success.set(undefined);
 
     const convertToSeconds = (value: number, unit: string): number => {
+      let seconds = 0
       switch (unit) {
         case 'minutos':
-          return value * 60;
+          seconds = value * 60;
+          break;
         case 'horas':
-          return value * 3600;
+          seconds = value * 3600;
+          break;
         case 'dias':
-          return value * 86400;
+          seconds = value * 86400;
+          break;
         default:
-          return value;
+          seconds = value;
       }
+      return Math.round(seconds)
     };
 
     const prescripciones: NuevaPrescripcion[] = this.prescripciones().map(

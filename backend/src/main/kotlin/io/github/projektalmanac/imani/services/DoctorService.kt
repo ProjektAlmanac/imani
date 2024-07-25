@@ -2,15 +2,14 @@ package io.github.projektalmanac.imani.services
 
 import io.github.projektalmanac.imani.entities.Doctor
 import io.github.projektalmanac.imani.entities.Paciente
-import io.github.projektalmanac.imani.exceptions.CuerpoDePeticionNuloException
-import io.github.projektalmanac.imani.exceptions.NombreUsuarioTomadoException
-import io.github.projektalmanac.imani.exceptions.UsuarioNoEncontradoException
+import io.github.projektalmanac.imani.exceptions.*
 import io.github.projektalmanac.imani.generated.dto.DoctorDto
 import io.github.projektalmanac.imani.generated.dto.NuevoDoctorDto
 import io.github.projektalmanac.imani.mappers.DoctorMapper
 import io.github.projektalmanac.imani.repositories.DoctorRepository
 import io.github.projektalmanac.imani.repositories.FarmaceuticoRepository
 import io.github.projektalmanac.imani.repositories.PacienteRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -58,5 +57,16 @@ class DoctorService(
                     UsuarioNoEncontradoException(idDoctor)
                 }
         return doctorMapper.toDoctorDto(doctor)
+    }
+
+    fun updateDoctor(doctorId: Int, doctorDto: DoctorDto?) {
+        if (doctorDto === null) throw CuerpoDePeticionNuloException()
+        val doctor = doctorRepository.findById(doctorId).orElseThrow { DoctorNotFoundException(doctorId) }
+        val paciente = doctorDto.idPaciente?.let { pacienteRepository.findById(it).orElseThrow { PacienteNotFoundException(it) } }
+        if (paciente !== null && !doctor.pacientes.contains(paciente))
+            doctor.pacientes.add(paciente)
+        doctorMapper.update(doctor, doctorDto)
+        doctor.pacienteAtendido = paciente
+        doctorRepository.save(doctor)
     }
 }

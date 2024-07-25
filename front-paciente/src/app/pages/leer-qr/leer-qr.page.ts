@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import {
   IonContent,
   IonHeader,
@@ -9,7 +8,11 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
-import { QrService } from 'src/app/services/qr.service';
+import { Router, RouterModule } from '@angular/router';
+import { Html5QrcodeScanner } from 'html5-qrcode';
+import { PacienteService } from 'src/app/services/paciente.service';
+import { DoctorService, FarmaceuticoService } from 'src/generated/openapi';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-leer-qr',
@@ -24,49 +27,55 @@ import { QrService } from 'src/app/services/qr.service';
     CommonModule,
     FormsModule,
     NgxScannerQrcodeModule,
+    RouterModule
   ],
 })
-export class LeerQrPage {
-  imageSrc: string | null = null;
-  qrResult: string | null = null;
-  errorMessage: string | null = null;
+export class LeerQrPage implements AfterViewInit {
+  scanner!: Html5QrcodeScanner;
 
-  constructor(private qrService: QrService) {}
+  constructor(
+    private pacienteService: PacienteService,
+    private doctorService: DoctorService,
+    private farmaceuticoService: FarmaceuticoService,
+    private router: Router
+  ) {}
 
-  async takePicture() {
+  ngAfterViewInit() {
+    this.scanner = new Html5QrcodeScanner(
+      'qr-scanner',
+      {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+      },
+      false
+    );
+    this.scanner.render(this.onCodeScanned.bind(this), () => undefined);
+  }
+
+  async onCodeScanned(code: string) {
     try {
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: false,
-        resultType: CameraResultType.DataUrl,
-        source: CameraSource.Camera,
-      });
-
-      if (image && image.dataUrl) {
-        this.imageSrc = image.dataUrl;
-        console.log('Image captured:', this.imageSrc);
-        const blob = await this.dataUrlToBlob(this.imageSrc);
-        await this.scanQrCode(blob);
-      } else {
-        console.error('No image data received');
-        this.qrResult = 'No image data received';
+      const obj = JSON.parse(code);
+      if (obj.idUser == undefined || obj.isDoctor == undefined) {
+        return;
       }
-    } catch (error) {
-      console.error('Error taking picture', error);
-      this.qrResult = 'Error taking picture';
-    }
-  }
-
-  async scanQrCode(imageBlob: Blob): Promise<void> {
-    try {
-      await this.qrService.scanQrCode(imageBlob);
-    } catch (error) {
-      console.error('Error scanning QR code:', error);
-      this.qrResult = 'Error scanning QR code';
-    }
-  }
-
-  dataUrlToBlob(dataUrl: string): Promise<Blob> {
-    return fetch(dataUrl).then((res) => res.blob());
+      this.router.navigate(["/"])
+      this.scanner.pause();
+      const paciente = this.pacienteService.obtenerPaciente();
+      if (paciente == null) return;
+      if (obj.isDoctor) {
+        const doctor = await lastValueFrom(this.doctorService.getDoctor(obj.idUser))
+        console.log(doctor)
+        await lastValueFrom(this.doctorService.putDoctor(obj.idUser, {
+          ...doctor,
+          idPaciente: paciente.id
+        }))
+      } else {
+        const farmaceutico = await lastValueFrom(this.farmaceuticoService.getFarmaceutico(obj.idUser))
+        await lastValueFrom(this.farmaceuticoService.putFarmaceuticoFarmaceuticoId(obj.idUser, {
+          ...farmaceutico,
+          idPaciente: paciente.id
+        }))
+      }
+    } catch (error) {}
   }
 }

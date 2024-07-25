@@ -1,12 +1,11 @@
 package io.github.projektalmanac.imani.services
 
 import com.github.javafaker.Faker
-import io.github.projektalmanac.imani.entities.Figura
-import io.github.projektalmanac.imani.entities.Doctor
-import io.github.projektalmanac.imani.entities.Paciente
-import io.github.projektalmanac.imani.entities.Prescripcion
+import io.github.projektalmanac.imani.entities.*
 import io.github.projektalmanac.imani.repositories.DoctorRepository
+import io.github.projektalmanac.imani.repositories.FarmaceuticoRepository
 import io.github.projektalmanac.imani.repositories.PacienteRepository
+import org.springframework.context.annotation.Profile
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -14,16 +13,24 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Date
 
-@Service
-class TestDataService(
+@Service("testDataService")
+@Profile("!prod")
+open class TestDataService(
     val pacienteRepository: PacienteRepository,
     val doctorRepository: DoctorRepository,
     val faker: Faker,
-    val passwordEncoder: PasswordEncoder
+    val passwordEncoder: PasswordEncoder, private val farmaceuticoRepository: FarmaceuticoRepository
 ) {
-    fun generarDatos() {
+    open fun generarDatos() {
         val paciente1 = Paciente(1, "Crecencio", "Morales Rivera", LocalDate.of(1949, 4, 19), 1.67f, 92.3f, "asdf")
         val doctor = Doctor(1, "Luis", "Perez", "luisperez", passwordEncoder.encode("password"), "Zaragoza")
+        val farmaceutico = Farmaceutico(
+            id = 1,
+            nombre = "Juan",
+            apellidos = "Perez",
+            nombreUsuario = "juanperez",
+            passwordHash = passwordEncoder.encode("password")
+        )
         val pacientes = (1..10).map { generarPaciente() }
         doctor.pacientes.addAll(pacientes)
 
@@ -120,9 +127,10 @@ class TestDataService(
             prescripcion5,
             prescripcion6
         )
+        pacienteRepository.save(paciente1)
         pacienteRepository.saveAll(pacientes)
         doctorRepository.save(doctor)
-        pacienteRepository.save(paciente1)
+        farmaceuticoRepository.save(farmaceutico)
     }
 
     fun generarPaciente() = Paciente(
@@ -134,4 +142,18 @@ class TestDataService(
         peso = faker.number().numberBetween(500, 800).toFloat() / 10f,
         token = "",
     )
+}
+
+@Profile("prod")
+@Service("testDataService")
+class NoopTestDataService(
+    pacienteRepository: PacienteRepository,
+    doctorRepository: DoctorRepository,
+    faker: Faker,
+    passwordEncoder: PasswordEncoder,
+    farmaceuticoRepository: FarmaceuticoRepository
+) : TestDataService(pacienteRepository, doctorRepository, faker, passwordEncoder, farmaceuticoRepository) {
+    override fun generarDatos() {
+        // Noop
+    }
 }

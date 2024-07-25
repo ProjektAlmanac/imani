@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, effect, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -17,9 +17,11 @@ import {
   ProblemDetails,
   Doctor,
   Farmaceutico,
+  Usuario,
 } from '../../../generated/openapi';
 // @ts-ignore
 import { DateTime } from 'luxon';
+import { UsuarioService } from '../../services/usuario.service';
 
 interface PrescripcionTabla extends NuevaPrescripcion {
   fechaInicio: string | null;
@@ -44,8 +46,6 @@ interface PrescripcionTabla extends NuevaPrescripcion {
   styleUrls: ['./datosPaciente.component.scss'],
 })
 export class DatosPacienteComponent {
-  @Input() usuario: Doctor | Farmaceutico | undefined;
-
   paciente = this.pacienteService.pacienteActual;
 
   success = signal<string | undefined>(undefined);
@@ -67,8 +67,11 @@ export class DatosPacienteComponent {
     private prescripcionService: PrescripcionService,
     private pacienteService: PacienteService,
     private snackBar: MatSnackBar,
+    public usuarioService: UsuarioService,
     route: ActivatedRoute
   ) {
+    effect(this.cargarPrescripciones, { allowSignalWrites: true });
+
     route.paramMap.subscribe(async (paramMap) => {
       this.success.set(undefined);
       this.error.set(undefined);
@@ -131,13 +134,14 @@ export class DatosPacienteComponent {
     // }
   }
 
-  private async cargarPrescripciones() {
+  private cargarPrescripciones = async () => {
     if (!this.paciente) return;
 
     this.error.set(undefined);
     this.success.set(undefined);
 
     try {
+      console.log(this.paciente());
       const prescripciones =
         await this.prescripcionService.obtenerPrescripciones(
           this.paciente()?.id || 1
@@ -164,7 +168,7 @@ export class DatosPacienteComponent {
       this.error.set(problemDetails.detail);
       this.snackBar.open(problemDetails.detail, 'Cerrar', { duration: 3000 });
     }
-  }
+  };
 
   public async onSubmit() {
     //if (!this.usuario?.idPaciente) return;

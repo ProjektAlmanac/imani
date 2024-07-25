@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QRCodeModule } from 'angularx-qrcode';
 import { lastValueFrom } from 'rxjs';
-import { DoctorService, FarmaceuticoService, Usuario } from '../../../generated/openapi';
+import { Doctor, DoctorService, Farmaceutico, FarmaceuticoService, Usuario } from '../../../generated/openapi';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
@@ -52,17 +52,33 @@ export class GenerateQrComponent implements OnInit, OnDestroy {
       if (user.idPaciente != null) {
         this.router.navigate(['/pacientes', user.idPaciente]);
       }
+      await this.resetPaciente(idUser, isDoctor, user)
     } catch (error) {
       console.error('Error al obtener el doctor:', error);
     }
   }
 
-  private async getUsuario(idUser: number, isDoctor: boolean) {
+  private async getUsuario(idUser: number, isDoctor: boolean): Promise<Doctor | Farmaceutico> {
     if (isDoctor) {
       return lastValueFrom(this.doctorService.getDoctor(idUser))
     }
     else {
       return lastValueFrom(this.farmaceuticoService.getFarmaceutico(idUser))
+    }
+  }
+
+  private async resetPaciente(idUser: number, isDoctor: boolean, usuario: Doctor | Farmaceutico) {
+    if (isDoctor) {
+      return lastValueFrom(this.doctorService.putDoctor(idUser, {
+        ...usuario as Doctor,
+        idPaciente: undefined
+      }))
+    }
+    else {
+      return lastValueFrom(this.farmaceuticoService.putFarmaceuticoFarmaceuticoId(idUser, {
+        ...usuario,
+        idPaciente: undefined
+      }))
     }
   }
 }

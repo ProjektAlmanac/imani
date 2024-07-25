@@ -49,4 +49,13 @@ class FarmaceuticoService(
         farmaceutico.pacientaAtendido = paciente
         pacienteRepository.save(paciente)
     }
+
+    fun updateFarmaceutico(farmaceuticoId: Int, farmaceuticoDto: FarmaceuticoDto?) {
+        if (farmaceuticoDto === null) throw CuerpoDePeticionNuloException()
+        val farmaceutico = farmaceuticoRepository.findById(farmaceuticoId).orElseThrow { FarmaceuticoNotFoundException(farmaceuticoId) }
+        val paciente = farmaceuticoDto.idPaciente?.let { pacienteRepository.findById(it).orElseThrow { PacienteNotFoundException(it) } }
+        farmaceuticoMapper.update(farmaceutico, farmaceuticoDto)
+        farmaceutico.pacientaAtendido = paciente
+        farmaceuticoRepository.save(farmaceutico)
+    }
 }

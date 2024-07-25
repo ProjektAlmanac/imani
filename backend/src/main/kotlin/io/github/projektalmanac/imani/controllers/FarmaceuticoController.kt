@@ -32,6 +32,7 @@ class FarmaceuticoController(private val farmaceuticoService: FarmaceuticoServic
             farmaceuticoId: Int,
             farmaceuticoDto: FarmaceuticoDto?
     ): ResponseEntity<Unit> {
-        TODO("Not yet implemented")
+        farmaceuticoService.updateFarmaceutico(farmaceuticoId, farmaceuticoDto)
+        return ResponseEntity.noContent().build()
     }
 }
