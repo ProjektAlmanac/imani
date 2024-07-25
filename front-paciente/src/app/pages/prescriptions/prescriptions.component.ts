@@ -24,7 +24,7 @@ import {logoIonic} from "ionicons/icons";
 export class PrescriptionsComponent  implements OnInit {
 
   public patientPrescriptions: Prescripcion[] = [];
-  openAccordion: string | null = null;
+  openAccordion: number | null = null;
 
   constructor(private prescriptions: PrescriptionsService) {
     addIcons({logoIonic})
@@ -57,8 +57,8 @@ export class PrescriptionsComponent  implements OnInit {
     }
     return '';
   }
-  public toggleAccordion(medicamento: string) {
-    this.openAccordion = this.openAccordion === medicamento ? null : medicamento;
+  public toggleAccordion(idMedicamento: number) {
+    this.openAccordion = this.openAccordion === idMedicamento ? null : idMedicamento;
   }
 
   private getPrescriptions() {

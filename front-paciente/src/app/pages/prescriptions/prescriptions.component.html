@@ -8,8 +8,8 @@
     <ion-img src="assets/images/header.png"></ion-img>
     <div style="margin-left: 10px; margin-right: 10px;">
       <ion-accordion-group [value]="openAccordion">
-        <ion-accordion *ngFor="let prescripcion of patientPrescriptions" [value]="prescripcion.medicamento">
-          <ion-item slot="header" color="primary" class="item-background-color" (click)="toggleAccordion(prescripcion.medicamento)">
+        <ion-accordion *ngFor="let prescripcion of patientPrescriptions" [value]="prescripcion.id">
+          <ion-item slot="header" color="primary" class="item-background-color" (click)="toggleAccordion(prescripcion.id)">
             <ion-icon [name]="getIcon(prescripcion)" slot="start"></ion-icon>
             <ion-label>{{ prescripcion.medicamento }}</ion-label>
           </ion-item>
