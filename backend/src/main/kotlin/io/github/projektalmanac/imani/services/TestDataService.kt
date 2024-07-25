@@ -1,5 +1,7 @@
 package io.github.projektalmanac.imani.services
 
+import com.github.javafaker.Faker
+import com.github.javafaker.service.FakeValuesService
 import io.github.projektalmanac.imani.entities.Figura
 import io.github.projektalmanac.imani.entities.Doctor
 import io.github.projektalmanac.imani.entities.Paciente
@@ -10,17 +12,20 @@ import io.github.projektalmanac.imani.repositories.PrescripcionRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.Date
 
 @Service
 class TestDataService(
     val pacienteRepository: PacienteRepository,
-    val prescripcionRepository: PrescripcionRepository,
-    val doctorRepository: DoctorRepository
+    val doctorRepository: DoctorRepository,
+    val faker: Faker
 ) {
     fun generarDatos() {
         val paciente1 = Paciente(1, "Crecencio", "Morales Rivera", LocalDate.of(1949, 4, 19), 1.67f, 92.3f, "asdf")
         val doctor = Doctor(1, "Luis", "Perez", "luisperez", "1234", "Zaragoza", mutableListOf<Prescripcion>(), mutableListOf<Paciente>())
-        pacienteRepository.save(paciente1)
+        val pacientes = (1..10).map { generarPaciente() }
+        doctor.pacientes.addAll(pacientes)
 
         val prescripcion1 = Prescripcion(
             1, "Atorvastatina",
@@ -97,7 +102,18 @@ class TestDataService(
         paciente1.prescripciones.add(prescripcion3)
         paciente1.prescripciones.add(prescripcion4)
         paciente1.prescripciones.add(prescripcion5)
+        pacienteRepository.saveAll(pacientes)
         doctorRepository.save(doctor)
         pacienteRepository.save(paciente1)
     }
+
+    fun generarPaciente() = Paciente(
+        id = 0,
+        nombre = faker.name().firstName(),
+        apellidos = faker.name().lastName() + " " + faker.name().lastName(),
+        fechaNacimiento = faker.date().between(Date(40, 1, 1), Date(60, 1, 1)).toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+        estatura = faker.number().numberBetween(150, 180).toFloat() / 100f,
+        peso = faker.number().numberBetween(500, 800).toFloat() / 10f,
+        token = "",
+    )
 }

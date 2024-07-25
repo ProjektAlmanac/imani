@@ -1,18 +1,20 @@
 package io.github.projektalmanac.imani.services
 
-import io.github.projektalmanac.imani.entities.Paciente
 import io.github.projektalmanac.imani.exceptions.CuerpoDePeticionNuloException
+import io.github.projektalmanac.imani.exceptions.DoctorNotFoundException
 import io.github.projektalmanac.imani.exceptions.UsuarioNoEncontradoException
 import io.github.projektalmanac.imani.generated.dto.PacienteDto
 import io.github.projektalmanac.imani.mappers.PacienteMapper
+import io.github.projektalmanac.imani.repositories.DoctorRepository
 import io.github.projektalmanac.imani.repositories.PacienteRepository
 import org.springframework.stereotype.Service
 import java.util.UUID
 
 @Service
-class PacienteService (
+class PacienteService(
     private val pacienteRepository: PacienteRepository,
-    private val pacienteMapper: PacienteMapper
+    private val pacienteMapper: PacienteMapper,
+    private val doctorRepository: DoctorRepository
 ){
 
     fun addPaciente(pacienteDto: PacienteDto?): PacienteDto {
@@ -39,5 +41,13 @@ class PacienteService (
         pacienteActualizado.token = paciente.token
         val pacienteGuardado = pacienteRepository.save(pacienteActualizado)
         pacienteMapper.toPacienteDto(pacienteGuardado)
+    }
+
+    fun getPacientes(doctorId: Int): List<PacienteDto> {
+        val doctor = doctorRepository.findById(doctorId).orElseThrow { DoctorNotFoundException(doctorId) }
+        return doctor
+            .pacientes
+            .map(pacienteMapper::toPacienteDto)
+            .toList()
     }
 }

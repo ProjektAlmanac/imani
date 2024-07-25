@@ -9,23 +9,24 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api")
-class PacienteController (val pasienteService: PacienteService): PacienteApi {
+class PacienteController (val pacienteService: PacienteService): PacienteApi {
     override fun getPacienteID(pacienteId: Int): ResponseEntity<PacienteDto> {
-        val paciente = pasienteService.getPaciente(pacienteId)
+        val paciente = pacienteService.getPaciente(pacienteId)
         return ResponseEntity.ok(paciente)
     }
 
     override fun getPacientesDoctorID(doctorId: Int): ResponseEntity<List<PacienteDto>> {
-        TODO("Not yet implemented")
+        val pacientes = pacienteService.getPacientes(doctorId)
+        return ResponseEntity.ok(pacientes)
     }
 
     override fun postPacientes(pacienteDto: PacienteDto?): ResponseEntity<PacienteDto> {
-        val paciente = pasienteService.addPaciente(pacienteDto)
+        val paciente = pacienteService.addPaciente(pacienteDto)
         return ResponseEntity.ok(paciente)
     }
 
     override fun upDatePacienteID(pacienteId: Int, pacienteDto: PacienteDto?): ResponseEntity<Unit> {
-        pasienteService.updatePaciente(pacienteId, pacienteDto)
+        pacienteService.updatePaciente(pacienteId, pacienteDto)
         return ResponseEntity.noContent().build()
     }
 }

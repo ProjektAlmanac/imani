@@ -31,3 +31,8 @@ class GuardarPrescripcionException(id: Int, cause: Throwable? = null) : AppExcep
     override val tipo = "GUARDAR_PRESCRIPCION"
     override val status = HttpStatus.INTERNAL_SERVER_ERROR
 }
+
+class DoctorNotFoundException(id: Int, cause: Throwable? = null) : AppException("No es encontró al doctor con id $id", cause) {
+    override val tipo = "DOCTOR_NO_ENCONTRADO"
+    override val status = HttpStatus.NOT_FOUND
+}

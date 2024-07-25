@@ -34,6 +34,8 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:$mapStructVersion")
 	implementation("javax.servlet:javax.servlet-api:3.1.0")
 	implementation("org.openapitools:jackson-databind-nullable:0.2.2")
+	implementation("com.github.javafaker:javafaker:1.0.2") { exclude ( "org.yaml") }
+	implementation (group= "org.yaml", name= "snakeyaml", version= "2.0")
 
 
 	kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
