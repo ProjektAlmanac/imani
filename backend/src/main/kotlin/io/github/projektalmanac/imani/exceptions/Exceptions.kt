@@ -22,3 +22,8 @@ class NombreUsuarioTomadoException(nombreUsuario: String, cause: Throwable? = nu
     override val status = HttpStatus.BAD_REQUEST
 }
 
+class ListadeMedicamentosException(cause: Throwable? = null) : AppException("No existe la lista de medicamentos", cause) {
+    override val tipo = "CUERPO_NULO"
+    override val status = HttpStatus.NOT_FOUND
+}
+
