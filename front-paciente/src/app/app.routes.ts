@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import {SigupPatientComponent} from "./pages/sigup-patient/sigup-patient.component";
+import {PrescriptionsComponent} from "./pages/prescriptions/prescriptions.component";
 
 export const routes: Routes = [
   {
@@ -14,6 +15,10 @@ export const routes: Routes = [
   {
     path: 'signup-patient',
     component: SigupPatientComponent
+  },
+  {
+    path: 'prescriptions',
+    component: PrescriptionsComponent
   },
   {
     path: '',
