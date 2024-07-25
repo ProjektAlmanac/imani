@@ -42,7 +42,6 @@ export class HomePage {
   constructor(private qrService: QrService) {}
   public imageSrc: string = '';
   public qrResult: string = '';
-  ngOnInit(): void {}
   async takePicture() {
     try {
       const image = await Camera.getPhoto({
