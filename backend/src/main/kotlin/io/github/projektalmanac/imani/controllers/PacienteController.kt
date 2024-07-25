@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import io.github.projektalmanac.imani.generated.api.PacienteApi
 import io.github.projektalmanac.imani.generated.dto.PacienteDto
 import io.github.projektalmanac.imani.generated.dto.PostPacientesSendQrRequestDto
+import io.github.projektalmanac.imani.services.DoctorService
 import io.github.projektalmanac.imani.services.PacienteService
 import java.io.InputStream
 import java.io.OutputStream
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api")
-class PacienteController(val pacienteService: PacienteService) : PacienteApi {
+class PacienteController(val pacienteService: PacienteService, val doctorService: DoctorService) :
+        PacienteApi {
     override fun getPacienteID(pacienteId: Int): ResponseEntity<PacienteDto> {
         val paciente = pacienteService.getPaciente(pacienteId)
         return ResponseEntity.ok(paciente)
@@ -107,11 +109,10 @@ class PacienteController(val pacienteService: PacienteService) : PacienteApi {
                 } else {
                     return ResponseEntity.status(HttpURLConnection.HTTP_INTERNAL_ERROR).body(Unit)
                 }
+                this.doctorService.agregarPacienteAdoctor(idUser, pacienteId)
             } else {
                 return ResponseEntity.status(HttpURLConnection.HTTP_INTERNAL_ERROR).body(Unit)
             }
-
-            println("POST /api/pacientes/send-qr response: $response")
         } catch (e: Exception) {
             e.printStackTrace()
             return ResponseEntity.status(HttpURLConnection.HTTP_INTERNAL_ERROR).build()
