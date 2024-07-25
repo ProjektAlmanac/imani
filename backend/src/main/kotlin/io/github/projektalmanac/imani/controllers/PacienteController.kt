@@ -1,5 +1,7 @@
 package io.github.projektalmanac.imani.controllers
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.github.projektalmanac.imani.generated.api.PacienteApi
 import io.github.projektalmanac.imani.generated.dto.PacienteDto
 import io.github.projektalmanac.imani.generated.dto.PostPacientesSendQrRequestDto
@@ -42,7 +44,7 @@ class PacienteController(val pacienteService: PacienteService) : PacienteApi {
     ): ResponseEntity<Unit> {
         val docBase64 = postPacientesSendQrRequestDto?.archivo
         val reqId = 1
-        if (docBase64 == null || reqId == null) {
+        if (docBase64 == null) {
             return ResponseEntity.badRequest().build()
         }
 
@@ -77,13 +79,35 @@ class PacienteController(val pacienteService: PacienteService) : PacienteApi {
 
             // Leer la respuesta
             var `is`: InputStream? = null
-            var response: String? = null
+            var response: String = ""
             try {
                 `is` = connection.inputStream
                 val bytes = `is`.readBytes()
                 response = bytes.toString(Charsets.UTF_8)
             } finally {
                 `is`?.close()
+            }
+
+            // Parsear la respuesta JSON
+            val mapper = jacksonObjectMapper()
+            val responseMap: Map<String, Any> = mapper.readValue(response)
+
+            val data = responseMap["data"] as? Map<*, *>
+            val code1 = data?.get("code1") as? Map<*, *>
+            val qrData = code1?.get("qr_data") as? String
+
+            if (qrData != null) {
+                val qrDataMap: Map<String, Any> = mapper.readValue(qrData)
+                val idUser = qrDataMap["idUser"] as? Int
+                val isDoctor = qrDataMap["isDoctor"] as? Boolean
+
+                if (idUser != null && isDoctor != null) {
+                    println("idUser: $idUser, isDoctor: $isDoctor")
+                } else {
+                    return ResponseEntity.status(HttpURLConnection.HTTP_INTERNAL_ERROR).body(Unit)
+                }
+            } else {
+                return ResponseEntity.status(HttpURLConnection.HTTP_INTERNAL_ERROR).body(Unit)
             }
 
             println("POST /api/pacientes/send-qr response: $response")
