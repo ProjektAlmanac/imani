@@ -75,7 +75,7 @@ export class PrescriptionsComponent  implements OnInit {
   }
   private assignColorsToPrescriptions() {
     this.patientPrescriptions.forEach(prescripcion => {
-      this.colors[prescripcion.id] = this.colorService.getRandomColor();
+      this.colors[prescripcion.id] = this.colorService.generaColor(prescripcion);
     });
   }
   public getColor(id: number): string {
