@@ -7,7 +7,6 @@ import io.github.projektalmanac.imani.services.FarmaceuticoService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import io.github.projektalmanac.imani.generated.dto.FarmaceuticoDto
 
 @RestController
 @RequestMapping("/api")
@@ -26,21 +25,13 @@ class FarmaceuticoController(private val farmaceuticoService: FarmaceuticoServic
             farmaceuticoId: Int,
             farmaceuticoDto: FarmaceuticoDto?
     ): ResponseEntity<Unit> {
-        TODO()
+        TODO("Not yet implemented")
     }
 
     override fun putFarmaceuticoFarmaceuticoId(
             farmaceuticoId: Int,
             farmaceuticoDto: FarmaceuticoDto?
     ): ResponseEntity<Unit> {
-        TODO()
-    }
-
-    override fun getFarmaceutico(farmaceuticoId: Int, farmaceuticoDto: FarmaceuticoDto?): ResponseEntity<Unit> { 
-        TODO("Not yet implemented")
-    }
-
-    override fun putFarmaceuticoFarmaceuticoId(farmaceuticoId: Int, farmaceuticoDto: FarmaceuticoDto?): ResponseEntity<Unit> { 
         TODO("Not yet implemented")
     }
 }
