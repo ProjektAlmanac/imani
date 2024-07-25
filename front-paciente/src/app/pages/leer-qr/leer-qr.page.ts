@@ -8,7 +8,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import QrScanner from 'qr-scanner';
+import jsQR from 'jsqr';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-leer-qr',
@@ -22,6 +23,7 @@ import QrScanner from 'qr-scanner';
     IonToolbar,
     CommonModule,
     FormsModule,
+    NgxScannerQrcodeModule,
   ],
 })
 export class LeerQrPage implements OnInit {
@@ -29,6 +31,7 @@ export class LeerQrPage implements OnInit {
   qrResult: string | null = null;
 
   constructor() {}
+
   ngOnInit(): void {}
 
   async takePicture() {
@@ -40,12 +43,15 @@ export class LeerQrPage implements OnInit {
         source: CameraSource.Camera,
       });
 
-      this.imageSrc = image.dataUrl ?? null;
-      console.log('Image captured:', this.imageSrc);
+      if (image && image.dataUrl) {
+        this.imageSrc = image.dataUrl;
+        console.log('Image captured:', this.imageSrc);
 
-      if (this.imageSrc) {
         await this.waitForImageLoad(this.imageSrc);
-        this.scanQrCode(this.imageSrc);
+        await this.scanQrCode(this.imageSrc);
+      } else {
+        console.error('No image data received');
+        this.qrResult = 'No image data received';
       }
     } catch (error) {
       console.error('Error taking picture', error);
@@ -53,45 +59,56 @@ export class LeerQrPage implements OnInit {
     }
   }
 
-  waitForImageLoad(imageDataUrl: string): Promise<void> {
+  async waitForImageLoad(imageDataUrl: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const img = new Image();
+      img.onload = () => resolve();
+      img.onerror = (error) => reject(error);
       img.src = imageDataUrl;
-      img.onload = () => {
-        console.log('Image loaded successfully');
-        resolve();
-      };
-      img.onerror = (error) => {
-        console.error('Error loading image', error);
-        reject(error);
-      };
     });
   }
 
-  async scanQrCode(imageDataUrl: string) {
-    try {
+  async scanQrCode(imageDataUrl: string): Promise<void> {
+    return new Promise((resolve, reject) => {
       const img = new Image();
-      img.src = imageDataUrl;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        if (!context) {
+          reject(new Error('Canvas context is not supported'));
+          return;
+        }
 
-      img.onload = async () => {
-        try {
-          console.log('Starting QR code scan');
-          const result = await QrScanner.scanImage(img);
-          console.log('QR code result:', result);
-          this.qrResult = result;
-        } catch (err) {
-          console.error('Error reading QR code', err);
-          this.qrResult = 'Error reading QR code: ' + err;
+        canvas.width = img.width;
+        canvas.height = img.height;
+        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const imageData = context.getImageData(
+          0,
+          0,
+          canvas.width,
+          canvas.height,
+        );
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+        if (code) {
+          console.log('QR code result:', code.data);
+          this.qrResult = code.data;
+          resolve();
+        } else {
+          console.error('No QR code found.');
+          this.qrResult = 'No QR code found';
+          reject(new Error('No QR code found'));
         }
       };
 
       img.onerror = (error) => {
         console.error('Error loading image for scanning', error);
         this.qrResult = 'Error loading image for scanning';
+        reject(error);
       };
-    } catch (error) {
-      console.error('Error waiting for image load', error);
-      this.qrResult = 'Error waiting for image load';
-    }
+
+      img.src = imageDataUrl;
+    });
   }
 }

@@ -9,6 +9,7 @@
     <div *ngIf="imageSrc">
       <img [src]="imageSrc" alt="Captured image" width="100%" />
     </div>
+    <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
     <div *ngIf="qrResult">
       <p>QR Code Result: {{ qrResult }}</p>
     </div>
