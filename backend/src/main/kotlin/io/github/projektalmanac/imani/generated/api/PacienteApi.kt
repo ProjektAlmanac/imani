@@ -70,7 +70,7 @@ nombre, estatura, etc""",
             value = ["/doctores/{doctorId}/pacientes"],
             produces = ["application/json"]
     )
-    fun getPacientesDoctorID(@Parameter(description = "", required = true) @PathVariable("doctorId") doctorId: kotlin.String): ResponseEntity<List<PacienteDto>>
+    fun getPacientesDoctorID(@Parameter(description = "", required = true) @PathVariable("doctorId") doctorId: kotlin.Int): ResponseEntity<List<PacienteDto>>
 
     @Operation(
         tags = ["paciente",],
