@@ -4,7 +4,6 @@ import {DatePipe, NgForOf} from "@angular/common";
 import {PrescriptionsService} from "../../services/prescriptions.service";
 import {Prescripcion} from "../../../generated/openapi";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
-import { SortType } from '@swimlane/ngx-datatable';
 import {addIcons} from "ionicons";
 import {logoIonic} from "ionicons/icons";
 
