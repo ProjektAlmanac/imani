@@ -1,10 +1,18 @@
 import { Routes } from '@angular/router';
-import {SigupPatientComponent} from "./pages/sigup-patient/sigup-patient.component";
+import { SigupPatientComponent } from './pages/sigup-patient/sigup-patient.component';
 
 export const routes: Routes = [
   {
+    path: 'leer-qr',
+    loadComponent: () =>
+      import('./pages/leer-qr/leer-qr.page').then((m) => m.LeerQrPage),
+  },
+  {
     path: 'home',
-    loadComponent: () => import('./pages/sigup-patient/sigup-patient.component').then((m) => m.SigupPatientComponent),
+    loadComponent: () =>
+      import('./pages/sigup-patient/sigup-patient.component').then(
+        (m) => m.SigupPatientComponent,
+      ),
   },
   {
     path: 'message/:id',
@@ -13,7 +21,7 @@ export const routes: Routes = [
   },
   {
     path: 'signup-patient',
-    component: SigupPatientComponent
+    component: SigupPatientComponent,
   },
   {
     path: '',
@@ -21,4 +29,3 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
 ];
-
