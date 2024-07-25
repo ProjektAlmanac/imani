@@ -6,6 +6,7 @@ import {Prescripcion} from "../../../generated/openapi";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {addIcons} from "ionicons";
 import {logoIonic} from "ionicons/icons";
+import {ColorService} from "../../services/color.service";
 
 
 @Component({
@@ -25,8 +26,10 @@ export class PrescriptionsComponent  implements OnInit {
 
   public patientPrescriptions: Prescripcion[] = [];
   openAccordion: number | null = null;
+  public colors: { [key: number]: string } = {};
 
-  constructor(private prescriptions: PrescriptionsService) {
+  constructor(private prescriptions: PrescriptionsService,
+              private colorService: ColorService) {
     addIcons({logoIonic})
   }
 
@@ -60,15 +63,23 @@ export class PrescriptionsComponent  implements OnInit {
   public toggleAccordion(idMedicamento: number) {
     this.openAccordion = this.openAccordion === idMedicamento ? null : idMedicamento;
   }
-
   private getPrescriptions() {
     this.prescriptions.getPrescriptions()
       .then((prescriptions) => {
         this.patientPrescriptions = prescriptions;
+        this.assignColorsToPrescriptions();
       })
       .catch((error) => {
         console.error('Error al obtener las prescripciones:', error);
       });
+  }
+  private assignColorsToPrescriptions() {
+    this.patientPrescriptions.forEach(prescripcion => {
+      this.colors[prescripcion.id] = this.colorService.getRandomColor();
+    });
+  }
+  public getColor(id: number): string {
+    return this.colors[id] || '#FFFFFF'; // Retorna el color asociado o blanco si no existe
   }
 
 
