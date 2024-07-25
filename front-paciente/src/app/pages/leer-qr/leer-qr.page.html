@@ -1,0 +1,14 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Leer QR</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div>
+    <button (click)="takePicture()">Take Picture</button>
+
+    <div *ngIf="qrResult">
+      <p>QR Code Result: {{ qrResult }}</p>
+    </div>
+  </div>
+</ion-content>

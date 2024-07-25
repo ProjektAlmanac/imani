@@ -10,21 +10,27 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api")
-class FarmaceuticoController(private val farmaceuticoService: FarmaceuticoService) : FarmaceuticoApi {
-    override fun getFarmaceutico(farmaceuticoId: Int, farmaceuticoDto: FarmaceuticoDto?): ResponseEntity<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override fun postFarmaceutico(nuevoFarmaceuticoDto: NuevoFarmaceuticoDto?): ResponseEntity<Unit> {
+class FarmaceuticoController(private val farmaceuticoService: FarmaceuticoService) :
+        FarmaceuticoApi {
+    override fun postFarmaceutico(
+            nuevoFarmaceuticoDto: NuevoFarmaceuticoDto?
+    ): ResponseEntity<Unit> {
 
         farmaceuticoService.addFarmaceutico(nuevoFarmaceuticoDto)
 
         return ResponseEntity.noContent().build()
     }
 
+    override fun getFarmaceutico(
+            farmaceuticoId: Int,
+            farmaceuticoDto: FarmaceuticoDto?
+    ): ResponseEntity<Unit> {
+        TODO("Not yet implemented")
+    }
+
     override fun putFarmaceuticoFarmaceuticoId(
-        farmaceuticoId: Int,
-        farmaceuticoDto: FarmaceuticoDto?
+            farmaceuticoId: Int,
+            farmaceuticoDto: FarmaceuticoDto?
     ): ResponseEntity<Unit> {
         TODO("Not yet implemented")
     }
