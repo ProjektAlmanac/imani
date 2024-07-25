@@ -8,8 +8,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import jsQR from 'jsqr';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import { QrService } from 'src/app/services/qr.service';
 
 @Component({
   selector: 'app-leer-qr',
@@ -29,11 +29,11 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 export class LeerQrPage implements OnInit {
   imageSrc: string | null = null;
   qrResult: string | null = null;
+  errorMessage: string | null = null;
 
-  constructor() {}
+  constructor(private qrService: QrService) {}
 
   ngOnInit(): void {}
-
   async takePicture() {
     try {
       const image = await Camera.getPhoto({
@@ -46,9 +46,8 @@ export class LeerQrPage implements OnInit {
       if (image && image.dataUrl) {
         this.imageSrc = image.dataUrl;
         console.log('Image captured:', this.imageSrc);
-
-        await this.waitForImageLoad(this.imageSrc);
-        await this.scanQrCode(this.imageSrc);
+        const blob = await this.dataUrlToBlob(this.imageSrc);
+        await this.scanQrCode(blob);
       } else {
         console.error('No image data received');
         this.qrResult = 'No image data received';
@@ -59,56 +58,16 @@ export class LeerQrPage implements OnInit {
     }
   }
 
-  async waitForImageLoad(imageDataUrl: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve();
-      img.onerror = (error) => reject(error);
-      img.src = imageDataUrl;
-    });
+  async scanQrCode(imageBlob: Blob): Promise<void> {
+    try {
+      await this.qrService.scanQrCode(imageBlob);
+    } catch (error) {
+      console.error('Error scanning QR code:', error);
+      this.qrResult = 'Error scanning QR code';
+    }
   }
 
-  async scanQrCode(imageDataUrl: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        if (!context) {
-          reject(new Error('Canvas context is not supported'));
-          return;
-        }
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-        context.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        const imageData = context.getImageData(
-          0,
-          0,
-          canvas.width,
-          canvas.height,
-        );
-        const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-        if (code) {
-          console.log('QR code result:', code.data);
-          this.qrResult = code.data;
-          resolve();
-        } else {
-          console.error('No QR code found.');
-          this.qrResult = 'No QR code found';
-          reject(new Error('No QR code found'));
-        }
-      };
-
-      img.onerror = (error) => {
-        console.error('Error loading image for scanning', error);
-        this.qrResult = 'Error loading image for scanning';
-        reject(error);
-      };
-
-      img.src = imageDataUrl;
-    });
+  dataUrlToBlob(dataUrl: string): Promise<Blob> {
+    return fetch(dataUrl).then((res) => res.blob());
   }
 }

@@ -8,6 +8,7 @@ export * from './nuevoDoctor';
 export * from './nuevoFarmaceutico';
 export * from './nuevoPaciente';
 export * from './paciente';
+export * from './postPacientesSendQrRequest';
 export * from './prescripcion';
 export * from './problemDetails';
 export * from './usuario';

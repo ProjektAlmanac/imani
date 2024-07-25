@@ -437,6 +437,38 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Farmaceutico"
+  "/pacientes/{pacienteId}/send-qr":
+    parameters:
+      - schema:
+          type: integer
+        name: pacienteId
+        in: path
+        required: true
+    post:
+      summary: Envia el QR para iniciar sesión
+      tags:
+        - paciente
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Error en el envío del QR
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+      operationId: postPacientesSendQr
+      x-stoplight:
+        id: 2gwa6puqvzmyp
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                archivo:
+                  type: string
+                  description: Archivo de imagen en base64
 components:
   schemas:
     Paciente:
