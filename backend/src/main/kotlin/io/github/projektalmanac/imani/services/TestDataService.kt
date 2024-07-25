@@ -20,7 +20,6 @@ class TestDataService(
     fun generarDatos() {
         val paciente1 = Paciente(1, "Crecencio", "Morales Rivera", LocalDate.of(1949, 4, 19), 1.67f, 92.3f, "asdf")
         val doctor = Doctor(1, "Luis", "Perez", "luisperez", "1234", "Zaragoza", mutableListOf<Prescripcion>(), mutableListOf<Paciente>())
-        pacienteRepository.save(paciente1)
 
         val prescripcion1 = Prescripcion(
             1, "Atorvastatina",
@@ -92,12 +91,30 @@ class TestDataService(
             null
         )
 
-        paciente1.prescripciones.add(prescripcion1)
-        paciente1.prescripciones.add(prescripcion2)
-        paciente1.prescripciones.add(prescripcion3)
-        paciente1.prescripciones.add(prescripcion4)
-        paciente1.prescripciones.add(prescripcion5)
-        doctorRepository.save(doctor)
+        val prescripcion6 = Prescripcion(
+            6,
+            "Paracetamol",
+            5,
+            "",
+            LocalDateTime.now(),
+            Int.MAX_VALUE,
+            null,
+            Figura.SEMICIRCULO,
+            1f,
+            0f,
+            paciente1,
+            null
+        )
+
+        paciente1.prescripciones = mutableListOf(
+            prescripcion1,
+            prescripcion2,
+            prescripcion3,
+            prescripcion4,
+            prescripcion5,
+            prescripcion6
+        )
         pacienteRepository.save(paciente1)
+        doctorRepository.save(doctor)
     }
 }
