@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -7,7 +7,7 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PrescripcionService } from '../../services/prescripcion.service';
 import { PacienteService } from '../../services/paciente.service';
@@ -43,12 +43,13 @@ interface PrescripcionTabla extends NuevaPrescripcion {
   templateUrl: './datosPaciente.html',
   styleUrls: ['./datosPaciente.component.scss'],
 })
-export class DatosPacienteComponent implements OnInit {
+export class DatosPacienteComponent {
   @Input() usuario: Doctor | Farmaceutico | undefined;
 
-  paciente?: Paciente;
-  success?: string;
-  error?: string;
+  paciente = this.pacienteService.pacienteActual;
+
+  success = signal<string | undefined>(undefined);
+  error = signal<string | undefined>(undefined);
   dataSource = new MatTableDataSource<PrescripcionTabla>();
   displayedColumns: string[] = [
     'medicamento',
@@ -65,67 +66,81 @@ export class DatosPacienteComponent implements OnInit {
     private router: Router,
     private prescripcionService: PrescripcionService,
     private pacienteService: PacienteService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    route: ActivatedRoute
   ) {
+    route.paramMap.subscribe(async (paramMap) => {
+      this.success.set(undefined);
+      this.error.set(undefined);
+      const id = Number(paramMap.get('id'));
+      try {
+        const paciente = await this.pacienteService.obtenerPaciente(id);
+        this.paciente.set(paciente);
+      } catch (e) {
+        const errorResponse = e as HttpErrorResponse;
+        const problemDetails = errorResponse.error as ProblemDetails;
+        this.error.set(problemDetails.detail);
+        this.snackBar.open(problemDetails.detail, 'Cerrar', { duration: 3000 });
+      }
+    });
+
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['usuario']) {
       this.paciente = navigation.extras.state['usuario'];
     }
   }
 
-  async ngOnInit() {
-    await this.obtenerPAciente();
-    if (this.paciente) {
-      await this.cargarPrescripciones();
-    } else {
-      console.error('Error: Paciente no obtenido correctamente.');
-    }
-  }
+  // async ngOnInit() {
+  //   await this.obtenerPAciente();
+  //   if (this.paciente) {
+  //     await this.cargarPrescripciones();
+  //   } else {
+  //     console.error('Error: Paciente no obtenido correctamente.');
+  //   }
+  // }
 
   private async obtenerPAciente() {
     //if (!this.usuario?.idPaciente) return;
-
-    this.error = undefined;
-    this.success = undefined;
-
-    try {
-      this.paciente = await this.pacienteService.obtenerPaciente(
-        this.usuario?.idPaciente || 1
-      );
-      if (this.paciente && this.paciente.fechaDeNacimiento) {
-        const fechaNacimiento = DateTime.fromFormat(
-          this.paciente.fechaDeNacimiento,
-          'dd-MM-yyyy'
-        );
-        if (fechaNacimiento.isValid) {
-          this.paciente.fechaDeNacimiento = fechaNacimiento.toISODate();
-        } else {
-          console.error(
-            'Fecha de nacimiento no válida:',
-            this.paciente.fechaDeNacimiento
-          );
-        }
-      }
-      //this.snackBar.open('Paciente cargado con éxito', 'Cerrar', { duration: 3000 });
-      //this.success = 'Paciente cargado con éxito';
-    } catch (e) {
-      const errorResponse = e as HttpErrorResponse;
-      const problemDetails = errorResponse.error as ProblemDetails;
-      this.error = problemDetails.detail;
-      this.snackBar.open(problemDetails.detail, 'Cerrar', { duration: 3000 });
-    }
+    // this.error = undefined;
+    // this.success = undefined;
+    // try {
+    //   this.paciente = await this.pacienteService.obtenerPaciente(
+    //     this.usuario?.idPaciente || 1
+    //   );
+    //   if (this.paciente && this.paciente.fechaDeNacimiento) {
+    //     const fechaNacimiento = DateTime.fromFormat(
+    //       this.paciente.fechaDeNacimiento,
+    //       'dd-MM-yyyy'
+    //     );
+    //     if (fechaNacimiento.isValid) {
+    //       this.paciente.fechaDeNacimiento = fechaNacimiento.toISODate();
+    //     } else {
+    //       console.error(
+    //         'Fecha de nacimiento no válida:',
+    //         this.paciente.fechaDeNacimiento
+    //       );
+    //     }
+    //   }
+    //   //this.snackBar.open('Paciente cargado con éxito', 'Cerrar', { duration: 3000 });
+    //   //this.success = 'Paciente cargado con éxito';
+    // } catch (e) {
+    //   const errorResponse = e as HttpErrorResponse;
+    //   const problemDetails = errorResponse.error as ProblemDetails;
+    //   this.error = problemDetails.detail;
+    //   this.snackBar.open(problemDetails.detail, 'Cerrar', { duration: 3000 });
+    // }
   }
 
   private async cargarPrescripciones() {
     if (!this.paciente) return;
 
-    this.error = undefined;
-    this.success = undefined;
+    this.error.set(undefined);
+    this.success.set(undefined);
 
     try {
       const prescripciones =
         await this.prescripcionService.obtenerPrescripciones(
-          this.paciente?.id || 1
+          this.paciente()?.id || 1
         );
       this.dataSource.data = prescripciones.map((p: { inicio: string }) => {
         const fechaInicio = p.inicio
@@ -146,7 +161,7 @@ export class DatosPacienteComponent implements OnInit {
     } catch (e) {
       const errorResponse = e as HttpErrorResponse;
       const problemDetails = errorResponse.error as ProblemDetails;
-      this.error = problemDetails.detail;
+      this.error.set(problemDetails.detail);
       this.snackBar.open(problemDetails.detail, 'Cerrar', { duration: 3000 });
     }
   }
@@ -154,10 +169,13 @@ export class DatosPacienteComponent implements OnInit {
   public async onSubmit() {
     //if (!this.usuario?.idPaciente) return;
 
-    this.error = undefined;
-    this.router.navigate(['/agregar-prescripcion'], {
-      state: { paciente: this.paciente },
-    });
+    this.error.set(undefined);
+    this.router.navigate(
+      ['/pacientes', this.paciente()?.id, 'agregar-prescripcion'],
+      {
+        state: { paciente: this.paciente() },
+      }
+    );
   }
 
   // Método para verificar el tipo de usuario y acceder a propiedades específicas
@@ -182,11 +200,11 @@ export class DatosPacienteComponent implements OnInit {
   }
 
   public async actualizarPaciente() {
-    if (!this.paciente) return;
+    if (!this.paciente()) return;
 
-    this.error = undefined;
-    this.router.navigate(['/actualizar-paciente'], {
-      state: { paciente: this.paciente },
+    this.error.set(undefined);
+    this.router.navigate(['/pacientes', this.paciente()?.id, 'actualizar'], {
+      state: { paciente: this.paciente() },
     });
   }
 }

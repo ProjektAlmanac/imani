@@ -7,6 +7,7 @@ import io.github.projektalmanac.imani.entities.Paciente
 import io.github.projektalmanac.imani.entities.Prescripcion
 import io.github.projektalmanac.imani.repositories.DoctorRepository
 import io.github.projektalmanac.imani.repositories.PacienteRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -17,11 +18,12 @@ import java.util.Date
 class TestDataService(
     val pacienteRepository: PacienteRepository,
     val doctorRepository: DoctorRepository,
-    val faker: Faker
+    val faker: Faker,
+    val passwordEncoder: PasswordEncoder
 ) {
     fun generarDatos() {
         val paciente1 = Paciente(1, "Crecencio", "Morales Rivera", LocalDate.of(1949, 4, 19), 1.67f, 92.3f, "asdf")
-        val doctor = Doctor(1, "Luis", "Perez", "luisperez", "1234", "Zaragoza", mutableListOf<Prescripcion>(), mutableListOf<Paciente>())
+        val doctor = Doctor(1, "Luis", "Perez", "luisperez", passwordEncoder.encode("password"), "Zaragoza")
         val pacientes = (1..10).map { generarPaciente() }
         doctor.pacientes.addAll(pacientes)
 

@@ -1,19 +1,24 @@
 import { Component, Input, signal, WritableSignal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { PacienteService } from "../../services/paciente.service";
+import { PacienteService } from '../../services/paciente.service';
 import { ProblemDetails, Paciente } from '../../../generated/openapi';
-import { CommonModule } from '@angular/common';
-import { MatTableModule } from "@angular/material/table";
+import { CommonModule, Location } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { HttpErrorResponse } from "@angular/common/http";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-actualizarPaciente',
@@ -52,7 +57,8 @@ export class ActualizarPacienteComponent {
   constructor(
     private router: Router,
     private pacienteService: PacienteService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras?.state?.['paciente']) {
@@ -68,17 +74,28 @@ export class ActualizarPacienteComponent {
 
     const nombre = this.pacienteForm.value.nombre || this.paciente.nombre;
 
-    const apellidoPaterno = this.pacienteForm.value.apellidoPaterno || this.paciente.apellidos?.split(' ')[0] || '';
-    const apellidoMaterno = this.pacienteForm.value.apellidoMaterno || this.paciente.apellidos?.split(' ')[1] || '';
+    const apellidoPaterno =
+      this.pacienteForm.value.apellidoPaterno ||
+      this.paciente.apellidos?.split(' ')[0] ||
+      '';
+    const apellidoMaterno =
+      this.pacienteForm.value.apellidoMaterno ||
+      this.paciente.apellidos?.split(' ')[1] ||
+      '';
 
     const fechaDeNacimiento = this.pacienteForm.value.fechaNacimiento
       ? this.pacienteForm.value.fechaNacimiento.toISOString().split('T')[0]
       : this.paciente.fechaDeNacimiento;
 
-    const estatura = this.pacienteForm.value.estatura !== null ? this.pacienteForm.value.estatura : this.paciente.estatura;
+    const estatura =
+      this.pacienteForm.value.estatura !== null
+        ? this.pacienteForm.value.estatura
+        : this.paciente.estatura;
     const peso = this.pacienteForm.value.peso || this.paciente.peso;
 
-    const apellidos = [apellidoPaterno, apellidoMaterno].filter(apellido => apellido).join(' ');
+    const apellidos = [apellidoPaterno, apellidoMaterno]
+      .filter((apellido) => apellido)
+      .join(' ');
 
     const updatedPaciente: Paciente = {
       ...this.paciente,
@@ -90,10 +107,15 @@ export class ActualizarPacienteComponent {
     };
 
     try {
-      await this.pacienteService.actualizarPaciente(this.paciente.id, updatedPaciente);
+      await this.pacienteService.actualizarPaciente(
+        this.paciente.id,
+        updatedPaciente
+      );
       this.snackBar.open('Actualización éxitosa', 'Cerrar', { duration: 3000 });
       this.success.set('Actualización éxitosa');
-      this.router.navigate(['/datos-paciente'], { state: { paciente: updatedPaciente } });
+      this.router.navigate(['/pacientes', this.paciente.id], {
+        state: { paciente: updatedPaciente },
+      });
     } catch (e) {
       const errorResponse = e as HttpErrorResponse;
       const problemDetails = errorResponse.error as ProblemDetails;
@@ -103,6 +125,6 @@ export class ActualizarPacienteComponent {
   }
 
   async cerrarComponente() {
-    this.router.navigate(['/datos-paciente'], { state: { paciente: this.paciente } });
+    this.location.back();
   }
 }

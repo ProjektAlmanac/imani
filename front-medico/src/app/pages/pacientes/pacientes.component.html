@@ -1,0 +1,36 @@
+<div class="contenedor">
+  <mat-form-field class="example-full-width" class="search">
+    <mat-label>Buscar</mat-label>
+    <input matInput type="search" [(ngModel)]="searchQuery" />
+    @if (searchQuery()) {
+    <button
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="searchQuery.set('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    }
+  </mat-form-field>
+  <div class="qr-container">
+    <a routerLink="/codigo-qr"><button mat-raised-button>Mostrar QR</button></a>
+  </div>
+  <div class="card-container">
+    <mat-card class="card">
+      <mat-card-content class="card-content">
+        @for (paciente of pacientesFiltrados(); track paciente.id) {
+        <a [routerLink]="['/pacientes', paciente.id]">
+          <mat-card appearance="outlined">
+            <mat-card-content>
+              <button mat-button>
+                {{ paciente.nombre }} {{ paciente.apellidos }}
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </a>
+        }
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -56,7 +56,7 @@ export class LoginComponent {
       if (usuario.rol === 'doctor') {
         this.router.navigate(['pacientes']);
       } else {
-        this.router.navigate(['datos-paciente']);
+        this.router.navigate(['']);
       }
     } catch (e) {
       const errorResponse = e as HttpErrorResponse;

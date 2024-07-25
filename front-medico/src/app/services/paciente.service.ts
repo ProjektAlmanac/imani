@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import {
   PacienteService as PacienteApi,
   Paciente,
@@ -8,13 +8,21 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class PacienteService {
+  public readonly pacienteActual = signal<Paciente | undefined>(undefined);
+
   constructor(private pacienteApi: PacienteApi) {}
 
-  public actualizarPaciente(pacienteId: number, paciente: Paciente): Promise<any> {
-    return lastValueFrom(this.pacienteApi.upDatePacienteID(pacienteId, paciente));
+  public actualizarPaciente(pacienteId: number, paciente: Paciente) {
+    return lastValueFrom(
+      this.pacienteApi.upDatePacienteID(pacienteId, paciente)
+    );
   }
 
-  public obtenerPaciente(pacienteId: number): Promise<any> {
+  public obtenerPaciente(pacienteId: number) {
     return lastValueFrom(this.pacienteApi.getPacienteID(pacienteId));
+  }
+
+  public getPacientes(doctorId: number) {
+    return lastValueFrom(this.pacienteApi.getPacientesDoctorID(doctorId));
   }
 }
