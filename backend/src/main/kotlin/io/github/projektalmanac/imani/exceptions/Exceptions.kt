@@ -31,8 +31,8 @@ class GuardarPrescripcionException(id: Int, cause: Throwable? = null) : AppExcep
     override val tipo = "GUARDAR_PRESCRIPCION"
     override val status = HttpStatus.INTERNAL_SERVER_ERROR
 }
-class NombreUsuarioNoEncontradoException(nombreUsuario: String, cause: Throwable? = null) : AppException("No se encontró ningún usuario registrado con '$nombreUsuario'", cause) {
-    override val tipo: String = "NOMBRE_USUARIO_NO_ENCONTRADO"
-    override val status: HttpStatus = HttpStatus.BAD_REQUEST
+class CredencialesInvalidasException(cause: Throwable? = null) : AppException("Nombre de usuario o contraseña incorrecto", cause) {
+    override val tipo: String = "NOMBRE_USUARIO_O_PASSWORD_INCORRECTO"
+    override val status: HttpStatus = HttpStatus.UNAUTHORIZED
 }
 
