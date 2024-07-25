@@ -31,7 +31,7 @@ export class PacienteService {
     localStorage.setItem(this.llaveStorage, JSON.stringify(paciente));
   }
 
-  private obtenerPaciente(): Paciente | null {
+  public obtenerPaciente(): Paciente | null {
     const paciente = localStorage.getItem(this.llaveStorage);
     return paciente ? JSON.parse(paciente) : null;
   }
