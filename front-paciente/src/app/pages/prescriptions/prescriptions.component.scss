@@ -29,8 +29,12 @@ ion-header{
   margin-top: 40px;
   text-align: center;
   color: #100b0b;
+  p{
+    font-size: 30px;
+    color: #100b0b;
+  }
   strong{
-    font-size: 13px;
+    font-size: 30px;
     color: #100b0b;
     font-weight: bold;
   }
@@ -57,10 +61,10 @@ ion-card-content{
 }
 ion-item{
   border-radius: 4px !important;
-  background-color: cornflowerblue !important;
-  color: #fff !important;
-  font-weight: 600 !important;
+  color: #000000 !important;
+  font-weight: 1000 !important;
   margin-top: 10px !important;
+
 }
 ion-label{
   font-size: 20px !important;
@@ -69,6 +73,7 @@ ion-label{
 }
 ion-icon {
   font-size: 24px;
+  color: #000000;
 }
 
 
