@@ -1,6 +1,7 @@
 package io.github.projektalmanac.imani.services
 
 import io.github.projektalmanac.imani.entities.Figura
+import io.github.projektalmanac.imani.entities.Paciente
 import io.github.projektalmanac.imani.exceptions.GuardarPrescripcionException
 import io.github.projektalmanac.imani.exceptions.UsuarioNoEncontradoException
 import io.github.projektalmanac.imani.exceptions.PrescripcionVaciaException
@@ -17,9 +18,6 @@ class PrescripcionService(
     private val prescripcionMapper: PrescripcionMapper
 ) {
 
-    private val figuraMapping: MutableMap<String, Figura> = mutableMapOf()
-    private val figurasDisponibles = Figura.values().toMutableList()
-
     fun guardarPrescripcion(pacienteId: Int, prescripcion: List<NuevaPrescripcionDto>): URI {
 
         if (prescripcion.isEmpty()) throw PrescripcionVaciaException()
@@ -29,7 +27,7 @@ class PrescripcionService(
         }
 
         prescripcion.forEach {
-            val figura = asignarFigura(it.medicamento)
+            val figura = asignarFigura(it.medicamento, paciente)
             val result = prescripcionMapper.toPrescripcion(it, paciente, figura)
             if (result != null) {
                 paciente.prescripciones.add(result)
@@ -42,14 +40,27 @@ class PrescripcionService(
         return URI.create("/pacientes/$pacienteId/prescripciones")
     }
 
-    private fun asignarFigura(medicamento: String): Figura {
-        return figuraMapping.computeIfAbsent(medicamento) {
-            if (figurasDisponibles.isNotEmpty()) {
-                figurasDisponibles.removeAt(0)
-            } else {
-                throw IllegalStateException("No hay más figuras disponibles para asignar")
+    private fun asignarFigura(medicamento: String, paciente: Paciente): Figura {
+
+        paciente.prescripciones.forEach { prescripcion ->
+            if (prescripcion.medicamento == medicamento) {
+                return prescripcion.figura
             }
         }
+
+        val ultimaFiguraAsignada = paciente.prescripciones.lastOrNull()?.figura
+        val nuevasFiguras = Figura.values()
+
+        if (ultimaFiguraAsignada == null) {
+            return nuevasFiguras[0]
+        }
+
+        val indiceUltimaFigura = ultimaFiguraAsignada.ordinal
+        if (indiceUltimaFigura < nuevasFiguras.size - 1) {
+            return nuevasFiguras[indiceUltimaFigura + 1]
+        }
+
+        return nuevasFiguras[0]
     }
 
     fun obtenerPrescripciones(pacienteId: Int): List<PrescripcionDto> {
