@@ -26,4 +26,12 @@ export class UsuarioService {
     }
     this._usuario.set(usuario);
   }
+  public getUsuario(): Usuario | null {
+    const usuarioSerializado = localStorage.getItem(UsuarioService.USUARIO_KEY);
+    if (usuarioSerializado == null) {
+      return null;
+    } else {
+      return JSON.parse(usuarioSerializado);
+    }
+  }
 }
