@@ -2,20 +2,19 @@ package io.github.projektalmanac.imani.services
 
 import io.github.projektalmanac.imani.entities.Figura
 import io.github.projektalmanac.imani.entities.Paciente
-import io.github.projektalmanac.imani.exceptions.GuardarPrescripcionException
-import io.github.projektalmanac.imani.exceptions.UsuarioNoEncontradoException
-import io.github.projektalmanac.imani.exceptions.PrescripcionVaciaException
+import io.github.projektalmanac.imani.exceptions.*
 import io.github.projektalmanac.imani.generated.dto.NuevaPrescripcionDto
 import io.github.projektalmanac.imani.generated.dto.PrescripcionDto
 import io.github.projektalmanac.imani.mappers.PrescripcionMapper
 import io.github.projektalmanac.imani.repositories.PacienteRepository
+import io.github.projektalmanac.imani.repositories.PrescripcionRepository
 import org.springframework.stereotype.Service
 import java.net.URI
 
 @Service
 class PrescripcionService(
     private val pacienteRepository: PacienteRepository,
-    private val prescripcionMapper: PrescripcionMapper
+    private val prescripcionMapper: PrescripcionMapper, private val prescripcionRepository: PrescripcionRepository
 ) {
 
     fun guardarPrescripcion(pacienteId: Int, prescripcion: List<NuevaPrescripcionDto>): URI {
@@ -68,6 +67,13 @@ class PrescripcionService(
             UsuarioNoEncontradoException(pacienteId)
         }
         return paciente.prescripciones.map { prescripcionMapper.toPrescripcionDto(it) }
+    }
+
+    fun actualizarPrescripcion(pacienteId: Int, prescripcionId: Int, nuevaPrescripcionDto: NuevaPrescripcionDto?) {
+        if (nuevaPrescripcionDto === null) throw CuerpoDePeticionNuloException()
+        val prescripcion = prescripcionRepository.findById(prescripcionId).orElseThrow { PrescripcionNoEncontradaException(prescripcionId) }
+        prescripcionMapper.update(prescripcion, nuevaPrescripcionDto)
+        prescripcionRepository.save(prescripcion)
     }
 }
 

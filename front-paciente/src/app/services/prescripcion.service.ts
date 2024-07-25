@@ -32,6 +32,10 @@ export class PrescripcionService {
     return this.prescripciones().find((p) => p.id == prescripcionId);
   }
 
+  public updatePrescripcion(pacienteId: number, prescripcion: Prescripcion) {
+    return lastValueFrom(this.prescripcionApi.putPrescripcion(pacienteId, prescripcion.id, prescripcion))
+  }
+
   private getMedicamentos = async () => {
     const paciente = this.pacienteService.obtenerPaciente();
     if (paciente === null) return;
@@ -71,7 +75,8 @@ export class PrescripcionService {
         prescripcionNueva.duracion !== prescripcionVieja.duracion ||
         prescripcionNueva.frecuenciaDosis !==
           prescripcionVieja.frecuenciaDosis ||
-        prescripcionNueva.inicio !== prescripcionVieja.inicio
+        prescripcionNueva.inicio !== prescripcionVieja.inicio ||
+        prescripcionNueva.numeroDeDosis !== prescripcionVieja.numeroDeDosis
       ) {
         cambios.push(prescripcionNueva);
         continue;

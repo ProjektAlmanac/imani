@@ -41,6 +41,9 @@ abstract class PrescripcionMapper {
     @Mapping(source = "figura", target = "figura", qualifiedByName = ["mapFigura"])
     @Mapping(source = "inicio", target = "inicio", qualifiedByName = ["localDateTimeToOffsetDateTime"])
     abstract fun toPrescripcionDto(prescripcion: Prescripcion): PrescripcionDto
+
+    @Mapping(target = "inicio", qualifiedByName = ["offsetDateTimeToLocalDateTime"])
+    abstract fun update(@MappingTarget prescripcion: Prescripcion, prescripcionDto: NuevaPrescripcionDto)
 }
 
 
