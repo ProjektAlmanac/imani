@@ -2,7 +2,6 @@ package io.github.projektalmanac.imani.controllers
 
 import io.github.projektalmanac.imani.generated.api.DoctorApi
 import io.github.projektalmanac.imani.generated.dto.DoctorDto
-import io.github.projektalmanac.imani.generated.dto.DoctorDto
 import io.github.projektalmanac.imani.generated.dto.NuevoDoctorDto
 import io.github.projektalmanac.imani.services.DoctorService
 import org.springframework.http.ResponseEntity
@@ -22,7 +21,6 @@ class DoctorController(val doctorService: DoctorService) : DoctorApi {
         return ResponseEntity.noContent().build()
     }
 
-    override fun putDoctor(doctorId: Int, doctorDto: DoctorDto?): ResponseEntity<Unit> {
     override fun putDoctor(doctorId: Int, doctorDto: DoctorDto?): ResponseEntity<Unit> {
         TODO("Not yet implemented")
     }
