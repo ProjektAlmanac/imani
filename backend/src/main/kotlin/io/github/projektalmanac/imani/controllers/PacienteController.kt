@@ -20,6 +20,8 @@ class PacienteController(val pacienteService: PacienteService) : PacienteApi {
         TODO("Not yet implemented")
     }
 
+
+
     override fun postPacientes(pacienteDto: PacienteDto?): ResponseEntity<PacienteDto> {
         val paciente = pacienteService.addPaciente(pacienteDto)
         return ResponseEntity.ok(paciente)
@@ -29,6 +31,11 @@ class PacienteController(val pacienteService: PacienteService) : PacienteApi {
             pacienteId: Int,
             pacienteDto: PacienteDto?
     ): ResponseEntity<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getPacientesDoctorID(doctorId: Int): ResponseEntity<List<PacienteDto>> {
+    override fun upDatePacienteID(pacienteId: Int, pacienteDto: PacienteDto?): ResponseEntity<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -95,4 +102,5 @@ class PacienteController(val pacienteService: PacienteService) : PacienteApi {
         }
         return ResponseEntity.ok().build()
     }
+     }
 }
