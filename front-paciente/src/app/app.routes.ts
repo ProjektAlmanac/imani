@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
+import { HomePage } from './home/home.page';
 import { NotificacionMedicamentoComponent } from './pages/notificacion-medicamento/notificacion-medicamento.component';
-import { PrescriptionsComponent } from "./pages/prescriptions/prescriptions.component";
-import { SigupPatientComponent } from "./pages/sigup-patient/sigup-patient.component";
+import { PrescriptionsComponent } from './pages/prescriptions/prescriptions.component';
+import { SigupPatientComponent } from './pages/sigup-patient/sigup-patient.component';
 
 export const routes: Routes = [
   {
@@ -27,15 +28,14 @@ export const routes: Routes = [
   },
   {
     path: 'prescriptions',
-    component: PrescriptionsComponent
+    component: PrescriptionsComponent,
   },
   {
-    path: "notificacion-medicamento/:id",
-    component: NotificacionMedicamentoComponent
+    path: 'notificacion-medicamento/:id',
+    component: NotificacionMedicamentoComponent,
   },
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    component: HomePage,
   },
 ];
