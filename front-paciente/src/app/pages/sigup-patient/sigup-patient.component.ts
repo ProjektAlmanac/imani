@@ -27,7 +27,7 @@ export class SigupPatientComponent implements OnInit{
 
 
   private async generaCuentaPaciente(): Promise<void> {
-    await this.pacienteService.creaPaciente({ id: 0 });
+    await this.pacienteService.creaPaciente();
   }
 
 

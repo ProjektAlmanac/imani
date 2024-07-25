@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
-import {lastValueFrom} from "rxjs";
-import {PacienteService as PacienteAPi, Paciente} from "../../generated/openapi";
+import { lastValueFrom } from 'rxjs';
+import {
+  PacienteService as PacienteAPi,
+  Paciente,
+} from '../../generated/openapi';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PacienteService {
-
   private llaveStorage = 'paciente';
-  constructor(private pacienteApi: PacienteAPi) { }
+  constructor(private pacienteApi: PacienteAPi) {}
 
-
-  public async creaPaciente(paciente: Paciente): Promise<Paciente> {
+  public async creaPaciente(): Promise<Paciente> {
     const pacienteGuardado = this.obtenerPaciente();
     if (pacienteGuardado) {
       return pacienteGuardado;
     }
 
     try {
-      const nuevoPaciente = await lastValueFrom(this.pacienteApi.postPacientes(paciente));
+      const nuevoPaciente = await lastValueFrom(
+        this.pacienteApi.postPacientes({ id: 0 })
+      );
       this.guardarPaciente(nuevoPaciente);
       return nuevoPaciente;
     } catch (error) {

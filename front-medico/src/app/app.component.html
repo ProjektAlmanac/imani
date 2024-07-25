@@ -1,1 +1,12 @@
+<mat-toolbar>
+  <a routerLink="/">
+    <button mat-button>
+      <h1>Imani</h1>
+    </button>
+  </a>
+  <span class="spacer"></span>
+  @if (usuarioService.usuario()) {
+  <button mat-raised-button (click)="cerrarSesion()">Cerrar sesión</button>
+  }
+</mat-toolbar>
 <router-outlet />
