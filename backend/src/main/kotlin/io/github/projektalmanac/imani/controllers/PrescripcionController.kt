@@ -31,6 +31,7 @@ class PrescripcionController(private val prescripcionService: PrescripcionServic
         prescripcionId: Int,
         nuevaPrescripcionDto: NuevaPrescripcionDto?
     ): ResponseEntity<Unit> {
-        TODO("Not yet implemented")
+        prescripcionService.actualizarPrescripcion(pacienteId, prescripcionId, nuevaPrescripcionDto)
+        return ResponseEntity.noContent().build();
     }
 }

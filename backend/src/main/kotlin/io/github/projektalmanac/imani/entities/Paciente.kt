@@ -14,13 +14,13 @@ class Paciente(
     var estatura: Float?,
     var peso: Float?,
     var token: String?,
-
+) {
     @OneToMany(mappedBy = "paciente", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    var prescripciones: MutableList<Prescripcion> = mutableListOf(),
+    var prescripciones: MutableList<Prescripcion> = mutableListOf()
 
     @ManyToMany(mappedBy = "pacientes", fetch = FetchType.LAZY)
-    var doctores: MutableList<Doctor> = mutableListOf(),
+    var doctores: MutableList<Doctor> = mutableListOf()
 
     @OneToMany(mappedBy = "paciente", cascade = [CascadeType.ALL] ,fetch = FetchType.LAZY)
     var citas: MutableList<Cita> = mutableListOf()
-)
+}

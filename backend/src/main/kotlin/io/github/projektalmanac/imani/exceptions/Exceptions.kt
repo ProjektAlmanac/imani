@@ -31,6 +31,16 @@ class GuardarPrescripcionException(id: Int, cause: Throwable? = null) : AppExcep
     override val tipo = "GUARDAR_PRESCRIPCION"
     override val status = HttpStatus.INTERNAL_SERVER_ERROR
 }
+class CredencialesInvalidasException(cause: Throwable? = null) : AppException("Nombre de usuario o contraseña incorrecto", cause) {
+    override val tipo: String = "NOMBRE_USUARIO_O_PASSWORD_INCORRECTO"
+    override val status: HttpStatus = HttpStatus.UNAUTHORIZED
+}
+
+
+class PrescripcionNoEncontradaException(id: Int, cause: Throwable? = null) : AppException("No se encontró la prescripción con el id '$id'", cause) {
+    override val tipo = "PRESCRIPCION_NO_ENCONTRADA"
+    override val status = HttpStatus.NOT_FOUND
+}
 
 class DoctorNotFoundException(id: Int, cause: Throwable? = null) : AppException("No es encontró al doctor con id $id", cause) {
     override val tipo = "DOCTOR_NO_ENCONTRADO"

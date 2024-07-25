@@ -1,14 +1,12 @@
 package io.github.projektalmanac.imani.services
 
 import com.github.javafaker.Faker
-import com.github.javafaker.service.FakeValuesService
 import io.github.projektalmanac.imani.entities.Figura
 import io.github.projektalmanac.imani.entities.Doctor
 import io.github.projektalmanac.imani.entities.Paciente
 import io.github.projektalmanac.imani.entities.Prescripcion
 import io.github.projektalmanac.imani.repositories.DoctorRepository
 import io.github.projektalmanac.imani.repositories.PacienteRepository
-import io.github.projektalmanac.imani.repositories.PrescripcionRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -97,11 +95,29 @@ class TestDataService(
             null
         )
 
-        paciente1.prescripciones.add(prescripcion1)
-        paciente1.prescripciones.add(prescripcion2)
-        paciente1.prescripciones.add(prescripcion3)
-        paciente1.prescripciones.add(prescripcion4)
-        paciente1.prescripciones.add(prescripcion5)
+        val prescripcion6 = Prescripcion(
+            6,
+            "Paracetamol",
+            5,
+            "",
+            LocalDateTime.now(),
+            Int.MAX_VALUE,
+            null,
+            Figura.SEMICIRCULO,
+            1f,
+            0f,
+            paciente1,
+            null
+        )
+
+        paciente1.prescripciones = mutableListOf(
+            prescripcion1,
+            prescripcion2,
+            prescripcion3,
+            prescripcion4,
+            prescripcion5,
+            prescripcion6
+        )
         pacienteRepository.saveAll(pacientes)
         doctorRepository.save(doctor)
         pacienteRepository.save(paciente1)

@@ -1,0 +1,31 @@
+<div class="login-container">
+  <div class="login-form">
+    <h2>Login</h2>
+    <form [formGroup]="formLogin" (ngSubmit)="login()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="nombreUsuario"
+          name="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          name="password"
+          required
+        />
+      </div>
+      <button type="submit">Login</button>
+      @if (error()) {
+      <mat-error>{{ error() }}</mat-error>
+      }
+    </form>
+  </div>
+</div>
