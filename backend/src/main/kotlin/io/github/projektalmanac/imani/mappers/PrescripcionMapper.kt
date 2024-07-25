@@ -14,17 +14,9 @@ import java.time.ZoneOffset
 @Mapper(componentModel = "spring", uses = [JsonNullableMapper::class])
 abstract class PrescripcionMapper {
 
-    @Mapping(source = "inicio", target = "inicio", qualifiedByName = ["offsetDateTimeToLocalDateTime"])
-    @Mapping(target = "paciente", ignore = true)
-    abstract fun toPrescripcion(dto: NuevaPrescripcionDto?, @Context paciente: Paciente, @Context figura: Figura): Prescripcion?
-
-    @AfterMapping
-    protected fun setPaciente(@MappingTarget prescripcion: Prescripcion?, @Context paciente: Paciente, @Context figura: Figura) {
-        if (prescripcion != null) {
-            prescripcion.paciente = paciente
-            prescripcion.figura = figura
-        }
-    }
+    @Mapping(source = "dto.inicio", target = "inicio", qualifiedByName = ["offsetDateTimeToLocalDateTime"])
+    @Mapping(target = "id", expression = "java(0)")
+    abstract fun toPrescripcion(dto: NuevaPrescripcionDto?, paciente: Paciente, figura: Figura): Prescripcion?
 
     @Named("offsetDateTimeToLocalDateTime")
     fun offsetDateTimeToLocalDateTime(offsetDateTime: OffsetDateTime?): LocalDateTime? {

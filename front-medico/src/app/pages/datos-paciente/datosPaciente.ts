@@ -11,7 +11,13 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PrescripcionService } from '../../services/prescripcion.service';
 import { PacienteService } from '../../services/paciente.service';
-import {Paciente, NuevaPrescripcion, ProblemDetails, Doctor, Farmaceutico} from '../../../generated/openapi';
+import {
+  Paciente,
+  NuevaPrescripcion,
+  ProblemDetails,
+  Doctor,
+  Farmaceutico,
+} from '../../../generated/openapi';
 // @ts-ignore
 import { DateTime } from 'luxon';
 
@@ -32,13 +38,12 @@ interface PrescripcionTabla extends NuevaPrescripcion {
     MatTableModule,
     MatSnackBarModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
   templateUrl: './datosPaciente.html',
   styleUrls: ['./datosPaciente.component.scss'],
 })
 export class DatosPacienteComponent implements OnInit {
-
   @Input() usuario: Doctor | Farmaceutico | undefined;
 
   paciente?: Paciente;
@@ -46,8 +51,14 @@ export class DatosPacienteComponent implements OnInit {
   error?: string;
   dataSource = new MatTableDataSource<PrescripcionTabla>();
   displayedColumns: string[] = [
-    'medicamento', 'frecuenciaDosis', 'indicaciones', 'duracion',
-    'cantidadPorDosis', 'fechaInicio', 'horaInicio', 'figura'
+    'medicamento',
+    'frecuenciaDosis',
+    'indicaciones',
+    'duracion',
+    'cantidadPorDosis',
+    'fechaInicio',
+    'horaInicio',
+    'figura',
   ];
 
   constructor(
@@ -77,15 +88,22 @@ export class DatosPacienteComponent implements OnInit {
     this.error = undefined;
     this.success = undefined;
 
-
     try {
-      this.paciente = await this.pacienteService.obtenerPaciente(this.usuario?.idPaciente || 1);
+      this.paciente = await this.pacienteService.obtenerPaciente(
+        this.usuario?.idPaciente || 1
+      );
       if (this.paciente && this.paciente.fechaDeNacimiento) {
-        const fechaNacimiento = DateTime.fromFormat(this.paciente.fechaDeNacimiento, 'dd-MM-yyyy');
+        const fechaNacimiento = DateTime.fromFormat(
+          this.paciente.fechaDeNacimiento,
+          'dd-MM-yyyy'
+        );
         if (fechaNacimiento.isValid) {
           this.paciente.fechaDeNacimiento = fechaNacimiento.toISODate();
         } else {
-          console.error('Fecha de nacimiento no válida:', this.paciente.fechaDeNacimiento);
+          console.error(
+            'Fecha de nacimiento no válida:',
+            this.paciente.fechaDeNacimiento
+          );
         }
       }
       //this.snackBar.open('Paciente cargado con éxito', 'Cerrar', { duration: 3000 });
@@ -94,7 +112,7 @@ export class DatosPacienteComponent implements OnInit {
       const errorResponse = e as HttpErrorResponse;
       const problemDetails = errorResponse.error as ProblemDetails;
       this.error = problemDetails.detail;
-      this.snackBar.open(problemDetails.detail, 'Cerrar', {duration: 3000});
+      this.snackBar.open(problemDetails.detail, 'Cerrar', { duration: 3000 });
     }
   }
 
@@ -105,13 +123,22 @@ export class DatosPacienteComponent implements OnInit {
     this.success = undefined;
 
     try {
-      const prescripciones = await this.prescripcionService.obtenerPrescripciones(this.paciente?.id || 1);
+      const prescripciones =
+        await this.prescripcionService.obtenerPrescripciones(
+          this.paciente?.id || 1
+        );
       this.dataSource.data = prescripciones.map((p: { inicio: string }) => {
-        const fechaInicio = p.inicio ? DateTime.fromISO(p.inicio, { zone: 'utc' }) : null;
+        const fechaInicio = p.inicio
+          ? DateTime.fromISO(p.inicio, { zone: 'utc' })
+          : null;
         return {
           ...p,
-          fechaInicio: fechaInicio ? fechaInicio.toFormat('dd/MM/yyyy', { zone: 'utc' }) : null,
-          horaInicio: fechaInicio ? fechaInicio.toFormat('HH:mm', { zone: 'utc' }) : ''
+          fechaInicio: fechaInicio
+            ? fechaInicio.toFormat('dd/MM/yyyy', { zone: 'utc' })
+            : null,
+          horaInicio: fechaInicio
+            ? fechaInicio.toFormat('HH:mm', { zone: 'utc' })
+            : '',
         };
       });
       //this.snackBar.open('Prescripciones cargadas con éxito', 'Cerrar', { duration: 3000 });
@@ -128,13 +155,15 @@ export class DatosPacienteComponent implements OnInit {
     //if (!this.usuario?.idPaciente) return;
 
     this.error = undefined;
-    this.router.navigate(['/agregar-prescripcion'], { state: { paciente: this.paciente} });
+    this.router.navigate(['/agregar-prescripcion'], {
+      state: { paciente: this.paciente },
+    });
   }
 
   // Método para verificar el tipo de usuario y acceder a propiedades específicas
   public esDoctor(usuario: any): usuario is Doctor {
     //return (usuario as Doctor).centroMedico !== undefined;
-    return false;
+    return true;
   }
 
   formatTime(seconds: number): string {
@@ -156,9 +185,8 @@ export class DatosPacienteComponent implements OnInit {
     if (!this.paciente) return;
 
     this.error = undefined;
-    this.router.navigate(['/actualizar-paciente'], { state: { paciente: this.paciente } });
+    this.router.navigate(['/actualizar-paciente'], {
+      state: { paciente: this.paciente },
+    });
   }
 }
-
-
-
