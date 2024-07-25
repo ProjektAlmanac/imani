@@ -24,17 +24,19 @@
         <div class="fila">
           <div class="dato">
             <p class="label">Estatura</p>
-            <p>{{ paciente.estatura }} m</p>
+            <p *ngIf="paciente.estatura">{{ paciente.estatura }} m</p>
+            <p *ngIf="!paciente.estatura">{{ paciente.estatura }}</p>
           </div>
           <div class="dato">
             <p class="label">Peso</p>
-            <p>{{ paciente.peso }} kg</p>
+            <p *ngIf="paciente.peso">{{ paciente.peso }} kg</p>
+            <p *ngIf="!paciente.peso">{{ paciente.peso }}</p>
           </div>
         </div>
       </div>
 
       <div class="bottom-buttons">
-        <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="onSubmit()">Guardar Prescripciones</button>
+        <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="onSubmit()">Ingresar Prescripciones</button>
         <button *ngIf="esDoctor(usuario)" type="button" mat-raised-button (click)="actualizarPaciente()">Modificar Paciente</button>
       </div>
 
