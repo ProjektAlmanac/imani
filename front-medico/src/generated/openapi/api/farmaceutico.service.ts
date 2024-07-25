@@ -99,14 +99,13 @@ export class FarmaceuticoService {
     /**
      * Obten Farmaceutico
      * @param farmaceuticoId 
-     * @param farmaceutico 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getFarmaceutico(farmaceuticoId: number, farmaceutico?: Farmaceutico, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any>;
-    public getFarmaceutico(farmaceuticoId: number, farmaceutico?: Farmaceutico, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<any>>;
-    public getFarmaceutico(farmaceuticoId: number, farmaceutico?: Farmaceutico, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<any>>;
-    public getFarmaceutico(farmaceuticoId: number, farmaceutico?: Farmaceutico, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public getFarmaceutico(farmaceuticoId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Farmaceutico>;
+    public getFarmaceutico(farmaceuticoId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Farmaceutico>>;
+    public getFarmaceutico(farmaceuticoId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Farmaceutico>>;
+    public getFarmaceutico(farmaceuticoId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (farmaceuticoId === null || farmaceuticoId === undefined) {
             throw new Error('Required parameter farmaceuticoId was null or undefined when calling getFarmaceutico.');
         }
@@ -136,15 +135,6 @@ export class FarmaceuticoService {
         }
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -157,10 +147,9 @@ export class FarmaceuticoService {
         }
 
         let localVarPath = `/farmaceutico/${this.configuration.encodeParam({name: "farmaceuticoId", value: farmaceuticoId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: undefined})}`;
-        return this.httpClient.request<any>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<Farmaceutico>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: farmaceutico,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

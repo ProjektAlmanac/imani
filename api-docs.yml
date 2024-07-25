@@ -5,10 +5,10 @@ info:
   title: Imani API
   version: 1.0.0
 servers:
-  - url: "http://localhost:8080/api"
+  - url: 'http://localhost:8080/api'
     description: Servidor local
 paths:
-  "/pacientes/{pacienteId}":
+  '/pacientes/{pacienteId}':
     parameters:
       - schema:
           type: integer
@@ -18,12 +18,12 @@ paths:
     get:
       summary: Obtiene la informacion del paciente
       responses:
-        "200":
+        '200':
           description: paciente existe
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Paciente"
+                $ref: '#/components/schemas/Paciente'
               examples:
                 Get User Alice Smith:
                   value:
@@ -31,15 +31,15 @@ paths:
                     firstName: Alice
                     lastName: Smith
                     email: alice.smith@gmail.com
-                    dateOfBirth: "1997-10-31"
+                    dateOfBirth: '1997-10-31'
                     emailVerified: true
-                    signUpDate: "2019-08-24"
-        "404":
+                    signUpDate: '2019-08-24'
+        '404':
           description: Paciente no existe
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: getPacienteID
       description: |-
         Obtiene la información del paciente 
@@ -52,27 +52,27 @@ paths:
       summary: Actualiza informacion del paciente
       operationId: upDatePacienteID
       responses:
-        "204":
+        '204':
           description: Paciente Creado
           content: {}
-        "404":
+        '404':
           description: No existe el paciente
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
-      description: "Actualiza fecha de nacimiento, nombre, etc"
+                $ref: '#/components/schemas/ProblemDetails'
+      description: 'Actualiza fecha de nacimiento, nombre, etc'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Paciente"
+              $ref: '#/components/schemas/Paciente'
         description: Patch user properties to update.
       x-stoplight:
         id: zdq8jrhnbmc8p
       tags:
         - paciente
-  "/pacientes/{pacienteId}/prescripciones":
+  '/pacientes/{pacienteId}/prescripciones':
     parameters:
       - schema:
           type: integer
@@ -84,44 +84,44 @@ paths:
       tags:
         - prescripciones
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Prescripcion"
+                  $ref: '#/components/schemas/Prescripcion'
       operationId: getPrescription
       x-stoplight:
         id: 8siu6zxk1rcy7
-      description: "Medicamentos, horas, inicio y duracion"
+      description: 'Medicamentos, horas, inicio y duracion'
     post:
       summary: Agregar prescripciones
       tags:
         - prescripciones
       responses:
-        "201":
+        '201':
           description: Created
-        "404":
+        '404':
           description: Paciente no encontrado
           headers: {}
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: postPrescription
       x-stoplight:
         id: dxmf1ryxmgz6j
-      description: "agrega una lista de prescripciones (Medicamentos, horas, inicio y duracion)"
+      description: 'agrega una lista de prescripciones (Medicamentos, horas, inicio y duracion)'
       requestBody:
         content:
           application/json:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/NuevaPrescripcion"
-  "/pacientes/{pacienteId}/citas":
+                $ref: '#/components/schemas/NuevaPrescripcion'
+  '/pacientes/{pacienteId}/citas':
     parameters:
       - schema:
           type: integer
@@ -131,20 +131,20 @@ paths:
     get:
       summary: Obtiene las Citas del paciente
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Citas"
-        "404":
+                  $ref: '#/components/schemas/Citas'
+        '404':
           description: Paciente no encontrado
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: getDates
       x-stoplight:
         id: vsomnt4vnc10g
@@ -156,14 +156,14 @@ paths:
       tags:
         - cita
       responses:
-        "201":
+        '201':
           description: cita creada
-        "404":
+        '404':
           description: Paciente no encontrado
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: PostDate
       x-stoplight:
         id: j2ns8nifdbz6r
@@ -172,19 +172,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NuevaCita"
+              $ref: '#/components/schemas/NuevaCita'
   /pacientes:
     post:
       summary: Crea un paciente
       tags:
         - paciente
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Paciente"
+                $ref: '#/components/schemas/Paciente'
       operationId: postPacientes
       x-stoplight:
         id: 5mt2p8bhcugph
@@ -195,32 +195,32 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Paciente"
+              $ref: '#/components/schemas/Paciente'
   /doctores:
     post:
       summary: Crear doctor
       tags:
         - doctor
       responses:
-        "204":
+        '204':
           description: No Content
-        "400":
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: postDoctor
       x-stoplight:
         id: rtdxtgetto7x7
-      description: "Crea un doctor nombre, centro medico, etc"
+      description: 'Crea un doctor nombre, centro medico, etc'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NuevoDoctor"
+              $ref: '#/components/schemas/NuevoDoctor'
     parameters: []
-  "/doctores/{doctorId}":
+  '/doctores/{doctorId}':
     parameters:
       - schema:
           type: integer
@@ -232,32 +232,32 @@ paths:
       tags:
         - doctor
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Doctor"
-        "404":
+                $ref: '#/components/schemas/Doctor'
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: getDoctor
       x-stoplight:
         id: b844dfurx4zjv
     put:
       summary: Actualiza Doctor
       responses:
-        "204":
+        '204':
           description: No Content
-        "404":
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: putDoctor
       x-stoplight:
         id: jall88e6dyqpt
@@ -265,10 +265,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Doctor"
+              $ref: '#/components/schemas/Doctor'
       tags:
         - doctor
-  "/pacientes/{pacienteId}/prescripciones/{prescripcionId}":
+  '/pacientes/{pacienteId}/prescripciones/{prescripcionId}':
     parameters:
       - schema:
           type: integer
@@ -285,20 +285,20 @@ paths:
       tags:
         - prescripciones
       responses:
-        "204":
+        '204':
           description: No Content
-        "400":
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
-        "404":
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: putPrescripcion
       x-stoplight:
         id: tk96c4tw2pu89
@@ -307,19 +307,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NuevaPrescripcion"
+              $ref: '#/components/schemas/NuevaPrescripcion'
   /farmaceutico:
     post:
       summary: Crear un farmaceutico
       responses:
-        "204":
+        '204':
           description: No Content
-        "400":
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: postFarmaceutico
       x-stoplight:
         id: eo7zllp8oyejz
@@ -327,7 +327,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NuevoFarmaceutico"
+              $ref: '#/components/schemas/NuevoFarmaceutico'
       tags:
         - farmaceutico
     parameters: []
@@ -337,18 +337,18 @@ paths:
       tags:
         - login
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Usuario"
-        "401":
+                $ref: '#/components/schemas/Usuario'
+        '401':
           description: Datos incorrectos
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: login
       x-stoplight:
         id: nlx0ran8j80pg
@@ -357,8 +357,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Login"
-  "/doctores/{doctorId}/pacientes":
+              $ref: '#/components/schemas/Login'
+  '/doctores/{doctorId}/pacientes':
     parameters:
       - schema:
           type: integer
@@ -368,27 +368,27 @@ paths:
     get:
       summary: Obtener pacientes de doctor
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Paciente"
-        "404":
+                  $ref: '#/components/schemas/Paciente'
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: getPacientesDoctorID
       x-stoplight:
         id: mxk7ub50adl7g
       tags:
         - paciente
       description: Recuperar la lista de pacientes de un doctor
-  "/farmaceutico/{farmaceuticoId}":
+  '/farmaceutico/{farmaceuticoId}':
     parameters:
       - schema:
           type: integer
@@ -400,35 +400,34 @@ paths:
       tags:
         - farmaceutico
       responses:
-        "204":
-          description: No Content
-        "404":
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Farmaceutico'
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: getFarmaceutico
       x-stoplight:
         id: pmu2271onq552
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Farmaceutico"
     put:
       summary: Actualiza Farmaceutico
       tags:
         - farmaceutico
       responses:
-        "204":
+        '204':
           description: No Content
-        "404":
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: put-farmaceutico-farmaceuticoId
       x-stoplight:
         id: 27jt5sb9tjx36
@@ -436,8 +435,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Farmaceutico"
-  "/pacientes/{pacienteId}/send-qr":
+              $ref: '#/components/schemas/Farmaceutico'
+  '/pacientes/{pacienteId}/send-qr':
     parameters:
       - schema:
           type: integer
@@ -449,14 +448,14 @@ paths:
       tags:
         - paciente
       responses:
-        "204":
+        '204':
           description: No Content
-        "400":
+        '400':
           description: Error en el envío del QR
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProblemDetails"
+                $ref: '#/components/schemas/ProblemDetails'
       operationId: postPacientesSendQr
       x-stoplight:
         id: 2gwa6puqvzmyp
@@ -480,9 +479,9 @@ components:
           firstName: Alice
           lastName: Smith
           email: alice.smith@gmail.com
-          dateOfBirth: "1997-10-31"
+          dateOfBirth: '1997-10-31'
           emailVerified: true
-          signUpDate: "2019-08-24"
+          signUpDate: '2019-08-24'
       x-stoplight:
         id: nbmmsf9f33lrf
       required:
@@ -504,7 +503,7 @@ components:
         fechaDeNacimiento:
           type: string
           format: date
-          example: "1997-10-31"
+          example: '1997-10-31'
           x-stoplight:
             id: 1n395w1h9lffu
         estatura:
@@ -530,9 +529,9 @@ components:
           firstName: Alice
           lastName: Smith
           email: alice.smith@gmail.com
-          dateOfBirth: "1997-10-31"
+          dateOfBirth: '1997-10-31'
           emailVerified: true
-          signUpDate: "2019-08-24"
+          signUpDate: '2019-08-24'
       properties:
         nombre:
           type: string
@@ -541,7 +540,7 @@ components:
         fechaDeNacimiento:
           type: string
           format: date
-          example: "1997-10-31"
+          example: '1997-10-31'
         estatura:
           type: number
         peso:
@@ -595,7 +594,7 @@ components:
                 - anillo
                 - semicirculo
                 - nube
-        - $ref: "#/components/schemas/NuevaPrescripcion"
+        - $ref: '#/components/schemas/NuevaPrescripcion'
     NuevaPrescripcion:
       title: NuevaPrescripcion
       x-stoplight:
@@ -700,7 +699,7 @@ components:
               type: string
               x-stoplight:
                 id: ae0vybn83v9cg
-        - $ref: "#/components/schemas/Doctor"
+        - $ref: '#/components/schemas/Doctor'
     Doctor:
       title: Doctor
       x-stoplight:
@@ -755,7 +754,7 @@ components:
           properties:
             password:
               type: string
-        - $ref: "#/components/schemas/Farmaceutico"
+        - $ref: '#/components/schemas/Farmaceutico'
     Usuario:
       title: Usuario
       x-stoplight:

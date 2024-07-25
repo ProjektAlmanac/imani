@@ -44,17 +44,16 @@ interface FarmaceuticoApi {
         operationId = "getFarmaceutico",
         description = """""",
         responses = [
-            ApiResponse(responseCode = "204", description = "No Content"),
+            ApiResponse(responseCode = "200", description = "OK", content = [Content(schema = Schema(implementation = FarmaceuticoDto::class))]),
             ApiResponse(responseCode = "404", description = "Not Found", content = [Content(schema = Schema(implementation = ProblemDetailsDto::class))])
         ]
     )
     @RequestMapping(
             method = [RequestMethod.GET],
             value = ["/farmaceutico/{farmaceuticoId}"],
-            produces = ["application/json"],
-            consumes = ["application/json"]
+            produces = ["application/json"]
     )
-    fun getFarmaceutico(@Parameter(description = "", required = true) @PathVariable("farmaceuticoId") farmaceuticoId: kotlin.Int,@Parameter(description = "") @Valid @RequestBody(required = false) farmaceuticoDto: FarmaceuticoDto?): ResponseEntity<Unit>
+    fun getFarmaceutico(@Parameter(description = "", required = true) @PathVariable("farmaceuticoId") farmaceuticoId: kotlin.Int): ResponseEntity<FarmaceuticoDto>
 
     @Operation(
         tags = ["farmaceutico",],
