@@ -41,6 +41,7 @@ dependencies {
 	kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
 
 	runtimeOnly("com.h2database:h2")
+	runtimeOnly("org.mariadb.jdbc:mariadb-java-client:3.4.1")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
