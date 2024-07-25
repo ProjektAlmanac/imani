@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pacientes</title>
+  <link rel="stylesheet" href="actualizarPaciente.component.scss">
+</head>
+<body>
+<div class="container">
+  <mat-card appearance="raised">
+    <h1 class="titulo">Actualizar Pacientes</h1>
+    <mat-card-content>
+      <form [formGroup]="pacienteForm" class="form">
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Apellido Paterno</mat-label>
+          <input matInput formControlName="apellidoPaterno" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Apellido Materno</mat-label>
+          <input matInput formControlName="apellidoMaterno" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Fecha de Nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Estatura</mat-label>
+          <input type="number" matInput formControlName="estatura" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Peso</mat-label>
+          <input matInput formControlName="peso" />
+        </mat-form-field>
+      </form>
+
+      <div class="bottom-buttons">
+        <button type="button" mat-raised-button (click)="onSubmit()">Guardar</button>
+        <button type="button" mat-raised-button (click)="cerrarComponente()">Cerrar</button>
+      </div>
+
+      <div *ngIf="success() !== undefined" class="success">{{ success() }}</div>
+      <mat-error *ngIf="error() !== undefined" class="error">{{ error() }}</mat-error>
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+</html>
+

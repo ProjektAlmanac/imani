@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api")
 class PacienteController (val pasienteService: PacienteService): PacienteApi {
     override fun getPacienteID(pacienteId: Int): ResponseEntity<PacienteDto> {
-        TODO("Not yet implemented")
+        val paciente = pasienteService.getPaciente(pacienteId)
+        return ResponseEntity.ok(paciente)
     }
 
-
+    override fun getPacientesDoctorID(doctorId: Int): ResponseEntity<List<PacienteDto>> {
+        TODO("Not yet implemented")
+    }
 
     override fun postPacientes(pacienteDto: PacienteDto?): ResponseEntity<PacienteDto> {
         val paciente = pasienteService.addPaciente(pacienteDto)
@@ -22,10 +25,7 @@ class PacienteController (val pasienteService: PacienteService): PacienteApi {
     }
 
     override fun upDatePacienteID(pacienteId: Int, pacienteDto: PacienteDto?): ResponseEntity<Unit> {
-        TODO("Not yet implemented")
+        pasienteService.updatePaciente(pacienteId, pacienteDto)
+        return ResponseEntity.noContent().build()
     }
-
-    override fun getPacientesDoctorID(doctorId: Int): ResponseEntity<List<PacienteDto>> {
-        TODO("Not yet implemented")
-     }
 }

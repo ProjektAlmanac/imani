@@ -1,0 +1,74 @@
+.form {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr); // Tres columnas por fila
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr; // Una columna por fila para pantallas pequeñas
+  }
+
+  @media (min-width: 601px) and (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr); // Dos columnas por fila para pantallas medianas
+  }
+
+  @media (min-width: 901px) {
+    grid-template-columns: repeat(4, 1fr); // Tres columnas por fila para pantallas grandes
+  }
+}
+
+.form-group mat-form-field {
+  flex: 1;
+}
+
+mat-form-field {
+  width: 100%;
+
+  &:first-child {
+    grid-column: span 2; // El campo de medicamento ocupará dos columnas
+  }
+}
+
+mat-card {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo {
+  font-size: 35px;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #000000;
+}
+
+.button-container {
+  justify-content: center;
+  display: flex;
+  margin:  30px auto;
+}
+
+.bottom-buttons {
+  justify-content: center;
+  display: flex;
+  margin-top: 30px;
+  gap: 40px;
+}
+
+.success {
+  color: rgb(0, 128, 0); /* Ajusta el estilo según tus necesidades */
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.error {
+  color: rgb(255, 0, 0);
+}
+
+

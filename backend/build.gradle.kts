@@ -33,6 +33,8 @@ dependencies {
 	implementation("jakarta.validation:jakarta.validation-api:2.0.2")
 	implementation("org.mapstruct:mapstruct:$mapStructVersion")
 	implementation("javax.servlet:javax.servlet-api:3.1.0")
+	implementation("org.openapitools:jackson-databind-nullable:0.2.2")
+
 
 	kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
 
