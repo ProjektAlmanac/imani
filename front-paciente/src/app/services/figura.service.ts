@@ -8,7 +8,7 @@ export class FiguraService {
 
   private icons: Record<Prescripcion.FiguraEnum, string> = {
     "cuadrado": "square-sharp",
-    "circulo": "elipse-sharp",
+    "circulo": "ellipse-sharp",
     "triangulo": "triangle-sharp",
     "estrella": "star-sharp",
     "anillo": "radio-button-off-sharp",

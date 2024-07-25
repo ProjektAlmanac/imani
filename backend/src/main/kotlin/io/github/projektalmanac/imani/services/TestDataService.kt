@@ -100,7 +100,7 @@ class TestDataService(
         val prescripcion6 = Prescripcion(
             6,
             "Paracetamol",
-            5,
+            5 * 60,
             "",
             LocalDateTime.now(),
             Int.MAX_VALUE,

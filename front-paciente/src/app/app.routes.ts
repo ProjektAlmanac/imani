@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import {SigupPatientComponent} from "./pages/sigup-patient/sigup-patient.component";
 import {PrescriptionsComponent} from "./pages/prescriptions/prescriptions.component";
 import { NotificacionMedicamentoComponent } from './pages/notificacion-medicamento/notificacion-medicamento.component';
+import { HomePage } from './home/home.page';
 
 export const routes: Routes = [
   {
@@ -27,8 +28,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
+    component: HomePage
   },
 ];
 

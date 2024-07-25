@@ -6,6 +6,7 @@ import { DatosPacienteComponent } from './pages/datos-paciente/datosPaciente';
 import { ActualizarPacienteComponent } from './pages/actualizar-paciente/actualizarPaciente';
 import { LoginComponent } from './pages/login/login.component';
 import { PacientesComponent } from './pages/pacientes/pacientes.component';
+import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: '',
+    component: HomeComponent,
   },
 ];
