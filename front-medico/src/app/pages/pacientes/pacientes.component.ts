@@ -43,9 +43,12 @@ export class PacientesComponent implements OnInit {
     private pacienteService: PacienteService,
     public router: Router
   ) {
-    effect(async () => {
-      this.fetchPacientes();
-    });
+    effect(
+      async () => {
+        this.fetchPacientes();
+      },
+      { allowSignalWrites: true }
+    );
 
     this.pacientesFiltrados = computed(() => {
       const searchQuery = this.searchQuery().toLowerCase().trim();
