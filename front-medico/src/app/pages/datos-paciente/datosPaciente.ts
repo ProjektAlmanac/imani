@@ -88,8 +88,8 @@ export class DatosPacienteComponent implements OnInit {
           console.error('Fecha de nacimiento no válida:', this.paciente.fechaDeNacimiento);
         }
       }
-      this.snackBar.open('Paciente cargado con éxito', 'Cerrar', { duration: 3000 });
-      this.success = 'Paciente cargado con éxito';
+      //this.snackBar.open('Paciente cargado con éxito', 'Cerrar', { duration: 3000 });
+      //this.success = 'Paciente cargado con éxito';
     } catch (e) {
       const errorResponse = e as HttpErrorResponse;
       const problemDetails = errorResponse.error as ProblemDetails;
@@ -114,8 +114,8 @@ export class DatosPacienteComponent implements OnInit {
           horaInicio: fechaInicio ? fechaInicio.toFormat('HH:mm', { zone: 'utc' }) : ''
         };
       });
-      this.snackBar.open('Prescripciones cargadas con éxito', 'Cerrar', { duration: 3000 });
-      this.success = 'Prescripciones cargadas con éxito';
+      //this.snackBar.open('Prescripciones cargadas con éxito', 'Cerrar', { duration: 3000 });
+      //this.success = 'Prescripciones cargadas con éxito';
     } catch (e) {
       const errorResponse = e as HttpErrorResponse;
       const problemDetails = errorResponse.error as ProblemDetails;
@@ -134,7 +134,7 @@ export class DatosPacienteComponent implements OnInit {
   // Método para verificar el tipo de usuario y acceder a propiedades específicas
   public esDoctor(usuario: any): usuario is Doctor {
     //return (usuario as Doctor).centroMedico !== undefined;
-    return true;
+    return false;
   }
 
   formatTime(seconds: number): string {
