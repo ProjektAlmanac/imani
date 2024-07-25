@@ -1,17 +1,25 @@
 package io.github.projektalmanac.imani.services
 
 import io.github.projektalmanac.imani.entities.Figura
+import io.github.projektalmanac.imani.entities.Doctor
 import io.github.projektalmanac.imani.entities.Paciente
 import io.github.projektalmanac.imani.entities.Prescripcion
+import io.github.projektalmanac.imani.repositories.DoctorRepository
 import io.github.projektalmanac.imani.repositories.PacienteRepository
+import io.github.projektalmanac.imani.repositories.PrescripcionRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
-class TestDataService(val pacienteRepository: PacienteRepository) {
+class TestDataService(
+    val pacienteRepository: PacienteRepository,
+    val prescripcionRepository: PrescripcionRepository,
+    val doctorRepository: DoctorRepository
+) {
     fun generarDatos() {
         val paciente1 = Paciente(1, "Crecencio", "Morales Rivera", LocalDate.of(1949, 4, 19), 1.67f, 92.3f, "asdf")
+        val doctor = Doctor(1, "Luis", "Perez", "luisperez", "1234", "Zaragoza", mutableListOf<Prescripcion>(), mutableListOf<Paciente>())
         pacienteRepository.save(paciente1)
 
         val prescripcion1 = Prescripcion(
@@ -89,6 +97,7 @@ class TestDataService(val pacienteRepository: PacienteRepository) {
         paciente1.prescripciones.add(prescripcion3)
         paciente1.prescripciones.add(prescripcion4)
         paciente1.prescripciones.add(prescripcion5)
-       pacienteRepository.save(paciente1)
+        doctorRepository.save(doctor)
+        pacienteRepository.save(paciente1)
     }
 }
