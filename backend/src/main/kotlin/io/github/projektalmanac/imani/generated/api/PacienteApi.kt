@@ -6,6 +6,7 @@
 package io.github.projektalmanac.imani.generated.api
 
 import io.github.projektalmanac.imani.generated.dto.PacienteDto
+import io.github.projektalmanac.imani.generated.dto.PostPacientesSendQrRequestDto
 import io.github.projektalmanac.imani.generated.dto.ProblemDetailsDto
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.enums.*
@@ -89,6 +90,24 @@ nombre estatura, etc""",
             consumes = ["application/json"]
     )
     fun postPacientes(@Parameter(description = "") @Valid @RequestBody(required = false) pacienteDto: PacienteDto?): ResponseEntity<PacienteDto>
+
+    @Operation(
+        tags = ["paciente",],
+        summary = "Envia el QR para iniciar sesión",
+        operationId = "postPacientesSendQr",
+        description = """""",
+        responses = [
+            ApiResponse(responseCode = "204", description = "No Content"),
+            ApiResponse(responseCode = "400", description = "Error en el envío del QR", content = [Content(schema = Schema(implementation = ProblemDetailsDto::class))])
+        ]
+    )
+    @RequestMapping(
+            method = [RequestMethod.POST],
+            value = ["/pacientes/{pacienteId}/send-qr"],
+            produces = ["application/json"],
+            consumes = ["application/json"]
+    )
+    fun postPacientesSendQr(@Parameter(description = "", required = true) @PathVariable("pacienteId") pacienteId: kotlin.Int,@Parameter(description = "") @Valid @RequestBody(required = false) postPacientesSendQrRequestDto: PostPacientesSendQrRequestDto?): ResponseEntity<Unit>
 
     @Operation(
         tags = ["paciente",],

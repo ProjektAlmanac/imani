@@ -16,6 +16,7 @@ src/main/kotlin/io/github/projektalmanac/imani/generated/dto/NuevoDoctorDto.kt
 src/main/kotlin/io/github/projektalmanac/imani/generated/dto/NuevoFarmaceuticoDto.kt
 src/main/kotlin/io/github/projektalmanac/imani/generated/dto/NuevoPacienteDto.kt
 src/main/kotlin/io/github/projektalmanac/imani/generated/dto/PacienteDto.kt
+src/main/kotlin/io/github/projektalmanac/imani/generated/dto/PostPacientesSendQrRequestDto.kt
 src/main/kotlin/io/github/projektalmanac/imani/generated/dto/PrescripcionDto.kt
 src/main/kotlin/io/github/projektalmanac/imani/generated/dto/ProblemDetailsDto.kt
 src/main/kotlin/io/github/projektalmanac/imani/generated/dto/UsuarioDto.kt
