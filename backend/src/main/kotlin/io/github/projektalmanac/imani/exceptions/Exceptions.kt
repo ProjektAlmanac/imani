@@ -46,3 +46,13 @@ class DoctorNotFoundException(id: Int, cause: Throwable? = null) : AppException(
     override val tipo = "DOCTOR_NO_ENCONTRADO"
     override val status = HttpStatus.NOT_FOUND
 }
+
+class FarmaceuticoNotFoundException(id: Int, cause: Throwable? = null) : AppException("No es encontró al farmacéutico con id $id", cause) {
+    override val tipo = "FARMACEUTICO_NO_ENCONTRADO"
+    override val status = HttpStatus.NOT_FOUND
+}
+
+class PacienteNotFoundException(id: Int, cause: Throwable? = null) : AppException("No es encontró al paciente con id $id", cause) {
+    override val tipo = "PACIENTE_NO_ENCONTRADO"
+    override val status = HttpStatus.NOT_FOUND
+}

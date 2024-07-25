@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QRCodeModule } from 'angularx-qrcode';
 import { lastValueFrom } from 'rxjs';
-import { DoctorService, Usuario } from '../../../generated/openapi';
+import { DoctorService, FarmaceuticoService, Usuario } from '../../../generated/openapi';
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
@@ -21,6 +21,7 @@ export class GenerateQrComponent implements OnInit, OnDestroy {
   constructor(
     private session: UsuarioService,
     private doctorService: DoctorService,
+    private farmaceuticoService: FarmaceuticoService,
     private router: Router,
   ) {
     const idUser: number = +(this.session.getUsuario()?.id ?? 0);
@@ -46,18 +47,22 @@ export class GenerateQrComponent implements OnInit, OnDestroy {
     const isDoctor: boolean =
       this.session.getUsuario()?.rol == Usuario.RolEnum.Doctor;
 
-    if (!isDoctor) {
-      console.error('El usuario no es un médico');
-      return;
-    }
-
     try {
-      const doctor = await lastValueFrom(this.doctorService.getDoctor(idUser));
-      if (doctor.idPaciente != null) {
-        this.router.navigate([`/pacientes/${doctor.idPaciente}`]);
+      const user = await this.getUsuario(idUser, isDoctor)
+      if (user.idPaciente != null) {
+        this.router.navigate(['/pacientes', user.idPaciente]);
       }
     } catch (error) {
       console.error('Error al obtener el doctor:', error);
+    }
+  }
+
+  private async getUsuario(idUser: number, isDoctor: boolean) {
+    if (isDoctor) {
+      return lastValueFrom(this.doctorService.getDoctor(idUser))
+    }
+    else {
+      return lastValueFrom(this.farmaceuticoService.getFarmaceutico(idUser))
     }
   }
 }

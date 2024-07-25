@@ -1,8 +1,6 @@
 package io.github.projektalmanac.imani.entities
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
 class Farmaceutico(
@@ -12,5 +10,7 @@ class Farmaceutico(
     var nombre: String,
     var apellidos: String,
     var nombreUsuario: String,
-    var passwordHash: String
+    var passwordHash: String,
+    @OneToOne(fetch = FetchType.LAZY)
+    var pacientaAtendido: Paciente?
 )

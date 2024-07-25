@@ -26,14 +26,13 @@ import { QrService } from 'src/app/services/qr.service';
     NgxScannerQrcodeModule,
   ],
 })
-export class LeerQrPage implements OnInit {
+export class LeerQrPage {
   imageSrc: string | null = null;
   qrResult: string | null = null;
   errorMessage: string | null = null;
 
   constructor(private qrService: QrService) {}
 
-  ngOnInit(): void {}
   async takePicture() {
     try {
       const image = await Camera.getPhoto({

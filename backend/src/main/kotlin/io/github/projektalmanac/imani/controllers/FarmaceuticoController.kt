@@ -24,7 +24,8 @@ class FarmaceuticoController(private val farmaceuticoService: FarmaceuticoServic
     override fun getFarmaceutico(
             farmaceuticoId: Int
     ): ResponseEntity<FarmaceuticoDto> {
-        TODO("Not yet implemented")
+        val resultado = farmaceuticoService.getFarmaceutico(farmaceuticoId)
+        return ResponseEntity.ok(resultado)
     }
 
     override fun putFarmaceuticoFarmaceuticoId(

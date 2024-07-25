@@ -6,6 +6,7 @@ import io.github.projektalmanac.imani.generated.api.PacienteApi
 import io.github.projektalmanac.imani.generated.dto.PacienteDto
 import io.github.projektalmanac.imani.generated.dto.PostPacientesSendQrRequestDto
 import io.github.projektalmanac.imani.services.DoctorService
+import io.github.projektalmanac.imani.services.FarmaceuticoService
 import io.github.projektalmanac.imani.services.PacienteService
 import java.io.InputStream
 import java.io.OutputStream
@@ -17,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api")
-class PacienteController(val pacienteService: PacienteService, val doctorService: DoctorService) :
+class PacienteController(
+    val pacienteService: PacienteService,
+    val doctorService: DoctorService,
+    private val farmaceuticoService: FarmaceuticoService
+) :
         PacienteApi {
     override fun getPacienteID(pacienteId: Int): ResponseEntity<PacienteDto> {
         val paciente = pacienteService.getPaciente(pacienteId)
@@ -109,7 +114,10 @@ class PacienteController(val pacienteService: PacienteService, val doctorService
                 } else {
                     return ResponseEntity.status(HttpURLConnection.HTTP_INTERNAL_ERROR).body(Unit)
                 }
-                this.doctorService.agregarPacienteAdoctor(idUser, pacienteId)
+                if (isDoctor)
+                    this.doctorService.agregarPacienteAdoctor(idUser, pacienteId)
+                else
+                    farmaceuticoService.agregarPacienteFarmaceutico(idUser, pacienteId)
             } else {
                 return ResponseEntity.status(HttpURLConnection.HTTP_INTERNAL_ERROR).body(Unit)
             }
