@@ -3,15 +3,16 @@ package io.github.projektalmanac.imani.controllers
 import io.github.projektalmanac.imani.generated.api.PrescripcionesApi
 import io.github.projektalmanac.imani.generated.dto.NuevaPrescripcionDto
 import io.github.projektalmanac.imani.generated.dto.PrescripcionDto
+import io.github.projektalmanac.imani.services.PrescripccionService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api")
-class PrescripcionController : PrescripcionesApi {
+class PrescripcionController(private val prescripccionService: PrescripccionService) : PrescripcionesApi {
     override fun getPrescription(pacienteId: Int): ResponseEntity<List<PrescripcionDto>> {
-        TODO("Not yet implemented")
+       return ResponseEntity.ok(prescripccionService.getPrescripciones(pacienteId))
     }
 
     override fun postPrescription(
