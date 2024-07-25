@@ -12,13 +12,12 @@ import { SessionService } from '../../services/session.service';
   styleUrls: ['./generate-qr.component.scss'],
 })
 export class GenerateQrComponent {
-  qrData: string = '';
+  public qrData: string;
 
   constructor(private session: SessionService) {
     const idUser: number = this.session.getIdSession();
     const isDoctor: boolean = this.session.isDoctor();
-    this.qrData = `idUser:${idUser},isDoctor:${isDoctor}`;
+    this.qrData = JSON.stringify({ idUser, isDoctor });
   }
-
   onInputChange(newData: string) {}
 }
