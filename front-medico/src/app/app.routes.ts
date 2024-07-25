@@ -4,6 +4,7 @@ import { SuccessComponent as SignupSuccessComponent } from './pages/signup/succe
 import { AgregarPrescripcionComponent } from './pages/agregar-prescripcion/agregarPrescripcion';
 import { DatosPacienteComponent } from './pages/datos-paciente/datosPaciente';
 import {ActualizarPacienteComponent} from "./pages/actualizar-paciente/actualizarPaciente";
+import {LoginComponent} from "./pages/login/login.component";
 
 export const routes: Routes = [
   {
@@ -25,5 +26,9 @@ export const routes: Routes = [
   {
     path: 'actualizar-paciente',
     component: ActualizarPacienteComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];

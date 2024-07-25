@@ -1,5 +1,6 @@
 package io.github.projektalmanac.imani.services
 
+import io.github.projektalmanac.imani.entities.Doctor
 import io.github.projektalmanac.imani.entities.Figura
 import io.github.projektalmanac.imani.entities.Doctor
 import io.github.projektalmanac.imani.entities.Paciente
