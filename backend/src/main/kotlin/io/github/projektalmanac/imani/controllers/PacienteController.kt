@@ -94,7 +94,7 @@ class PacienteController(val pacienteService: PacienteService, val doctorService
             // Parsear la respuesta JSON
             val mapper = jacksonObjectMapper()
             val responseMap: Map<String, Any> = mapper.readValue(response)
-
+            println(response)
             val data = responseMap["data"] as? Map<*, *>
             val code1 = data?.get("code1") as? Map<*, *>
             val qrData = code1?.get("qr_data") as? String

@@ -5,6 +5,7 @@ import io.github.projektalmanac.imani.entities.Paciente
 import io.github.projektalmanac.imani.exceptions.CuerpoDePeticionNuloException
 import io.github.projektalmanac.imani.exceptions.NombreUsuarioTomadoException
 import io.github.projektalmanac.imani.exceptions.UsuarioNoEncontradoException
+import io.github.projektalmanac.imani.generated.dto.DoctorDto
 import io.github.projektalmanac.imani.generated.dto.NuevoDoctorDto
 import io.github.projektalmanac.imani.mappers.DoctorMapper
 import io.github.projektalmanac.imani.repositories.DoctorRepository
@@ -48,11 +49,14 @@ class DoctorService(
                 pacienteRepository.findPacienteById(idPaciente)
                         ?: throw UsuarioNoEncontradoException(idPaciente)
 
-        if (!doctor.pacientes.contains(paciente)) {
-            doctor.pacientes.add(paciente)
-            paciente.doctores.add(doctor)
-            doctorRepository.save(doctor)
-            pacienteRepository.save(paciente)
-        }
+        doctor.pacienteAtendido = paciente
+        doctorRepository.save(doctor)
+    }
+    fun getDoctorById(idDoctor: Int): DoctorDto {
+        val doctor =
+                doctorRepository.findById(idDoctor).orElseThrow {
+                    UsuarioNoEncontradoException(idDoctor)
+                }
+        return doctorMapper.toDoctorDto(doctor)
     }
 }
