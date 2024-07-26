@@ -20,5 +20,6 @@
     </a>
   </div>
   <div class="spacer"></div>
-  <ion-button (click)="reset()">Reset</ion-button>
+  <ion-input type="number" [value]="userId()" (input)="setValue($event)"></ion-input>
+  <ion-button (click)="update()">Update</ion-button>
 </ion-content>

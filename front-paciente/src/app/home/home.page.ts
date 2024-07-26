@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {IonicModule} from "@ionic/angular"
 import {
   IonButton,
   IonContent,
@@ -11,7 +12,7 @@ import {
   IonTitle,
   IonToolbar,
   RefresherCustomEvent,
-} from '@ionic/angular/standalone';
+  IonInput } from '@ionic/angular/standalone';
 import { MessageComponent } from '../message/message.component';
 
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
@@ -25,24 +26,20 @@ import { PacienteService } from '../services/paciente.service';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
-    IonButton,
+    IonicModule,
     CommonModule,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonRefresher,
-    IonRefresherContent,
-    IonList,
-    MessageComponent,
     RouterModule,
   ],
 })
 export class HomePage {
   private data = inject(DataService);
-  constructor(private qrService: QrService, private pacienteService: PacienteService) {}
   public imageSrc: string = '';
   public qrResult: string = '';
+
+  userId = signal(this.pacienteService.obtenerPaciente()?.id)
+
+  constructor(private qrService: QrService, private pacienteService: PacienteService) {}
+
   async takePicture() {
     try {
       const image = await Camera.getPhoto({
@@ -90,7 +87,16 @@ export class HomePage {
     return this.data.getMessages();
   }
 
-  reset() {
-    this.pacienteService.guardarPaciente(null!);
+  update() {
+    const id = this.userId()
+    if (id == undefined || isNaN(id) || id == 0)
+      this.pacienteService.guardarPaciente(null!)
+    else
+      this.pacienteService.guardarPaciente({ id } as any)
+  }
+
+  setValue(event: Event) {
+    const target = event.target as HTMLInputElement
+    this.userId.set(+target.value)
   }
 }
