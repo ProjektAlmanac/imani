@@ -1,4 +1,11 @@
-import { Component, effect, Input, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  Input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -18,6 +25,7 @@ import {
   Doctor,
   Farmaceutico,
   Usuario,
+  Prescripcion,
 } from '../../../generated/openapi';
 // @ts-ignore
 import { DateTime } from 'luxon';
@@ -51,7 +59,7 @@ export class DatosPacienteComponent {
   success = signal<string | undefined>(undefined);
   error = signal<string | undefined>(undefined);
   dataSource = new MatTableDataSource<PrescripcionTabla>();
-  displayedColumns: string[] = [
+  doctorColumns: string[] = [
     'medicamento',
     'frecuenciaDosis',
     'indicaciones',
@@ -61,6 +69,22 @@ export class DatosPacienteComponent {
     'horaInicio',
     'figura',
   ];
+  farmaceuticoColumns: string[] = [
+    'medicamento',
+    'frecuenciaDosis',
+    'indicaciones',
+    'duracion',
+    'cantidadPorDosis',
+    'fechaInicio',
+    'horaInicio',
+    'figura',
+    'numeroDeDosis',
+  ];
+
+  displayedColumns = signal<string[]>([]);
+
+  /** Relaciona el id de una prescripción con su nueva cantidad */
+  cambios = new Map<number, Prescripcion>();
 
   constructor(
     private router: Router,
@@ -71,6 +95,14 @@ export class DatosPacienteComponent {
     route: ActivatedRoute
   ) {
     effect(this.cargarPrescripciones, { allowSignalWrites: true });
+    effect(
+      () => {
+        if (this.usuarioService.usuario()?.rol == 'doctor')
+          this.displayedColumns.set(this.doctorColumns);
+        else this.displayedColumns.set(this.farmaceuticoColumns);
+      },
+      { allowSignalWrites: true }
+    );
 
     route.paramMap.subscribe(async (paramMap) => {
       this.success.set(undefined);
@@ -210,5 +242,33 @@ export class DatosPacienteComponent {
     this.router.navigate(['/pacientes', this.paciente()?.id, 'actualizar'], {
       state: { paciente: this.paciente() },
     });
+  }
+
+  public guardarCambioCantidad(prescripcion: Prescripcion, e: Event) {
+    const target = e.target as HTMLInputElement;
+    const value = +target.value;
+    prescripcion.numeroDeDosis = value;
+    this.cambios.set(prescripcion.id, prescripcion);
+  }
+
+  public async subirCambios() {
+    this.success.set(undefined)
+    this.error.set(undefined)
+    const pacienteId = this.paciente()?.id;
+    if (pacienteId == undefined) return;
+    const promises = [...this.cambios.entries()].map(([id, p]) =>
+      this.prescripcionService.actualizarprescripcion(pacienteId, id, p)
+    );
+    try {
+      await Promise.all(promises)
+      this.snackBar.open('Prescripciones actualizadas con éxito', 'Cerrar', { duration: 3000 });
+      this.success.set('Prescripciones actualizadas con éxito');
+    }
+    catch (e) {
+      const errorResponse = e as HttpErrorResponse;
+      const problemDetails = errorResponse.error as ProblemDetails;
+      this.error.set(problemDetails.detail);
+      this.snackBar.open(problemDetails.detail, 'Cerrar', { duration: 3000 });
+    }
   }
 }

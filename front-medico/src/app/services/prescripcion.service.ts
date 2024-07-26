@@ -18,4 +18,8 @@ export class PrescripcionService {
   public obtenerPrescripciones(pacienteId: number): Promise<any> {
     return lastValueFrom(this.prescripcionApi.getPrescription(pacienteId));
   }
+
+  public actualizarprescripcion(pacienteId: number, prescripcionId: number, prescripcion: NuevaPrescripcion) {
+    return lastValueFrom(this.prescripcionApi.putPrescripcion(pacienteId, prescripcionId, prescripcion))
+  }
 }

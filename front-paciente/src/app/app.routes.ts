@@ -11,13 +11,6 @@ export const routes: Routes = [
       import('./pages/leer-qr/leer-qr.page').then((m) => m.LeerQrPage),
   },
   {
-    path: 'home',
-    loadComponent: () =>
-      import('./pages/sigup-patient/sigup-patient.component').then(
-        (m) => m.SigupPatientComponent,
-      ),
-  },
-  {
     path: 'message/:id',
     loadComponent: () =>
       import('./view-message/view-message.page').then((m) => m.ViewMessagePage),
