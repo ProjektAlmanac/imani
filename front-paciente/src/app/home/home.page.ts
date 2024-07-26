@@ -17,6 +17,7 @@ import { MessageComponent } from '../message/message.component';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { DataService, Message } from '../services/data.service';
 import { QrService } from '../services/qr.service';
+import { PacienteService } from '../services/paciente.service';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,7 @@ import { QrService } from '../services/qr.service';
 })
 export class HomePage {
   private data = inject(DataService);
-  constructor(private qrService: QrService) {}
+  constructor(private qrService: QrService, private pacienteService: PacienteService) {}
   public imageSrc: string = '';
   public qrResult: string = '';
   async takePicture() {
@@ -87,5 +88,9 @@ export class HomePage {
 
   getMessages(): Message[] {
     return this.data.getMessages();
+  }
+
+  reset() {
+    this.pacienteService.guardarPaciente(null!);
   }
 }

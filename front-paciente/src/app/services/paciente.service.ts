@@ -30,7 +30,7 @@ export class PacienteService {
     }
   }
 
-  private guardarPaciente(paciente: Paciente): void {
+  public guardarPaciente(paciente: Paciente): void {
     localStorage.setItem(this.llaveStorage, JSON.stringify(paciente));
   }
 
