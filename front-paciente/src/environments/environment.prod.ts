@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  apiUrl: 'https://imani.espadas.org/api',
+  production: true,
 };
